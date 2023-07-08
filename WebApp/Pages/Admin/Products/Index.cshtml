@@ -1,0 +1,264 @@
+﻿@page
+@model WebApp.Pages.Admin.Products.IndexModel
+@{
+    ViewData["Title"] = "Products";
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Products</h3>
+            @*<a class="float-right" asp-page="Manage">
+                    <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+                </a>*@
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Product Code</th>
+                                <th class="search">Sale Type</th>
+                                <th class="search">Product Name</th>
+                                <th class="search text-right" width="50">View(s)</th>
+                                <th class="search text-right">Reserve Price</th>
+                                <th class="search text-right">Service Charge</th>
+                                <th class="search">Created On</th>
+                                <th class="text-center noExport noSort">IsApprove</th>
+                                <th class="text-center noExport noSort">IsFeatured</th>
+                                <th class="text-center noExport noSort">Active</th>
+                                <th class="text-center noExport noSort">View</th>
+                                <th class="text-center noExport noSort">Query</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                            <tr>
+                                <td class="text-right">
+                                    @{ index++; }
+                                    @index
+                                    <input type="hidden" asp-for="@item.Id" id="hdProductId" name="ProductId" />
+                                    <input type="hidden" asp-for="@item.IsApprove" id="hdIsApprove" name="IsApprove" />
+                                    <input type="hidden" asp-for="@item.IsFeatured" id="hdIsFeatured" name="IsFeatured" />
+                                </td>
+                                <td>@item.ProductNumber</td>
+                                <td>@item.SaleType</td>
+                                <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                <td class="text-right">0</td>
+                                <td class="text-right">@item.EstimatePrice.ToString("0")</td>
+                                <td class="text-right">@item.ReservePrice.ToString("0")</td>
+                                <td>@($"{item.CreatedDate:dd-MM-yyyy hh:mm tt}")</td>
+                                <td>
+                                    <div class="custom-control custom-switch custom-switch-on-primary">
+                                        <input class="custom-control-input chkChild" type="checkbox" asp-for="@item.IsApprove" id="@($"chk-{item.Id}")" name="@($"chk-{item.Id}")" />
+
+                                        <label class="custom-control-label" for="@($"chk-{item.Id}")">&nbsp;</label>
+                                    </div>
+                                    @*<input type="hidden" asp-for="@item.IsActive" id="idIsActive" name="IsActive" />*@
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch custom-switch-on-primary">
+
+                                        <input class="custom-control-input chkChildfeatured" type="checkbox" asp-for="@item.IsFeatured" id="@($"chkfm-{item.Id}")" name="@($"chkfm-{item.Id}")" />
+                                        <label class="custom-control-label" for="@($"chkfm-{item.Id}")">&nbsp;</label>
+                                    </div>
+                                    @*<input type="hidden" asp-for="@item.IsActive" id="idIsActive" name="IsActive" />*@
+                                </td>
+
+                                <td class="text-center"><i class="@(item.IsActive?"fa fa-check-circle text-success":"fa fa-minus")"></i></td>
+                                <td class="text-center">
+                                    @*<a asp-page="Manage" asp-route-id="@item.Id">
+                <i class="fa fa-edit text-dark" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+            </a>*@
+                                    <a asp-page="ViewProductDetails" asp-route-id="@item.Id">
+                                        <i class="fa fa-eye text-dark" data-toggle="tooltip" data-placement="top" title="View Details"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    @{
+                                        if (!item.IsApprove)
+                                        {
+                                            <a asp-page="Enquiry" asp-route-pid="@item.Id">
+                                                <i class="fa fa-question-circle text-dark" data-toggle="tooltip" data-placement="top" title="Query"></i>
+                                            </a>
+                                        }
+                                    }
+                                    @*<a asp-page="ProductsBuyerQueries" asp-route-pid="@item.Id">BQ</a>*@
+                                </td>
+
+
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Product Code</th>
+                                <th class="search">Sale Type</th>
+                                <th class="search">Sub Sub Category</th>
+                                <th class="search">View(s)</th>
+                                <th class="search">Reserve Price</th>
+                                <th class="search text-right">Service Charge</th>
+                                <th class="search">Created On</th>
+                                <th class="text-center noExport noSort">Is Approve</th>
+                                <th class="text-center noExport noSort">Is Featured</th>
+                                <th class="text-center noExport noSort">Active</th>
+                                <th class="text-center noExport noSort">Edit</th>
+                                <th class="text-center noExport noSort">Query</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet.</p>
+            }
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+        $('#tblDataTable').DataTable({
+            initComplete: function () {
+                var r = $('#tblDataTable tfoot tr');
+                r.find('th').each(function () {
+                    if ($(this).hasClass('search')) {
+                        $(this).css('padding', 5);
+                        var title = $(this).text();
+                        $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+                    } else {
+                        $(this).html('');
+                    }
+                });
+                $('#tblDataTable thead').prepend(r);
+                this.api().columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change clear',
+                        function () {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                });
+            }
+        });
+        $('table tbody tr td input.chkChild').on('change', function (event) {
+            debugger;
+            var pid = $(this).closest("tr").find('td:eq(0)').find('#hdProductId').val();
+            var isapprove = $(this).closest("tr").find('td:eq(0)').find('#hdIsApprove').val();
+            //var saletype = $(this).closest("tr").find('td:eq(2)').text();
+            var chkid = $(this).attr("id");
+            var myAlertsMsg;
+            if (isapprove == 'True') {
+                myAlertsMsg = 'Are you sure want to disapprove?';
+            }
+            else {
+                myAlertsMsg = 'Are you sure want to approve?';
+            }
+            getConfirm(myAlertsMsg,
+                function(result) {
+                    if (result) {
+                        var modelDto = { Id: pid, IsApprove: isapprove}
+                        debugger
+                        var modelstr = JSON.stringify(modelDto);
+                        var url = '@($"/Admin/Products/Index/?handler=UpdateSelected")';
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            data: { modelstr: modelstr },
+                            success: function(data) {
+                                if (data != null) {
+                                    if (data === 'unauthorized') {
+                                        $("#divClientAlert").addClass("alert-warning");
+                                        $("#divClientAlert > p.m-0").text("Please login to access this resource");
+                                        $("#divClientAlert").show();
+                                        SetTimeOut($("#divClientAlert"));
+                                        window.location.href = "/Account/Login";
+                                    } else {
+                                        $("#divClientAlert").addClass("alert-success");
+                                        $("#divClientAlert > p.m-0").text(data);
+                                        $("#divClientAlert").show();
+                                        SetTimeOut($("#divClientAlert"));
+                                        window.location.reload(true);
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        if (isapprove == 'True') {
+                            $("#" + chkid).prop('checked', true);
+                        }
+                        else {
+                            $("#" + chkid).prop('checked', false);
+                        }
+                        event.preventDefault();
+                    }
+                });
+        });
+
+        $('table tbody tr td input.chkChildfeatured').on('change', function (event) {
+            debugger;
+
+            var pid = $(this).closest("tr").find('td:eq(0)').find('#hdProductId').val();
+            var isfeatured = $(this).closest("tr").find('td:eq(0)').find('#hdIsFeatured ').val();
+            //var saletype = $(this).closest("tr").find('td:eq(2)').text();
+            var chkfmid = $(this).attr("id");
+            var myAlertsMsg;
+            if (isfeatured == 'True') {
+                myAlertsMsg = 'Are you sure want to De-Select as Featured Machines?';
+            }
+            else {
+                myAlertsMsg = 'Are you sure want to Select as Featured Machines?';
+            }
+            getConfirm(myAlertsMsg,
+                function(result) {
+                    if (result) {
+                        var modelDto = { Id: pid, IsFeatured: isfeatured}
+                        debugger
+                        var modelstr = JSON.stringify(modelDto);
+                        var url = '@($"/Admin/Products/Index/?handler=UpdateasFeatured")';
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            data: { modelstr: modelstr },
+                            success: function(data) {
+                                if (data != null) {
+                                    if (data === 'unauthorized') {
+                                        $("#divClientAlert").addClass("alert-warning");
+                                        $("#divClientAlert > p.m-0").text("Please login to access this resource");
+                                        $("#divClientAlert").show();
+                                        SetTimeOut($("#divClientAlert"));
+                                        window.location.href = "/Account/Login";
+                                    } else {
+                                        $("#divClientAlert").addClass("alert-success");
+                                        $("#divClientAlert > p.m-0").text(data);
+                                        $("#divClientAlert").show();
+                                        SetTimeOut($("#divClientAlert"));
+                                        window.location.reload(true);
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        if (isfeatured == 'True') {
+                            $("#" + chkfmid).prop('checked', true);
+                        }
+                        else {
+                            $("#" + chkfmid).prop('checked', false);
+                        }
+                        event.preventDefault();
+                    }
+                });
+        });
+    </script>
+}

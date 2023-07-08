@@ -1,0 +1,142 @@
+﻿@page
+@model WebApp.Pages.Admin.Products.PaymentsModel
+@{
+    ViewData["Title"] = "Reserve Price Paid";
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Buyer Reserve Price Paid</h3>
+            @*<a class="float-right" asp-page="Manage">
+                    <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+                </a>*@
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Product Code</th>
+                                <th class="search">Product Name</th>
+                                <th class="search">Payment mode</th>
+                                <th class="search">Number</th>
+                                <th class="search text-right">Reserve Price Paid</th>
+                                <th class="search">Drawn On</th>
+                                <th class="search">Ch / BG Date</th>
+                                <th class="search">Buyer Name</th>
+                                <th class="search">Submitted On</th>
+                                <th class="search">Status</th>
+                                <th class="search">Rec. Date</th>
+                                <th class="text-center noExport noSort">Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                                <tr>
+                                    <td class="text-right">
+                                        @{ index++; }
+                                        @index
+                                    </td>
+                                    <td>@item.ProductNumber</td>
+                                    <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                    <td>
+                                        @if (item.PaymentModeId == 1)
+                                        {<p>Online</p>}
+                                        else if (item.PaymentModeId == 2)
+                                        { <p>Offline</p>}
+                                        else if (item.PaymentModeId == 3)
+                                        { <p>Bank Guarantee</p>}
+
+                                    </td>
+                                    <td>
+                                        @if (item.DdChequeNo != null)
+                                        {<p>DD / Ch. No. : @item.DdChequeNo</p>}
+                                    else if (item.BgNo != null)
+                                    { <p>BG No. : @item.BgNo</p>}
+                                    </td>
+                                    <td class="text-right">@item.AmountRp.ToString("#,#")</td>
+                                    <td>@item.DrawnOn</td>
+                                    <td>@($"{item.ChAndBgDate:dd-MM-yyyy}")</td>
+                                    <td>@item.BuyerFullName</td>
+                                    <td>@($"{item.CreatedDate:dd-MM-yyyy hh:mm tt}")</td>
+                                    <td>
+                                        @if (item.PaymentStatus != null)
+                                        { @item.PaymentStatus}
+                                        else { <p>Pending</p>}
+                                    </td>
+                                    <td>
+                                        @($"{item.RecDate:dd-MM-yyyy hh:mm tt}")
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-page="PaymentsStatusManage" asp-route-id="@item.Id" class="ml-2 mr-2">
+                                            <i class="fa fa-edit text-dark" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Product Number</th>
+                                <th class="search">Product Name</th>
+                                <th class="search">Payment mode</th>
+                                <th class="search">Number</th>
+                                <th class="search text-right">Reserve Price Paid</th>
+                                <th class="search">Drawn On</th>
+                                <th class="search">Ch / BG Date</th>
+                                <th class="search">Buyer Name</th>
+                                <th class="search">Submitted On</th>
+                                <th class="search">Status</th>
+                                <th class="search">Rec. Date</th>
+                                <th class="text-center noExport noSort">Update</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet.</p>
+            }
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+        $('#tblDataTable').DataTable({
+            initComplete: function () {
+                var r = $('#tblDataTable tfoot tr');
+                r.find('th').each(function () {
+                    if ($(this).hasClass('search')) {
+                        $(this).css('padding', 5);
+                        var title = $(this).text();
+                        $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+                    } else {
+                        $(this).html('');
+                    }
+                });
+                $('#tblDataTable thead').prepend(r);
+                this.api().columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change clear',
+                        function () {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                });
+            }
+        });
+    </script>
+}

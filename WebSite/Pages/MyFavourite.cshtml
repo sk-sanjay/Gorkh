@@ -1,0 +1,105 @@
+﻿@page
+@model WebSite.Pages.MyFavouriteModel
+@{
+    ViewData["Title"] = "My Favourite Product";
+}
+@*<link href="~/css/test.css" rel="stylesheet" />*@
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class="mx-auto mt-2 col-md-9">
+
+                <div class="card">
+                    <div class="card-header">
+
+                        <h2 class="card-title"> Favourite Product(s)</h2>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                        {
+                            <div class="table-responsive">
+                                <table id="tblDataTable" class="table">
+                                    <thead>
+                                        @{
+                                            int index = 0;
+                                        }
+                                        <tr>
+                                            @*<th class="text-center noExport noSort"></th>*@
+                                            <th class="text-center">S. No.</th>
+                                            <th class="search">Product Code</th>
+                                            <th class="search">Product Name</th>
+                                            <th class="search text-right">Reserve Price</th>
+                                            <th class="search text-right">Action</th>
+                                            @*<th class="search">Date</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ModelVms)
+                                        {
+                                            <tr>
+                                                @*<td class="text-center"></td>*@
+                                                <td class="text-center">
+                                                    @{ index++; }
+                                                    @index
+                                                </td>
+                                                <td>
+                                                    <a asp-page="ProductDetails" asp-route-id="@item.ProductId" target="_blank">
+                                                        @item.ProductNumber
+                                                    </a>
+                                                </td>
+                                                <td>@item.SubSubCategoriesName</td>
+                                                <td class="text-right">@item.ReservePrice.ToString("#,#")</td>
+                                                @*<td>@($"{item.CreatedDate:dd-MM-yyyy hh:mm tt}")</td>*@
+                                                @*<td class="text-center">
+
+                                                        <a href="#" class="btn-sm btn-danger" style="margin-left:2px;">Delete</a>
+                                                    </td>*@
+
+                                                <td class="text-center">
+                                                    @*<a onclick='Delete(@item.Id);'><i class="fa fa-trash text-dark" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>*@
+                                                    <a asp-page-handler="Delete" asp-route-id="@item.Id"><i class="fa fa-trash text-dark" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No records has been added yet.</p>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script asp-append-version="true">
+        function Delete(id) {
+
+            $.ajax({
+                type: "GET",
+                url: "/MyFavourite?handler=Delete",
+                data: { id: id },
+                success: function (data) {
+                    if (data != null) {
+                        if (data === "unauthorized") {
+                            window.location.href = "/Account/Seller-Login";
+                        } else if (data === "success") {
+                            window.location.reload(true);
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
+}
+

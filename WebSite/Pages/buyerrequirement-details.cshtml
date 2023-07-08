@@ -1,0 +1,173 @@
+﻿@page
+@model WebSite.Pages.buyerrequirement_detailsModel
+@{
+}
+<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main">
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="#">Can’t find your requirement</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+@section Styles{
+
+    <link href="~/plugins/datatables/DataTables-1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/plugins/datatables/Buttons-1.7.1/css/buttons.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/plugins/datatables/ColReorder-1.5.4/css/colReorder.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/plugins/datatables/FixedHeader-3.1.9/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/plugins/datatables/Responsive-2.2.9/css/responsive.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/plugins/datatables/RowReorder-1.2.8/css/rowReorder.bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/plugins/daterangepicker/daterangepicker.min.css" rel="stylesheet" asp-append-version="true" />
+
+}
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="heading">Can’t find your requirement</h1>
+
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="search" style="width:70px">S. No.</th>
+                                @*<th class="text-center noExport noSort"></th>*@
+                                <th class="search">Title</th>
+                                <th class="search">Category</th>
+                                @*<th class="search">Sub-Category</th>*@
+                                <th class="search">Added Date</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                                <tr>
+                                    <td class="text-right">
+                                        @{ index++; }
+                                        @index
+                                        <input type="hidden" asp-for="@item.Id" id="hdUId" name="Id" />
+                                        <input type="hidden" asp-for="@item.IsActive" id="IsActive" name="IsActive" />
+                                    </td>
+                                    @*<td class="text-center"></td>*@
+                                    <td>@item.ProductListingTitle</td>
+                                    <td>@item.Category</td>
+                                    @*<td>@item.SubCategory</td>*@
+                                    @*<td>@item.CreatedDate</td>*@
+                                    <td>@($"{item.CreatedDate:dd/MM/yyyy hh:mm tt}")</td>
+                                    <td>
+                                        <a data-toggle="modal" href="#" class="BuyerReqdetails link-bdr" data-id="@item.Id">View</a>
+
+                                    </td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="search" style="width:70px">S. No.</th>
+                                <th class="search">Title</th>
+                                <th class="search">Category</th>
+                                @*<th class="search">Sub-Category</th>*@
+                                <th class="search">Added Date</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog productModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="heading">Can’t find your requirement</h1>
+
+                            </div>
+                            @*<button type="button" class="close" data-dismiss="modal">×</button>*@
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body">
+
+                            </div>
+                            @*<div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>*@
+
+                        </div>
+                    </div>
+                </div>
+
+              
+            }
+            else
+            {
+                <p>No records founds !</p>
+            }
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+    <script src="~/js/custom/buyerrequirment.js" asp-append-version="true"></script>
+@*<script src="~/js/custom/buyeroffer.js" asp-append-version="true"></script>*@
+    <script src="~/plugins/datatables/JSZip-2.5.0/jszip.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/pdfmake-0.1.36/pdfmake.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/pdfmake-0.1.36/vfs_fonts.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/DataTables-1.10.25/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/DataTables-1.10.25/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Buttons-1.7.1/js/dataTables.buttons.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Buttons-1.7.1/js/buttons.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Buttons-1.7.1/js/buttons.colVis.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Buttons-1.7.1/js/buttons.html5.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Buttons-1.7.1/js/buttons.print.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/ColReorder-1.5.4/js/dataTables.colReorder.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/FixedHeader-3.1.9/js/dataTables.fixedHeader.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Responsive-2.2.9/js/dataTables.responsive.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/Responsive-2.2.9/js/responsive.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/plugins/datatables/RowReorder-1.2.8/js/dataTables.rowReorder.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" asp-append-version="true">
+            try {
+                $("#tblDataTable").DataTable({
+                    initComplete: function () {
+                        var r = $("#tblDataTable tfoot tr");
+                        r.find("th").each(function () {
+                            if ($(this).hasClass("search")) {
+                                $(this).css("padding", 5);
+                                var title = $(this).text();
+                                $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+                            } else {
+                                $(this).html("");
+                            }
+                        });
+                        $("#tblDataTable thead").prepend(r);
+                        this.api().columns().every(function () {
+                            var that = this;
+                            $("input", this.footer()).on("keyup change clear",
+                                function () {
+                                    if (that.search() !== this.value) {
+                                        that.search(this.value).draw();
+                                    }
+                                });
+                        });
+                    }
+                });
+                
+
+            }
+            catch (e) {
+                console.log(e.message);
+        }
+
+
+        </script>
+
+}

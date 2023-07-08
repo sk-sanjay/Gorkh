@@ -1,0 +1,57 @@
+﻿@model TestimonialsDTO
+<div class="modal fade" id="ManageModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ManageModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="Manage">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ManageModalTitle">Manage Testimonials</h5>
+                   
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="Name" class="col-form-label">Name<span class="required">*</span></label>
+                        <input asp-for="Name" class="form-control" placeholder="Name" autocomplete="off" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="col-form-label">Description<span class="required">*</span></label>
+                        <input asp-for="Description" class="form-control" placeholder="Description" autocomplete="off" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CompanyName" class="col-form-label">CompanyName<span class="required"></span></label>
+                        <input asp-for="CompanyName" class="form-control" placeholder="CompanyName" autocomplete="off" />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Designtion" class="col-form-label">Designtion<span class="required"></span></label>
+                        <input asp-for="Designtion" class="form-control" placeholder="Designtion" autocomplete="off" />
+                        <span asp-validation-for="Designtion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Location" class="col-form-label">Location<span class="required"></span></label>
+                        <input asp-for="Location" class="form-control" placeholder="Location" autocomplete="off" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-switch custom-switch-on-primary">
+                            <input asp-for="IsActive" class="custom-control-input">
+                            <label asp-for="IsActive" class="custom-control-label">Active</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSave" type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

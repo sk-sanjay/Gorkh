@@ -1,0 +1,44 @@
+[
+  {
+    "outputFileName": "wwwroot/css/styles.min.css",
+    "inputFiles": [
+      "wwwroot/css/styles.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/scripts.min.js",
+    "inputFiles": [
+      "wwwroot/js/scripts.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/plugins/alt-theme/css/adminlte.min.css",
+    "inputFiles": [
+      "wwwroot/plugins/alt-theme/css/adminlte.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/plugins/alt-theme/js/adminlte.min.js",
+    "inputFiles": [
+      "wwwroot/plugins/alt-theme/js/adminlte.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/plugins/aes/aes.min.js",
+    "inputFiles": [
+      "wwwroot/plugins/aes/aes.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/plugins/fullcalendar/custom.min.css",
+    "inputFiles": [
+      "wwwroot/plugins/fullcalendar/custom.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/plugins/datatables/DataTables-1.10.25/js/jquery.dataTables.min.js",
+    "inputFiles": [
+      "wwwroot/plugins/datatables/DataTables-1.10.25/js/jquery.dataTables.js"
+    ]
+  }
+]

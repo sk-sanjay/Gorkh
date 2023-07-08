@@ -1,0 +1,86 @@
+﻿@page
+@model WebApp.Pages.Admin.Visitors.IndexModel
+@{
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Visitors List</h3>
+          
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="search" style="width:70px">S. No.</th>
+                                @*<th class="text-center noExport noSort"></th>*@
+                                <th class="search"> Name</th>
+                                <th class="search">Company Name</th>
+                                <th class="search">Mobile No.</th>
+                                <th class="search">Email</th>
+
+                                <th class="text-center noExport noSort">Active</th>
+                                @*<th class="text-center noExport noSort">Action</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                            <tr>
+                                <td class="text-right">
+                                    @{ index++; }
+                                    @index
+                                </td>
+                                @*<td class="text-center"></td>*@
+                                <td>@item.FirstName @item.LastName</td>
+                                <td>@item.CompanyName</td>
+                                <td>@item.ContactNo</td>
+                                <td>@item.Email</td>
+
+                                <td class="text-center"><i class="@(item.Status?"fa fa-check-circle text-success":"fa fa-minus text-danger")"></i></td>
+                                @*<td class="text-center">
+                                    <a data-id="@item.Id" data-toggle="modal" data-target="#ManageModal" class="ml-2 mr-2">
+                                        <i class="fa fa-edit text-dark" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                    </a>
+                                    @if (item.Status)
+                                    {
+                                        <a onclick='Delete(@item.Id);'><i class="fa fa-trash text-dark" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                    }
+                                </td>*@
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="search">S. No.</th>
+                                @*<th class="text-center noExport noSort"></th>*@
+                                <th class="search"> Name</th>
+                                <th class="search">Company Name</th>
+                                <th class="search">Mobile No.</th>
+                                <th class="search">Email</th>
+                                <th class="text-center noExport noSort">Active</th>
+                                
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records Found</p>
+            }
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script src="~/js/custom/Categories.js" asp-append-version="true"></script>
+}

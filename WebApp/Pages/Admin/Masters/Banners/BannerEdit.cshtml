@@ -1,0 +1,81 @@
+﻿@page "{id?}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebApp.Pages.Admin.Masters.Banners.BannerEditModel
+@{
+    ViewData["Title"] = "Manage Banners";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 offset-lg-3 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        @if (!Model.IsNew)
+                        {
+                            <h3 class="card-title float-left font-weight-bold">Edit Banners</h3>
+                            <div class="btn-group btn-group-sm float-right">
+                                <a class="text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        }
+                        else
+                        {
+                            <h3 class="card-title float-left font-weight-bold">Create Banners</h3>
+                            <a class="float-right text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                            <div class="clearfix"></div>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            @if (!Model.IsNew)
+                            {
+                                <input type="hidden" asp-for="Banner.Id" />
+                                <input type="hidden" asp-for="Banner.CreatedDate" />
+                                <input type="hidden" asp-for="Banner.CreatedBy" />
+                                <input type="hidden" asp-for="Banner.BannerImage" />
+                            }
+                            <div class="form-group">
+                                <label asp-for="Banner.Title" class="col-form-label">Banner Title<span class="required">*</span></label>
+                                <input asp-for="Banner.Title" class="form-control" placeholder="Banner Title" autocomplete="on" />
+                                <span asp-validation-for="Banner.Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Banner.Descriptions" class="col-form-label">Banner Descriptions<span class="required">*</span></label>
+                                <input asp-for="Banner.Descriptions" class="form-control" placeholder="Banner Descriptions" autocomplete="on" />
+                                <span asp-validation-for="Banner.Descriptions" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Banner.BannerImage" class="col-form-label">Banner Image<span class="required">*</span></label>
+                                <input type="file" id="UserImage" name="UserImage">
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Banner.BannerImage" class="col-form-label">Old Image</label> &nbsp;&nbsp;
+                                @*<a href="@($"{_config["BaseUrl"]}/img/banners/{Model.BannerImage}")" target="_blank">Model.BannerImage</a>*@
+                                @*<input id="lblOldBannerImage" class="form-control" placeholder="" />*@
+                                <a href="@($"{_config["BaseUrl"]}/img/banners/{Model.Banner.BannerImage}")" target="_blank">
+                                    @Model.Banner.BannerImage
+                                </a>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch custom-switch-on-primary">
+                                    <input asp-for="Banner.IsActive" class="custom-control-input">
+                                    <label asp-for="Banner.IsActive" class="custom-control-label">Active</label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3 offset-md-3">
+                                    <button type="submit" class="btn btn-block btn-primary">Save</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-block btn-secondary" asp-page="Index">Back</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

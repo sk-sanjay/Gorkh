@@ -1,0 +1,472 @@
+﻿@page
+@model WebSite.Pages.Product_ListingModel
+@{
+    ViewData["Title"] = "Product Listing";
+}
+@*<section class="site-breadcrumb">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Buyer Registration</a></li>
+        </ul>
+    </section>*@
+<section class="content">
+    <div class="mt-4">
+        <div class="container content">
+            <div class="row">
+
+
+                <div class="card card-register mx-auto mt-5 col-md-8">
+                    @if (TempData["Message"] != null)
+                    {
+                        var message = ((string)TempData["Message"]);
+                        <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                            <strong>
+                                <p style="font-weight:bold;color:red" class="m-0">@TempData["Message"]</p>
+                            </strong>
+                        </div>
+                    }
+
+                    <div class="card-header"><h2>Product Listing</h2></div>
+                    <div class="card-body">
+                        <form method="post">
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Sale Type<span class="required">*</span></label>
+                                            <select id="ddlSaleTypes" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                                <option value="Reserve Price">Reserve Price</option>
+                                                <option value="Online Auction">Online Auction</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Seller Type<span class="required">*</span></label>
+                                            <select id="ddlSellerType" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                                <option value="Central PSU">Central PSU</option>
+                                                <option value="State PSU">State PSU</option>
+                                                <option value="Public Ltd.">Public Ltd.</option>
+                                                <option value="Private Ltd.">Private Ltd.</option>
+                                                <option value="Proprietary/Individual">Proprietary/Individual</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Product Category<span class="required">*</span></label>
+                                            <select asp-items="Model.Category" id="ddlCategory" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Sub Category<span class="required">*</span></label>
+                                            <select id="ddlSubCategory" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Sub Sub Category<span class="required">*</span></label>
+                                            <select id="ddlSubSubCategory" class="custom-select">
+                                                <option value="0">--Select--</option>
+
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @*<div class="card-header"><h3>Specification</h3></div>*@
+                            <div class="form-group">
+                                <div id="specificationsdiv" class="form-row">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card-header"><h3>Item Location</h3></div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Country<span class="required">*</span></label>
+                                            <select asp-items="Model.Country" id="ddlCountry" class="custom-select">
+                                                <option value="0">--Select--</option>
+
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>State<span class="required">*</span></label>
+                                            <select id="ddlState" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Product Condition<span class="required">*</span></label>
+                                            <select id="ddlCondition" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Quantity Available<span class="required">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Quantity Available" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Address Line 1<span class="required">*</span></label>
+                                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address Line 1" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Address Line 2<span class="required">*</span></label>
+                                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address Line 2" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>City<span class="required">*</span></label>
+                                            <select id="ddlCity" class="custom-select">
+                                                <option value="0">--Select--</option>
+
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Postal / Zip Code<span class="required">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Postal / Zip Code" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Year of Procurement<span class="required">*</span></label>
+                                            <select id="ddlYearofProc" class="custom-select">
+                                                <option value="0">--select--</option>
+                                                @*<option value="2015">2015</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>*@
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Inventory ID, if any<span class="required">*</span></label>
+                                            <input type="text" id="txtInventoryId" class="form-control" placeholder="Inventory ID, if any" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Serial No.<span class="required">*</span></label>
+                                            <input type="text" id="txtSerialNo" class="form-control" placeholder="Serial No." />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Enter the Reserve Price (INR)<span class="required">*</span></label>
+                                            <input type="text" id="txtReservePrice" class="form-control" placeholder="Enter the Reserve Price (INR)" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Upload Pictures<span class="required">*</span></label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Put YouTube Videos Link<span class="required">*</span></label>
+                                            <input type="text" id="txtVideos" class="form-control" placeholder="Put YouTube Videos Link" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-label-group">
+                                            <label>Additional Information, if any<span class="required">*</span></label>
+                                            <textarea class="form-control" placeholder="Additional Information, if any"></textarea>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Terms / Conditions & Commercials
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <button type="submit" class="btn btn-block btn-primary">Save</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+
+        window.onload = function () {
+            //Reference the DropDownList.
+            var ddlYears = document.getElementById("ddlYearofProc");
+
+            //Determine the Current Year.
+            var currentYear = (new Date()).getFullYear();
+
+            //Loop and add the Year values to DropDownList.
+            for (var i = 1990; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddlYears.appendChild(option);
+            }
+        };
+
+        $("#ddlCategory").on("change", function () {
+            var isc = $("#IsCommon").val();
+            $("#specificationsdiv").empty();
+            var maincat = $("#ddlCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubCategory&maincat=' + maincat + '', (data) => {
+                    $("#ddlSubCategory").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subCategoryName}</option>`;
+                        });
+                        $("#ddlSubCategory").append(item1);
+                        /*Clear sub sub category*/
+                        $("#ddlSubSubCategory").empty().append('<option value="">--Select--</option>');
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $("#ddlSubCategory").append(item1);
+                        /*Hide sub sub category*/
+                        //var item2 = "<option value=''>Select</option>";
+                        $("#ddlSubSubCategory").empty().append('<option value="">--Select--</option>');
+                    }
+                });
+            }
+        })
+
+        $("#ddlSubCategory").on("change", function () {
+            var isc = $("#IsCommon").val();
+            $("#specificationsdiv").empty();
+            var maincat = $("#ddlSubCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubSubCategoryBySubCategory2&subcategoryid=' + maincat + '', (data) => {
+                    $("#ddlSubSubCategory").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subSubCategoriesName}</option>`;
+                        });
+                        $("#ddlSubSubCategory").append(item1);
+                        $('input[name="sequencenoname"]').val('');
+                        //common field check
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $("#ddlSubSubCategory").append(item1);
+                    }
+                });
+            }
+        })
+
+        $("#ddlSubSubCategory").on("change", function () {
+            debugger
+            var maincat = $("#ddlSubSubCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSpecificationsSSCategoriesjoin&subsubcategoryid=' + maincat + '', (data) => {
+                    $("#specificationsdiv").empty();
+                    if (data != '' && data != null) {
+                        
+                        $.each(data, function (i, item) {
+                            var sno = i + 1;
+                            var ids = "txtspecfname" + sno;
+                            var ismandat="";
+                            if (item.isMandatory == true) {
+                                ismandat = "*";
+                            }
+                            var rows = "<div class='col-md-6'>"
+                                + "<div class='form-label-group'>"
+                                + "<label>" + item.specfName + "<span class='required'>" + ismandat + "</span></label>"
+                                + "<input type='text' id='" + ids + "' class='form-control' placeholder='' />"
+                                + "<span class='text-danger'></span>"
+                                + "</div>"
+                                + "</div>"
+                            $('#specificationsdiv').append(rows);
+                        });
+                    }
+                    else {
+                        //var item1 = "<option value='Select'>Select</option>";
+                        //$("#SpecificationsSSCategory_SubSubCatId").append(item1);
+                    }
+                });
+            }
+        })
+
+
+        $("#ddlCountry").on("change", function () {
+            debugger;
+            var maincat = $("#ddlCountry option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetStatebyCountryid&countryid=' + maincat + '', (data) => {
+                    $("#ddlState").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.stateName}</option>`;
+                        });
+                        $("#ddlState").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlState").append(item1);
+                    }
+                });
+            }
+        })
+
+        $("#ddlState").on("change", function () {
+            debugger;
+            var maincat = $("#ddlState option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetCitybystateid&stateid=' + maincat + '', (data) => {
+                    $("#ddlCity").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.cityName}</option>`;
+                        });
+                        $("#ddlCity").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlCity").append(item1);
+                    }
+                });
+            }
+        })
+
+    </script>
+}

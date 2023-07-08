@@ -1,0 +1,26 @@
+﻿@page
+@model WebApp.Pages.Admin.Masters.SpecificationsSSCategories.IndexModel
+@{
+    ViewData["Title"] = "SpecificationsSSCategories";
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">SpecificationsSSCategories</h3>
+            @*<a data-toggle="modal" data-target="#ManageModal" class="float-right">
+            <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+        </a>*@
+            <a class="float-right" asp-page="Manage">
+                <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+            </a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+
+        </div>
+    </div>
+    <partial name="Shared/_SpecificationsSSCategoriesManagePartial" model="Model.ModelDto" />
+</section>
+@section Scripts{
+    <script src="~/js/custom/SpecificationsSSCategories.js" asp-append-version="true"></script>
+}

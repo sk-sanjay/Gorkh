@@ -1,0 +1,30 @@
+﻿@page
+@model WebSite.Pages.PartialDemoModel
+@{
+}
+<br />
+<br />
+<br />
+<br />
+<h2>Hello</h2>
+<br />
+@*<partial name="Shared/_AboutPartial" />
+    <partial name="Shared/_ContactPartial" />*@
+<p><button class="btn btn-primary" id="load">Load</button></p>
+
+<div id="grid"></div>
+
+@section Scripts{
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script>
+        $(function () {
+            $('#load').on('click', function () {
+                $('#grid').load('/PartialDemo?handler=AboutPartial');
+            });
+        });
+        $('body').on('click','#load2', function () {
+            $('#grid').load('/PartialDemo?handler=ContactPartial');
+        });
+    </script>
+}
+

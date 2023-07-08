@@ -1,0 +1,89 @@
+﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Http
+@using WebSite.Helpers
+@inject IConfiguration _config;
+@inject IHttpContextAccessor _httpContextAccessor
+<div class="col-lg-3">
+    <div class="user-info">
+        <div class="user-data">
+            @if (User.Identity.IsAuthenticated)
+            {
+                var RoleName = DataHelper.GetUserRole(User);
+                var NickName = DataHelper.GetUserNickName(User);
+                var BuyerId = DataHelper.GetBuyerId(User);
+                var SellerId = DataHelper.GetSellerId(User);
+                var Role = !string.IsNullOrEmpty(RoleName) ? RoleName : "Guest";
+                var UserImage = _httpContextAccessor.HttpContext.Session.GetString("ProfileImage");
+                @*<div class="image">
+                    <img style="width:100%;top: 15%;position: relative;" src="@($"{_config["BaseUrl"]}/img/users/{UserImage}")"
+                         alt="User Image"
+                         class="img-circle elevation-2"
+                         onerror=@($"src='{_config["BaseUrl"]}/img/users/default_user100.png'")
+                         asp-append-version="true" />
+                </div>*@
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <a asp-page="/Seller-Dashboard" class="d-block">
+                                <h3 class="h4 mb-0">@(!string.IsNullOrEmpty(NickName)?NickName: User.Identity.Name)</h3>
+                            </a>
+                            <span class="text-primary">(@Role)</span>
+                        </div>
+                        @if (BuyerId == SellerId)
+                        {
+                            <ul class="list-unstyled mb-4">
+                                @if (User.IsInRole("Seller") && !string.IsNullOrEmpty(BuyerId))
+                                {
+                                    <li class="mb-2"><a asp-page-handler="PrivilegeLoginBuyer"><span class="pl-2">Login as Buyer</span></a></li>
+                                }
+                                @if (User.IsInRole("Buyer") && !string.IsNullOrEmpty(SellerId))
+                                {
+                                    <li class="mb-2"><a asp-page-handler="PrivilegeLoginSeller"><span class="pl-2">Login as Seller</span></a></li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        @if (User.IsInRole("Seller"))
+        {
+            <nav class="list-group">
+                <a class="list-group-item" href="/Account/SellerProfile"><i class="fa fa-user mr-2"></i>Profile</a>
+                <a class="list-group-item" href="/Products"><i class="fa fa-list mr-2"></i>My Listing</a>
+                <a class="list-group-item" href="/ProductListing"><i class="fa fa-map mr-2"></i>Add Listing</a>
+                <a class="list-group-item" href="/BuyerPaymentsView"><i class="fa fa-money mr-2"></i>Buyer Payments</a>
+                <a class="list-group-item with-badge" href="/Account/ChangePassword"><i class="fa fa-key mr-2"></i> Change Password</a>
+                <a class="list-group-item with-badge" href="/Account/Logout"><i class="fa fa-sign-out mr-2"></i> Signout</a>
+
+            </nav>
+        }
+        @if (User.IsInRole("Buyer"))
+        {
+    <nav class="list-group">
+        <a class="list-group-item" href="/Account/BuyerProfile"><i class="fa fa-user mr-2"></i>Profile</a>
+        <a class="list-group-item" href="/ProductsBuyerQueriesView"><i class="fa fa-list mr-2"></i>Products Queries</a>
+        @*<a class="list-group-item" href="/ProductsPurchasesView"><i class="fa fa-rupee mr-2"></i>Reserve Price Paid</a>*@
+        <a class="list-group-item" href="/ProductsPaymentsView"><i class="fa fa-rupee mr-2"></i>Reserve Price Paid</a>
+        <a class="list-group-item" href="/MyWantedEquipments"><i class="fa fa-list mr-2"></i>My Wanted Equipment</a>
+        <a class="list-group-item" href="/ProductsBuyerInterestsView"><i class="fa fa-thumbs-up mr-2"></i>Product(s) Interested In</a>
+        <a class="list-group-item" href="/MyFavourite"><i class="fa fa-thumbs-up mr-2"></i>Favourite Product(s)</a>
+
+        <a class="list-group-item with-badge" href="/Account/ChangePassword"><i class="fa fa-key mr-2"></i> Change Password</a>
+        <a class="list-group-item with-badge" href="/Account/Logout"><i class="fa fa-sign-out mr-2"></i> Signout</a>
+
+    </nav>
+        }
+
+        @if (User.IsInRole("Visitor"))
+        {
+    <nav class="list-group">
+        <a class="list-group-item" href="/Account/VisitorProfile"><i class="fa fa-user mr-2"></i>Profile</a>
+        <a class="list-group-item with-badge" href="/Account/ChangePassword"><i class="fa fa-key mr-2"></i> Change Password</a>
+        <a class="list-group-item with-badge" href="/Account/Logout"><i class="fa fa-sign-out mr-2"></i> Signout</a>
+    </nav>
+        }
+    </div>
+</div>
+
+

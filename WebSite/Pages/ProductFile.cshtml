@@ -1,0 +1,469 @@
+﻿@page "{ProductId?}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebSite.Pages.ProductFileModel
+@{
+    ViewData["Title"] = "Products Files Uploads";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+
+            <div class="card card-register mx-auto mt-5 col-md-9">
+                @if (TempData["Message3"] != null)
+                {
+                    var message = ((string)TempData["Message3"]);
+                    <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                        <strong>
+                            <p style="font-weight:bold;color:red" class="m-0">@TempData["Message3"]</p>
+                        </strong>
+                    </div>
+                }
+                @if (Model.ProductId != null && Model.ProductsLocationsVM != null && Model.ProductsDescriptionsVM != null && Model.ModelVms1 == null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <a asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">
+                            <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                        </a>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+                }
+                else if (Model.ProductId != null && Model.ProductsLocationsVM != null && Model.ProductsDescriptionsVM != null && Model.ModelVms1 != null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <a asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">
+                            <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                        </a>
+                        <a asp-page="ProductPreview" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Preview"></div></a>
+                      
+                    </div>
+                }
+                
+                else
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>}
+
+                <div class="card-header"><h2>Item Images</h2></div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" id="myDropzone" action="">
+                        @if (!Model.IsNew)
+                        {
+                            <input type="hidden" asp-for="ProductsFileUpload.Id" />
+                            @*<input type="hidden" asp-for="ProductsLocation.CreatedDate" />
+                    <input type="hidden" asp-for="ProductsLocation.CreatedBy" />*@
+                        }
+
+                        @*<div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-label-group">
+                                <label asp-for="ProductsFileUpload.ProductImage">Image<span class="required">*</span></label>
+                                <input type="file" id="UserImage" name="UserImage" multiple>
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                        <div>
+                            <label>Upload An Image : </label>
+                            <label style="color: #a31431;">Maximum files to be uploaded at a time is 4 (Max file size - 5 MB)</label>
+                        </div>
+                        <div>
+                            <div id="previews" class="dz-default dz-message box__input dropzone">
+                                <div style="text-align:center">
+                                    <i class="fa fa-cloud-upload" style="font-size:23px;position:relative;top:4px;"></i> <span style="margin-left:20px">Drop files  to attach or browse</span>
+                                </div>
+                            </div>
+                            @*<div id="previewFiles"></div>*@
+                        </div>
+                        <br />
+                        <div class="row">
+                            @if (Model.ModelVms1 != null && Model.ModelVms1.Count > 0)
+                            {
+                                <input type="hidden" value="1" id="hdnimge" />
+                                @foreach (var item in Model.ModelVms1)
+                                {
+
+                                    <div class="col-md-2">
+                                        <div class="thumbnail">
+                                            <img id="imgPreview" class="img-thumbnail" width="100"
+                                                 src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")"
+                                                 alt="Image"
+                                                 asp-append-version="true">
+                                            <div class="caption">
+                                                <input type="button" value="Delete" class="btn-sm btn-danger" onclick="Delete(@item.Id);" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                            }
+                            else
+                            {
+                                <input type="hidden" value="0" id="hdnimge" />
+                            }
+
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <button type="submit" id="Submit" class="btn btn-primary">Save Image</button>
+                            </div>
+                        </div>
+                    </form>
+                    @*<input type="button" class="btn btn-primary" id="btnSave" value="Save" />*@
+                    <br />
+                    <div class="card-header"><h3>Upload An Videos</h3></div>
+                    <table class="table" id="TblVideo">
+                        <tr valign="top">
+                            <th scope="row"><label for="customFieldName">Youtube Video Url</label></th>
+                            <td>
+                                <input type="text" class="form-control s1" id="txtvideourl1" name="videourl" value="" placeholder="Video Url" /> &nbsp;
+
+                            </td>
+                            <td><a href="javascript:void(0);" class="addCF">Add</a></td>
+                        </tr>
+                    </table>
+
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <a class="btn btn-block btn-secondary" id="btn" asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId">Back</a>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="button" class="btn btn-block btn-primary" id="btnSave" value="Save & Next" />
+                        </div>
+                        @*<div class="col-md-2">
+                    <a class="btn btn-block btn-secondary" asp-route-ProductId="@Model.ProductId" asp-page="ProductPreview">Next</a>
+                </div>*@
+                    </div>
+                    <br />
+
+                    @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table id="tblDataTable" class="table">
+                                <thead>
+                                    @{
+                                        int index = 0;
+                                    }
+                                    <tr>
+                                        <th class="text-center">S. No.</th>
+                                        <th class="search">Video Url</th>
+                                        <th class="search">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ModelVms)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                @{ index++; }
+                                                @index
+                                            </td>
+                                            <td>
+                                                <a href="@item.ProductImage" target="_blank">@item.ProductImage</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="button" value="Delete" class="btn-sm btn-danger" onclick="Delete(@item.Id);" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    @*else
+            {
+                <p>No video has been added yet.</p>
+            }*@
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- At the bottom of the file -->
+@section Scripts {
+    @*<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />*@
+    <script src="~/js/dropzone.min.js"></script>
+    <link href="~/js/dropzone.min.css" rel="stylesheet" />
+    <script type="text/javascript" asp-append-version="true">
+
+        $(document).ready(function () {
+            debugger;
+            Dropzone.autoDiscover = false;
+            $('#myDropzone').dropzone({
+                //parameter name value
+                paramName: "files",
+                //clickable div id
+                clickable: '#previews',
+                //preview files container Id
+                //previewsContainer: "#previewFiles",
+                previewsContainer: "#previews",
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 100,
+                maxFiles: 4,
+                //  url:"/", // url here to save file
+                url: "/ProductFile",
+                maxFilesize: 5,//max file size in MB,
+                addRemoveLinks: true,
+                dictResponseError: 'Server not Configured',
+                acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",// use this to restrict file type
+                maxfilesexceeded: function (file) {
+                    console.log('exceeded')
+                },
+                init: function () {
+                    var self = this;
+                    // config
+
+                    //self.on("maxfilesexceeded", function (file) {
+                    //    self.removeAllFiles();
+                    //    self.addFile(file);
+                    //});
+
+                    self.options.addRemoveLinks = true;
+                    self.options.dictRemoveFile = "Delete";
+                    //New file added
+                    self.on("addedfile", function (file) {
+                        console.log('new file added ', file);
+                        $('.dz-success-mark').hide();
+                        $('.dz-error-mark').hide();
+
+                        //caption = file.caption == undefined ? "" : file.caption;
+                        //file._captionLabel = Dropzone.createElement("<p>File Info:</p>")
+                        //file._captionBox = Dropzone.createElement("<input id='" + file.upload.uuid + "' type='text' name='caption' value=" + caption + " >");
+                        //file.previewElement.appendChild(file._captionLabel);
+                        //file.previewElement.appendChild(file._captionBox);
+                    });
+                    // Send file starts
+                    self.on("sending", function (file) {
+                        console.log('upload started', file);
+                        $('.meter').show();
+                    });
+
+                    // File upload Progress
+                    self.on("totaluploadprogress", function (progress) {
+                        console.log("progress ", progress);
+                        $('.roller').width(progress + '%');
+                    });
+
+                    self.on("queuecomplete", function (progress) {
+                        $('.meter').delay(999).slideUp(999);
+                        window.location.reload(true);
+
+                    });
+
+                    // On removing file
+                    self.on("removedfile", function (file) {
+                        console.log(file);
+                    });
+
+                    $('#Submit').on("click", function (e) {
+                        debugger;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Validate form here if needed
+
+                        if (self.getQueuedFiles().length > 0) {
+                            self.processQueue();
+                        } else {
+                            if (self.getQueuedFiles().length > 0) {
+                                self.uploadFiles([]);
+                                $('#myDropzone').submit();
+                            }
+                            else {
+                                /*alert("Image Saved Successfully");*/
+                                /*window.location.reload(true);*/
+                                alert("Please upload atleast one image !");
+                                return false;
+                            }
+                        }
+
+                    });
+
+
+
+                    self.on("successmultiple", function (files, response) {
+                        // Gets triggered when the files have successfully been sent.
+                        // Redirect user or notify of success.
+                        alert("Image Saved Successfully");
+                        window.location.reload(true);
+
+                    });
+                    // after files have successfully remove file.
+                    self.on("complete", function (file) {
+                        self.removeFile(file);
+                    });
+                }
+            });
+
+
+        })
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(".addCF").click(function () {
+                var rowCount = $('#TblVideo tr').length;
+                if (rowCount < 5) {
+                    $("#TblVideo").append('<tr valign="top"><th scope="row"><label for="txtvideourl">Youtube Video Url</label></th><td><input type="text" class="form-control s1" id="txtvideourl" name="videourl" value="" placeholder="Video Url" /> </td><td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+                }
+                //To set textbox id
+                var rowid = 1;  //2
+                $("#TblVideo tr").each(function (k, v) {
+                    var row = $(this);
+                    row.find(".s1").attr("id", "txtvideourl" + rowid);
+                    rowid++;
+                });
+            });
+            $("#TblVideo").on('click', '.remCF', function () {
+                $(this).parent().parent().remove();
+                //To set textbox id
+                var rowid = 1;  //2
+                $("#TblVideo tr").each(function (k, v) {
+                    var row = $(this);
+                    row.find(".s1").attr("id", "txtvideourl" + rowid);
+                    rowid++;
+                });
+            });
+        });
+        $('#btnSave').click(function (event) {
+            var imgexist = $('#hdnimge').val();
+            if (imgexist == 0) {
+                alert("Please upload atleast one image !")
+
+                return false;
+            }
+            var flag = 0;
+            var url = "";
+            var videourl = "";
+            if (flag == 0) {
+                //latest code start
+                var arr = [];
+                debugger
+                $("#TblVideo tr input[name='videourl']").each(function (i, v) {
+                    var Id = i + 1;
+                    videourl = $('#txtvideourl' + Id).val();
+                    //if (videourl == "") {
+                    //    alert("Please enter youtube video url");
+                    //    flag = -1;
+                    //    return false;
+                    //}
+                    url = videourl; //get the url from the input by the id url
+                    console.log(url);
+                    //var lowercase = url.toLowerCase(); //temporarily convert to lowercase to avoid issues
+                    //if (lowercase.startsWith('https://www.youtube.com/watch?v=') == false && lowercase.startsWith('https://m.youtube.com/watch?v=') == false) {
+                    //    //e.preventDefault();
+                    //    alert("Invalid youtube url.  Must be https://www.youtube.com/watch?v=xxxxxxx.");
+                    //    flag = -1;
+                    //    return false;
+                    //}
+                    arr.push({
+                        ProductImage: videourl
+                    });
+                });
+                if (flag == 0) {
+
+                }
+                else {
+                    return false;
+                }
+                if (videourl == "" || videourl == null) {
+                    alert("Please Preview the Product details and click on Submit to generate Final Unique Product Code.");
+                            // window.location.reload(true);
+                    window.location.href = "/ProductPreview/" + @Model.ProductId;
+                    return true;
+                }
+                var productdata = JSON.stringify(arr);
+                debugger
+                $.post('/ProductFile?handler=Videos', { productData: productdata }, function (data) {
+                    if (data != null) {
+                        if (data === 'unauthorized') {
+                            //$("#divClientAlert").addClass("alert-warning");
+                            //$("#divClientAlert > p.m-0").text("Please login to access this resource");
+                            //$("#divClientAlert").show();
+                            //SetTimeOut($("#divClientAlert"));
+                            //window.location.href = "/Account/Login";
+                            alert("Save Failed");
+
+                        } else {
+                            //$("#divClientAlert").addClass("alert-success");
+                            //$("#divClientAlert > p.m-0").text(data);
+                            //$("#divClientAlert").show();
+                            //SetTimeOut($("#divClientAlert"));
+
+                            alert("Please Preview the Product details and click on Submit to generate Final Unique Product Code.");
+                            // window.location.reload(true);
+                            window.location.href = "/ProductPreview/" + @Model.ProductId;
+
+                        }
+                    }
+                });
+            }
+            else {
+                event.preventDefault();
+            }
+
+        });
+        function Delete(id) {
+            var result = confirm("Want to delete?");
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: "/ProductFile?handler=Delete",
+                    data: { id: id },
+                    success: function (data) {
+                        if (data != null) {
+                            if (data === "unauthorized") {
+                                window.location.href = "/Account/Login";
+                            } else if (data === "success") {
+                                window.location.reload(true);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        $(document).ready(function () {
+            var url = $("#txtvideourl1").val();
+            $("#btn").click(function () {
+                if (url != $("#txtvideourl1").val()) {
+                    if (confirm("Changes you made may not be saved.")) {
+                        return true;
+                    }
+                    else {
+                        //e.preventDefault();
+                        return false;
+                        
+                    }
+                }
+            });
+        });
+    </script>
+}

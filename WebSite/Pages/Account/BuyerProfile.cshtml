@@ -1,0 +1,293 @@
+﻿@page
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebSite.Pages.Account.BuyerProfileModel
+@{
+    ViewData["Title"] = "Buyer Profile";
+
+}
+
+<section class="content sectionbg">
+    <div class="container content">
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+
+            <div class=" mx-auto mt-2 col-md-9">
+                <div class="card">
+                    @if (TempData["Message"] != null)
+                    {
+                        var message = ((string)TempData["Message"]);
+                        <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                            <strong>
+                                <p style="font-weight:bold;color:red" class="m-0">@TempData["Message"]</p>
+                            </strong>
+                        </div>
+                    }
+                    <div class="card-header">
+                        <h2>Manage Profile</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+
+                            <input type="hidden" asp-for="BuyerSellerdto.Id" />
+                            <input type="hidden" asp-for="BuyerSellerdto.VeryfyEmail" />
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+
+
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.FirstName">First Name<span class="required">*</span></label>
+                                            <input type="text" id="txtFirstName" asp-for="BuyerSellerdto.FirstName" class="form-control" placeholder="First Name" />
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.LastName">Last Name<span class="required">*</span></label>
+                                            <input asp-for="BuyerSellerdto.LastName" type="text" class="form-control" placeholder="Last Name" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+
+
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.CompanyName">Company Name<span class="required">*</span></label>
+                                            <input type="text" asp-for="BuyerSellerdto.CompanyName" class="form-control" placeholder="Company Name" />
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.CompanyWebsite">Company Website<span class="required"></span></label>
+                                            <input asp-for="BuyerSellerdto.CompanyWebsite" type="text" class="form-control" placeholder="Last Name" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.Email">Email (User ID)<span class="required">*</span></label>
+                                            <input asp-for="BuyerSellerdto.Email" type="text" id="txtemailid" class="form-control" placeholder="Email (User ID)" readonly />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.Mobile">Mobile/Cell Number<span class="required">*</span></label>
+                                            <input asp-for="BuyerSellerdto.Mobile" id="txtMobileNo" type="text" class="form-control" placeholder="Mobile/Cell Number" />
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-label-group">
+                                            <div class="form-label-group">
+                                                <label asp-for="BuyerSellerdto.OrganisationType" class="col-form-label">Organisation Type<span class="required">*</span></label>
+                                                <select asp-for="BuyerSellerdto.OrganisationType" class="custom-select" asp-items="ViewBag.OrganisationType">
+                                                    <option value="">-select-</option>
+                                                </select>
+                                                @*<span asp-validation-for="BuyerSellerdto.OrganisationType" class="text-danger"></span>*@
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.Organisation" class="col-form-label">Organisation<span class="required">*</span></label>
+                                            <select asp-for="BuyerSellerdto.Organisation" class="custom-select" asp-items="ViewBag.Category">
+                                                <option value="">-select-</option>
+                                            </select>
+                                            @*<span asp-validation-for="BuyerSellerdto.City" class="text-danger"></span>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <div class="form-row">
+
+                                    <div class="col-md-12">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.Department">Department<span class="required">*</span></label>
+                                            <input type="text" asp-for="BuyerSellerdto.Department" class="form-control" placeholder="Departement">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.Country" class="col-form-label">Countries<span class="required">*</span></label>
+                                            <select id="ddlCountry" asp-for="BuyerSellerdto.Country" class="custom-select" asp-items="ViewBag.Countries">
+                                                <option value="">-select-</option>
+                                            </select>
+                                            @*<span asp-validation-for="BuyerSellerdto.Country" class="text-danger"></span>*@
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.State" class="col-form-label">State<span class="required">*</span></label>
+                                            <select id="ddlState" asp-for="BuyerSellerdto.State" class="custom-select" asp-items="ViewBag.States">
+                                            </select>
+                                            @*<span asp-validation-for="BuyerSellerdto.State" class="text-danger"></span>*@
+                                        </div>
+                                    </div>
+
+
+                                    @*<div class="col-md-6">
+                    <div class="form-label-group">
+                        <label asp-for="BuyerSellerdto.States.StateName">State<span class="required">*</span></label>
+                        <input type="text" asp-for="BuyerSellerdto.States.StateName" class="form-control" placeholder="State">
+
+
+
+
+                    </div>
+                </div>*@
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.AddressLine1">Address Line 1<span class="required">*</span></label>
+                                            <input asp-for="BuyerSellerdto.AddressLine1" type="text" id="txtAddress1" class="form-control" placeholder="Address Line 1" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.AddressLine2">Address Line 2<span class="required">*</span></label>
+                                            <input asp-for="BuyerSellerdto.AddressLine2" type="text" id="txtAddress2" class="form-control" placeholder="Address Line 2" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.City" class="col-form-label">City<span class="required">*</span></label>
+                                            <select id="ddlCity" asp-for="BuyerSellerdto.City" class="custom-select" asp-items="ViewBag.City">
+                                                <option value="">-select-</option>
+                                            </select>
+                                            <span asp-validation-for="BuyerSellerdto.City" class="text-danger"></span>
+
+                                            @*<label asp-for="BuyerSellerdto.Cities.CityName">City<span class="required">*</span></label>
+                        <input type="text" asp-for="BuyerSellerdto.Cities.CityName" class="form-control" placeholder="City">*@
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label asp-for="BuyerSellerdto.ZipCode">Postal / Zip Code<span class="required">*</span></label>
+                                            <input asp-for="BuyerSellerdto.ZipCode" type="text" class="form-control" placeholder="Postal / Zip Code" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mx-auto col-md-4">
+                                <button type="submit" id="btnsubmit" class="btn btn-block btn-primary">Update</button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+
+        $("#ddlCountry").on("change", function () {
+            debugger;
+            var maincat = $("#ddlCountry option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetStatebyCountryid&countryid=' + maincat + '', (data) => {
+                    $("#ddlState").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.stateName}</option>`;
+                        });
+                        $("#ddlState").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlState").append(item1);
+                    }
+                });
+            }
+        })
+
+        $("#ddlState").on("change", function () {
+            debugger;
+            var maincat = $("#ddlState option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetCitybystateid&stateid=' + maincat + '', (data) => {
+                    $("#ddlCity").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.cityName}</option>`;
+                        });
+                        $("#ddlCity").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlCity").append(item1);
+
+
+                    }
+                });
+            }
+        })
+
+    </script>
+}

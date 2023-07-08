@@ -1,0 +1,177 @@
+﻿@page
+@model WebSite.Pages.ProductsModel
+@{
+    ViewData["Title"] = "Product Listing";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class="mx-auto mt-2 col-md-9">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h2 class="card-title">My Listing</h2>
+                        <a class="float-right" asp-page="/ProductListing">
+                            <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i> Add New Listing
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="card-body">
+                            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                            {
+                                <div class="table-responsive" style="display:block; overflow-x:auto; white-space:nowrap;">
+                                    <table id="tblDataTable" class="table">
+                                        <thead>
+                                            @{
+                                                int index = 0;
+                                            }
+                                            <tr>
+                                                @*<th class="text-center noExport noSort"></th>*@
+                                                <th class="text-center">S. No.</th>
+                                                <th class="search">Product Code</th>
+                                                <th class="search">Sale Type</th>
+                                                @*<th class="search">Category</th>
+                                                    <th class="search">Sub Category</th>*@
+                                                <th class="search">Sub Sub Category</th>
+                                                <th class="search text-right">View(s)</th>
+                                                <th class="search text-right">Interest</th>
+                                                <th class="search text-right">Service charge</th>
+                                                <th class="search">Status</th>
+                                                <th class="text-center noExport noSort">Action</th>
+                                                <th class="text-center noExport noSort">Query</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ModelVms)
+                                            {
+                                                <tr>
+                                                    @*<td class="text-center"></td>*@
+                                                    <td class="text-center">
+                                                        @{ index++; }
+                                                        @index
+                                                    </td>
+                                                    <td>
+                                                        @*@item.ProductNumber*@
+                                                        @{
+                                                            if (item.ProductNumber != null)
+                                                            {
+                                                                @item.ProductNumber
+                                                            }
+                                                            else
+                                                            { <span>-</span>}
+
+                                                        }
+                                                    </td>
+                                                    <td>@item.SaleType</td>
+                                                    @*<td>@item.Category.Name</td>
+                                                        <td>@item.SubCategory.SubCategoryName</td>*@
+                                                    <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                                    <td class="text-right">
+                                                        @{
+                                                            if (item.totalVisitor != 0)
+                                                            {
+                                                                <a href="#" data-toggle="modal" data-target="#ManageModal" class="float-right">
+                                                                    @item.totalVisitor
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                @item.totalVisitor
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td class="text-right">
+                                                        @item.TotalInterest
+                                                    </td>
+                                                    <td class="text-right">@item.ReservePrice.ToString("#,#")</td>
+                                                    <td>
+                                                        @{
+                                                            if (item.ProductNumber == null)
+                                                            {
+                                                                <span>Draft</span>
+                                                            }
+                                                            else
+                                                            { @(item.IsApprove?"Approved": "Pending Approval")}
+                                                        }
+
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @*<a data-id="@item.Id" data-toggle="modal" data-target="#ManageModal" class="ml-2 mr-2">
+                                                                <i class="fa fa-edit text-dark" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                            </a>
+                                                            @if (item.IsActive)
+                                                            {
+                                                                <a onclick='Delete(@item.Id);'><i class="fa fa-trash text-dark" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                                            }*@
+                                                        @if (item.IsApprove)
+                                                        {
+                                                            <a href="" class="btn-sm btn-dark disabled" style="cursor:not-allowed">Edit</a><span> | </span>
+                                                            <a href="" class="btn-sm btn-danger" style="margin-left: 2px; cursor:not-allowed">Delete</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-page="ProductListing" asp-route-id="@item.Id" class="btn-sm btn-dark">Edit</a> <span> | </span>
+                                                            <a onclick='Delete(@item.Id);' href="" class="btn-sm btn-danger" style="margin-left:2px;">Delete</a>}
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            if (!item.IsApprove)
+                                                            {
+                                                                <a asp-page="ProductEnquiry" asp-route-pid="@item.Id">
+                                                                    <i class="fa fa-question-circle text-dark" data-toggle="tooltip" data-placement="top" title="Query"></i>
+                                                                </a>
+                                                            }
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>No records has been added yet. Click 'Add New Listing' to start adding.</p>
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="Shared/_BuyerViewsPartial" />
+</section>
+@section Scripts{
+    <script type="text/javascript">
+        function Delete(id) {
+            var result = confirm("Are you sure you want to delete?");
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Products?handler=Delete",
+                    data: { id: id },
+                    success: function (data) {
+                        if (data != null) {
+                            if (data === "unauthorized") {
+                                window.location.href = "/Account/Login";
+                            } else if (data === "success") {
+                                // window.location.reload(true);
+                                window.location.href = "/Products/";
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+}

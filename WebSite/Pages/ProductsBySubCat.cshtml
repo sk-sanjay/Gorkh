@@ -1,0 +1,157 @@
+﻿@page "{id?}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebSite.Pages.ProductsBySubCatModel
+@{
+    ViewData["Title"] = "Products";
+}
+@*<input type="hidden" asp-for="@Model.id" id="hdnsubcatid" />*@
+<input type="hidden" asp-for="@Model.categoryid" id="hdncategoryid" />
+<input type="hidden" asp-for="@Model.sub_categoryid" id="hdnsubcatid" />
+<input type="hidden" asp-for="@Model.keyword" id="hdnkeyword" />
+<section class="search-sec alt">
+    <div class="container">
+        <vc:search-headers></vc:search-headers>
+    </div>
+</section>
+
+<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main" id="breadcrumb">
+            @*<ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Energy Industry</a></li>
+                    <li><a href="#">Petroleum Refineries</a></li>
+                </ul>*@
+        </div>
+    </div>
+</section>
+
+<section class="product-list">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="pro-left">
+                    <h2>Filters</h2>
+                    <div class="clearFilter">
+                        <select asp-items="Model.Category" id="ddlCategory" class="selectInd" name="state">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="clearFilter">
+                        <select id="ddlSubCategory" class="selectInd1" name="state">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="clearFilter">
+                        <select asp-items="Model.Country" id="ddlCountry" class="selectCountry" name="state">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="clearFilter">
+                        <select id="ddlState" class="selectState" name="state">
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div id="accordion" class="accordion-container">
+                        <h4 class="accordion-title js-accordion-title">Sale Type</h4>
+                        <div class="accordion-content" style="display:none;">
+                            <label class="customRadio">
+                                All
+                                <input type="radio" checked="checked" name="rdslaetype" value="All">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="customRadio">
+                                Reserve Price
+                                <input type="radio" name="rdslaetype" value="Reserve Price">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="customRadio">
+                                Online Auction
+                                <input type="radio" name="rdslaetype" value="Online Auction">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <h4 class="accordion-title js-accordion-title">Product Conditions</h4>
+                        <div class="accordion-content">
+                            <label class="customRadio">
+                                All
+                                <input type="radio" checked="checked" name="rdcondition" value="">
+                                <span class="checkmark"></span>
+                            </label>
+                            @foreach (var item in Model.Condition)
+                            {
+                                <label for="@item.Value" class="customRadio">
+                                    @item.Text
+                                    <input id="@item.Value" type="radio" name="rdcondition" value="@item.Value">
+                                    <span class="checkmark"></span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                    <div class="product-cat-link" style="background: #987e37;">
+                        <button type="button" id="btnSearch" class="btn btn-lg" style="width:100%;">Filter</button>
+                    </div>
+                    <div class="product-cat-link mt-4" style="background: #987e37;">
+                        <button type="button" id="btnSearch" class="btn btn-lg text-white" style="width:100%;"><p class="text-dark">Cannot find what you want? <a href="/buyerrequirement" class="text-dark">Click Here</a></p></button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="pro-sort">
+                    @*<div class="pro-sort-left">Showing 1 -  6 of 24 results</div>*@
+                    <div class="pro-sort-right">
+                        @*<div class="sort-inp">
+                            <select class="" name="" id="ddlperpage">
+                                <option value="20">20 Per Page</option>
+                                <option value="50">50 Per Page</option>
+                                <option value="100">100 Per Page</option>
+                            </select>
+                        </div>*@
+                        <div class="view">
+                            <ul>
+                                <li class="gView active"><i class="fa fa-th" aria-hidden="true"></i></li>
+                                <li class="lView"><i class="fa fa-list" aria-hidden="true"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="data"></div>
+                <!--Partial View Data load here-->
+            </div>
+
+            <div class="pro-pagination">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+
+                            <ul id="pagin">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered productModal">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/custom/productbysubcat.js" asp-append-version="true"></script>
+    <script src="~/js/custom/headersearch.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+    <script type="text/javascript" asp-append-version="true">
+    </script>
+}

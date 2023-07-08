@@ -1,0 +1,58 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model ProductsDetailsVM
+
+<div class="listView alt">
+    <ul>
+        <li>
+            <div class="row">
+                <div class="col-lg-6">
+                    @{int i = 0;}
+                    @foreach (var item in Model.ProductsFileUpload)
+                    {
+                        if (i == 0)
+                            @if (item.FlagImage == 1)
+                            {
+                                <div class="item"><img src="@($"{_config["BaseUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                            }
+                            i++;
+                        }
+                </div>
+                <div class="col-lg-6">
+                    <div class="listView-mid">
+                        <h3>@Model.SubSubCategoriesName <span style="margin-left: 10px;color: #c89527;">@Model.ProductNumber</span></h3>
+                        <div class="mt-1 pt-2">
+                            <h4><i class="fa fa-map-marker" aria-hidden="true"></i> @Model.CityName, @Model.StateName, @Model.CountryName</h4> @*<span> <strong>Year:</strong> 2016</span>*@
+                        </div>
+                        <div class="mt-1 pt-2">
+                            <h5>
+                                @{
+                                    decimal price = Model.EstimatePrice;
+                                    System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                                }
+                                @(String.Format(Indian, "{0:C0}", price))
+                            </h5>
+                        </div>
+
+
+                        <p><strong>Category</strong> @Model.Name </p>
+
+
+                        <input type="text" onblur="GetOfferPrice();" id="txt_price" class="form-control"  onkeyup="return isNumberKey($(this));" maxlength="10" placeholder="Enter your Offer price" required /><br />
+                        <form method="post" asp-page-handler="BuyerOffer" onsubmit="SubmitForm(Event); return false;">
+                            <input type="hidden" asp-for="@Model.Id" />
+                            <input type="hidden" name="price" id="hdn_offerprice" />
+                            <span asp-validation-for="@Model.BuyerOffersInsert.OfferdPrice" class="text-danger"></span>
+                            <button type="submit" id="btnsubmit" @*onclick="SubmitForm(Event);"*@ class="btn btn-block btn-primary">Submit Your Offer</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+

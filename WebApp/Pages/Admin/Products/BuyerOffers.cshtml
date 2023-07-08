@@ -1,0 +1,215 @@
+﻿@page "{id?}"
+@model WebApp.Pages.Admin.Products.BuyerOffersModel
+@{
+}
+<style>
+    .blink_me {
+        animation: blinker 2s linear infinite;
+        background: -webkit-linear-gradient(#ff0000, #ba83ca);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+@@keyframes blinker {
+  50% {
+    opacity: 0.2;
+  }
+}
+</style>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Buyer Offer List</h3>
+            @*<a class="float-right" asp-page="Manage">
+                    <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+                </a>*@
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Buyer Name</th>
+                                <th class="search">Product Number</th>
+                                <th class="search">Reseve Price</th>
+                                <th class="search">Offered Price</th>
+                                <th class="search">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                                <tr>
+                                    <td class="text-right">
+                                        @{ index++; }
+                                        @index
+                                        <input type="hidden" asp-for="@item.Id" id="hdId" name="ProductId" />
+                                        <input type="hidden" asp-for="@item.BuyerId" id="hdBuyerId" name="ProductId" />
+                                    </td>
+                                    <td>@item.BuyerName</td>
+                                    <td>@item.ProductNumber</td>
+                                    <td>@item.EstimatePrice</td>
+                                    <td>@item.OfferdPrice</td>
+                                    <td>
+                                        @{
+                                            if (item.IsSoled == null)
+                                            {
+                                                <form method="post" asp-page-handler="UpdateOffer" asp-route-productnumber="@item.ProductNumber" asp-route-buyerid="@item.BuyerId" asp-route-id="@item.Id">
+                                                    @*<input type="hidden" asp-for="@item.ProductNumber" Id="hdProductNumber" name="ProductNumber" />*@
+                                                    <partial name="_ConfirmationModalPartial" model=@("Are you sure you want to delete this item? This can not be undone.") />
+                                                    <button type="submit" style="border: none; background: no-repeat; color: blue; "><strong>SALE</strong> <sup class="blink_me">New</sup></button>
+                                                </form>
+
+                                            }
+                                            else
+                                            {
+                                                @if (item.IsSoled == "SOLED")
+                                                {
+                                                    <p style="font-weight: bold;color: #0c8f0c;">@item.IsSoled</p>
+
+                                                }
+                                                else
+                                                {
+                                                    <p style="font-weight: bold;color: red;">@item.IsSoled</p>
+
+
+                                                }
+
+
+
+                                            }
+                                        }
+
+                                    </td>
+
+                                    @*<td>
+                                            @if (item.PaymentModeId == 1)
+                                            {<p>Online</p>}
+                                            else if (item.PaymentModeId == 2)
+                                            { <p>Offline</p>}
+                                            else if (item.PaymentModeId == 3)
+                                            { <p>Bank Guarantee</p>}
+
+                                        </td>*@
+
+
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Name</th>
+                                <th class="search">Product Number</th>
+                                <th class="search">Reseve Price</th>
+                                <th class="search">Offered Price</th>
+                                <th class="search">Action</th>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet.</p>
+            }
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+
+        $('#tblDataTable').DataTable({
+            initComplete: function () {
+                var r = $('#tblDataTable tfoot tr');
+                r.find('th').each(function () {
+                    if ($(this).hasClass('search')) {
+                        $(this).css('padding', 5);
+                        var title = $(this).text();
+                        $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+                    } else {
+                        $(this).html('');
+                    }
+                });
+                $('#tblDataTable thead').prepend(r);
+                this.api().columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change clear',
+                        function () {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                });
+            }
+        });
+
+        $(document).ready(function () {
+
+            $('input:radio[name="flexRadioDefault"]').change(function () {
+
+            });
+
+        });
+
+        $(function () {
+
+            // $('#flexRadioDefault1').on('click', function (event) {
+            $('input:radio[name="flexRadioDefault"]').on('click', function (event) {
+                alert('skjkds')
+                debugger;
+                var url = "/BuyerOffers?handler=Favorites";
+                var id = $(this).data('id');
+                if (typeof id != "undefined") {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { id: id },
+                        success: function (data) {
+                            if (data != null) {
+                                // $('.modal-body').html(data);
+                                //$("#exampleModal").modal("show");
+                                alert(data);
+                            }
+                        },
+                        complete: function () {
+                            $('.modal').on('shown.bs.modal', function (e) {
+                                $('.slider-for, .slider-nav').slick('setPosition');
+                                $('.wrap-modal-slider').addClass('open');
+                            })
+                            $('.slider-for').slick({
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                arrows: true,
+                                //fade: true,
+                                asNavFor: '.slider-nav'
+                            });
+                            $('.slider-nav').slick({
+                                slidesToShow: 4,
+                                slidesToScroll: 1,
+                                asNavFor: '.slider-for',
+                                //dots: true,
+                                arrows: false,
+                                //centerMode: true,
+                                focusOnSelect: true
+                            });
+                        }
+                    });
+                } else {
+
+                }
+            });
+        });
+    </script>
+}

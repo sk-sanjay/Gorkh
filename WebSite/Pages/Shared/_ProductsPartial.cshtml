@@ -1,0 +1,102 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model ProductsDetailsVM
+<div class="listView alt">
+    <ul>
+        <li>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="pro-show">
+                        <div class="slide-large">
+                            <div class="wrap-modal-slider">
+                                <div class="slider slider-for">
+                                    @foreach (var item in Model.ProductsFileUpload)
+                                    {
+                                        @if (item.FlagImage == 1)
+                                        {
+                                            <div class="item"><img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                                        }
+                                        else
+                                        {
+                                            @if (item.ProductImage != null)
+                                            {
+                                                var fullLink = item.ProductImage.ToString();
+                                                var youTubeId = fullLink.Split('=').Last();
+                                                <div class="item">
+                                                    @*<img src="http://img.youtube.com/vi/@youTubeId/0.jpg" alt="">*@
+                                                    <iframe type="text/html" src="https://www.youtube.com/embed/@youTubeId" frameborder="0" width="500" height="500"></iframe>
+                                                </div>
+                                                @*<div class="videoWrapper">
+                                                        <iframe type="text/html" src="http://www.youtube.com/embed/@youTubeId" frameborder="0"></iframe>
+                                                    </div>*@
+                                            }
+                                        }
+                                    }
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide-thumb">
+                            <div class="wrap-modal-slider">
+                                <div class="slider slider-nav">
+                                    @foreach (var item in Model.ProductsFileUpload)
+                                    {
+                                        @if (item.FlagImage == 1)
+                                        {
+                                            <div class="item"><img class="WP" src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                                        }
+                                        else
+                                        {
+                                            @if (item.ProductImage != null)
+                                            {
+                                                var fullLink = item.ProductImage.ToString();
+                                                var youTubeId = fullLink.Split('=').Last();
+                                                <div class="item"><img src="http://img.youtube.com/vi/@youTubeId/0.jpg" alt=""></div>
+                                                @*<div class="videoWrapper">
+                                                        <iframe type="text/html" src="http://www.youtube.com/embed/@youTubeId" frameborder="0"></iframe>
+                                                    </div>*@
+                                            }
+                                        }
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="listView-mid">
+                        <h3>@Model.SubSubCategoriesName</h3>
+                        <div class="mt-1 pt-2">
+                            <h4><i class="fa fa-map-marker" aria-hidden="true"></i> @Model.StateName</h4> @*<span> <strong>Year:</strong> 2016</span>*@
+                        </div>
+                        <div class="mt-1 pt-2">
+                            <h5>
+                                @{
+                                    decimal price = Model.EstimatePrice;
+                                    System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                                }
+                                @(String.Format(Indian, "{0:C0}", price))
+                            </h5> <span> <strong>Quantity</strong> @Model.QuantityAvl</span>
+                        </div>
+                        <div class="desc">@Html.Raw(Model.Descriptions)</div>
+                        @*<p><a href="#">Read More</a></p>*@
+                        <p><strong>Category</strong> @Model.Name </p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="listView-right">
+                        <div class="">
+                            <div class="listView-single">Code <span>@Model.ProductNumber</span></div>
+                            <div class="listView-single">Year <span>@Model.YearofProc</span></div>
+                            <div class="listView-single">Condition <span>@Model.ConditionName</span></div>
+                        </div>
+                        <div class="listView-btn">
+                            <a asp-page="ProductDetails" asp-route-id="@Model.Id">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,74 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model BuyerRequirementsVM1
+
+<div class="listView alt">
+    <div class="card-body">
+        @if (Model != null)
+        {
+            <div style="width: 100%;font-size: 20px;font-weight: 700;padding-bottom: 10px;text-align: center;">@Model.ProductListingTitle</div>
+            <div class="row">
+
+                <table class="table table-bordered">
+
+                    <tbody>
+                        <tr>
+                            <td><strong>Category</strong></td>
+                            <td>@Model.Category</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sub-Category</strong></td>
+                            <td>
+                                @if (Model.SubCategory == null)
+                                {
+                                    <p>NA</p>
+                                }
+                                else
+                                {
+                                    <p>@Model.SubCategory</p>
+
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sub-Sub Category</strong></td>
+                            <td>
+                                @if (Model.SubSubCategoryName == null)
+                                {
+                                    <p>NA</p>
+
+                                }
+                                else
+                                {
+                                    <p>@Model.SubSubCategoryName</p>
+
+                                }
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Added On</strong></td>
+                            <td>@Model.CreatedDate</td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Description </strong></td>
+                            <td>@Model.Descrition</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <p><strong>Do you have a similar machine to sell? Add your listing for FREE by clicking <a href="/ProductListing" id="checkRole">HERE</a></strong></p>
+            </div>
+
+
+        }
+    </div>
+</div>
+
+
+
+

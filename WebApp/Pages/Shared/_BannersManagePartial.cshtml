@@ -1,0 +1,54 @@
+﻿@model BannersDTO
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+<div class="modal fade" id="ManageModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ManageModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="Manage" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ManageModalTitle">Manage Banners</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="Title" class="col-form-label">Banner Title<span class="required">*</span></label>
+                        <input asp-for="Title" class="form-control" placeholder="Banner Title" autocomplete="on" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Descriptions" class="col-form-label">Banner Descriptions<span class="required">*</span></label>
+                        <input asp-for="Descriptions" class="form-control" placeholder="Banner Descriptions" autocomplete="on" />
+                        <span asp-validation-for="Descriptions" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BannerImage" class="col-form-label">Banner Image<span class="required">*</span></label>
+                        <input type="file" id="UserImage" name="UserImage">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BannerImage" class="col-form-label">Old Image</label> &nbsp;&nbsp;
+                        @*<a href="@($"{_config["BaseUrl"]}/img/banners/{Model.BannerImage}")" target="_blank">Model.BannerImage</a>*@
+                        @*<input id="lblOldBannerImage" class="form-control" placeholder="" />*@
+                        <label id="lblOldBannerImage" name="OldBannerImage" class="col-form-label"></label>
+                        <input type="hidden" id="hdnOldBannerImage" name="hdnOldBannerImage" />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch custom-switch-on-primary">
+                            <input asp-for="IsActive" class="custom-control-input">
+                            <label asp-for="IsActive" class="custom-control-label">Active</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSave" type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

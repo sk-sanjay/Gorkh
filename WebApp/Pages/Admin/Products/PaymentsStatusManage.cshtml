@@ -1,0 +1,62 @@
+﻿@page "{id?}"
+@model WebApp.Pages.Admin.Products.PaymentsStatusManageModel
+@{
+    ViewData["Title"] = "Manage Payment Status";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 offset-lg-3 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        @if (!Model.IsNew)
+                        {
+                            <h3 class="card-title float-left font-weight-bold">Update Payment Status</h3>
+                            <div class="btn-group btn-group-sm float-right">
+                                <a class="text-dark" asp-page="Payments"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        }
+                        else
+                        {
+                    <h3 class="card-title float-left font-weight-bold">Create Payment Status</h3>
+                            <a class="float-right text-dark" asp-page="Payments"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                            <div class="clearfix"></div>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            @if (!Model.IsNew)
+                            {
+                                <input type="hidden" asp-for="Payment.Id" />
+                            }
+                            <div class="form-group">
+                                <label asp-for="Payment.PaymentStatus" class="col-form-label">Payment Status<span class="required">*</span></label>
+                                <select asp-for="Payment.PaymentStatus" id="ddlPaymentMode" class="custom-select">
+                                    <option value="">--Select--</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Received">Received</option>
+                                    <option value="Not Received">Not Received</option>
+                                </select>
+                                <span asp-validation-for="Payment.PaymentStatus" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Payment.RecDate" class="col-form-label">Payment Received Date<span class="required">*</span></label>
+                                <input asp-for="Payment.RecDate" class="form-control" placeholder="Banner Descriptions" autocomplete="on" />
+                                <span asp-validation-for="Payment.RecDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3 offset-md-3">
+                                    <button type="submit" class="btn btn-block btn-primary">Save</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-block btn-secondary" asp-page="Payments">Back</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

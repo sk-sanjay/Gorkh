@@ -1,0 +1,148 @@
+﻿@page
+@model WebApp.Pages.Admin.RegisteredBuyersandSellers.BuyerandSellerModel
+@{
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Registered Buyer & Seller (Both)</h3>
+            <a class="float-right" href="/Admin/RegisteredBuyersandSellers">Click for all Registered Buyers & Sellers </a>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="search" style="width:48px">S. No.</th>
+                                <th class="search">Registration No</th>
+                                <th class="search">Name</th>
+                                <th class="search">Email Id</th>
+                                <th class="search">Mobile No</th>
+                                <th class="search" style="width:80px">Detials</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                                <tr>
+                                    <td class="text-right">
+                                        @{ index++; }
+                                        @index
+                                        <input type="hidden" asp-for="@item.Id" id="hdUId" name="Id" />
+                                        <input type="hidden" asp-for="@item.IsActive" id="IsActive" name="IsActive" />
+                                    </td>
+                                    @*<td class="text-center"></td>*@
+                                    <td>@item.UniqueCode</td>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Mobile</td>
+                                    @*<td>@item.CreatedDate</td>*@
+                                    <td class="text-center">
+
+
+                                        <a asp-page="Details" asp-route-email="@item.Email">
+                                            <i class="fa fa-eye text-dark" data-toggle="tooltip" data-placement="top" title="View Details"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="custom-control custom-switch custom-switch-on-primary">
+
+                                            <input class="custom-control-input chkChildfeatured" type="checkbox" asp-for="@item.IsActive" id="@($"chkfm-{item.Id}")" name="@($"chkfm-{item.Id}")" />
+                                            <label class="custom-control-label" for="@($"chkfm-{item.Id}")">&nbsp;</label>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="search">S. No.</th>
+                                <th class="search">Registration No</th>
+                                <th class="search">Name</th>
+                                <th class="search">Email Id</th>
+                                <th class="search">Mobile No</th>
+                                <th class="search">Detials</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet. Click 'Create New' to start adding.</p>
+            }
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+    <script src="~/js/custom/Categories.js" asp-append-version="true"></script>
+    <script type="text/javascript" asp-append-version="true">
+
+    $('table tbody tr td input.chkChildfeatured').on('change', function (event) {
+    debugger;
+
+        var id = $(this).closest("tr").find('td:eq(0)').find('#hdUId').val();
+        var isactive = $(this).closest("tr").find('td:eq(0)').find('#IsActive').val();
+    //var saletype = $(this).closest("tr").find('td:eq(2)').text();
+    var chkfmid = $(this).attr("uid");
+    var myAlertsMsg;
+        if (isactive == 'True') {
+            myAlertsMsg = 'Are you sure want to De-Activate User?';
+    }
+    else {
+            myAlertsMsg = 'Are you sure want to Activate User?';
+    }
+    getConfirm(myAlertsMsg,
+    function(result) {
+    if (result) {
+        var modelDto = { Id: id, IsActive: isactive}
+    debugger
+    var modelstr = JSON.stringify(modelDto);
+    var url = '@($"/Admin/RegisteredBuyersandSellers/Index/?handler=ActiveDeactiveUser")';
+    $.ajax({
+    type: "GET",
+    url: url,
+    data: { modelstr: modelstr },
+    success: function(data) {
+    if (data != null) {
+    if (data === 'unauthorized') {
+    $("#divClientAlert").addClass("alert-warning");
+    $("#divClientAlert > p.m-0").text("Please login to access this resource");
+    $("#divClientAlert").show();
+    SetTimeOut($("#divClientAlert"));
+    window.location.href = "/Account/Login";
+    } else {
+    $("#divClientAlert").addClass("alert-success");
+    $("#divClientAlert > p.m-0").text(data);
+    $("#divClientAlert").show();
+    SetTimeOut($("#divClientAlert"));
+    window.location.reload(true);
+    }
+    }
+    }
+    });
+    } else {
+        if (isactive == 'True') {
+    $("#" + chkfmid).prop('checked', true);
+    }
+    else {
+    $("#" + chkfmid).prop('checked', false);
+    }
+    event.preventDefault();
+    }
+    });
+    });
+    </script>
+}

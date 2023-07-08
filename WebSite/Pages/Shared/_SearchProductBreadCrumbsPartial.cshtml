@@ -1,0 +1,17 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model IEnumerable<ProductsBreadCrumbsVM>
+<ul>
+    <li><a href="/">Home</a></li>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <li><a asp-page="ProductsBySubCat" asp-route-category_id="@item.CatId">@item.CatName</a></li>
+            if (item.SubCatName != null)
+            {
+                <li><a asp-page="ProductsBySubCat" asp-route-sub_category="@item.SubCatid">@item.SubCatName</a></li>
+            }
+        }
+    }
+</ul>

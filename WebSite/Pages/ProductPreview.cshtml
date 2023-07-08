@@ -1,0 +1,198 @@
+﻿@page "{ProductId?}"
+@using Microsoft.Extensions.Configuration
+@using WebSite.Helpers
+@inject IConfiguration _config;
+@model WebSite.Pages.ProductPreviewModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class="card card-register mx-auto mt-5 col-md-9">
+                @if (Model.ProductId != null && Model.ProductsDetail != null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <a asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">
+                            <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                        </a>
+                        <a asp-page="ProductPreview" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Preview"></div></a>
+                        @*<div class="progress-step" data-title="Preview"></div>*@
+                    </div>
+                }
+                else
+                { <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <a asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">
+                            <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                        </a>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>}
+
+                <div class="col-lg-12">
+                    <div class="product-head">
+                        <div class="product-head-left">
+                            <h1>@Model.ProductsDetail.SubSubCategoriesName</h1>
+                            <div class="proMeta">
+                                <ul>
+                                    @*<li>Published on: <span>25 Dec, 2021</span></li>*@
+                                    @*<li>Published on <span>@($"{Model.ProductsDetail.CreatedDate:dd-MM-yyyy}")</span></li>*@
+                                    <li>Category <span>@Model.ProductsDetail.Name</span></li>
+                                    <li>Location <span>@Model.ProductsDetail.StateName, @Model.ProductsDetail.CountryName</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-head-right">
+                            <div class="proMeta-2">
+                                @*<h2>Code: @Model.ProductsDetail.ProductNumber</h2>*@
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-show">
+                        <div class="slide-large">
+                            <div class="slider slider-for">
+                                @foreach (var item in Model.ProductsDetail.ProductsFileUpload)
+                                {
+                                    @if (item.FlagImage == 1)
+                                    {
+                                        <div class="item"><img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                                    }
+                                    else
+                                    {
+                                        @if (item.ProductImage != null)
+                                        {
+                                            var fullLink = item.ProductImage.ToString();
+                                            var youTubeId = fullLink.Split('=').Last();
+                                            <div class="item">
+                                                @*<img src="http://img.youtube.com/vi/@youTubeId/0.jpg" alt="">*@
+                                                <iframe type="text/html" src="https://www.youtube.com/embed/@youTubeId" frameborder="0" width="500" height="500"></iframe>
+                                            </div>
+                                            @*<div class="videoWrapper">
+                                        <iframe type="text/html" src="http://www.youtube.com/embed/@youTubeId" frameborder="0"></iframe>
+                                    </div>*@
+                                        }
+                                    }
+                                }
+
+                                @*<div class="item"><img src="~/assets/images/prosub2.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub3.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub4.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub1.jpg" alt=""></div>*@
+                            </div>
+                        </div>
+                        <div class="slide-thumb">
+                            <div class="slider slider-nav">
+                                @foreach (var item in Model.ProductsDetail.ProductsFileUpload)
+                                {
+                                    @if (item.FlagImage == 1)
+                                    {
+                                        <div class="item"><img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                                    }
+                                    else
+                                    {
+                                        @if (item.ProductImage != null)
+                                        {
+                                            var fullLink = item.ProductImage.ToString();
+                                            var youTubeId = fullLink.Split('=').Last();
+                                            <div class="item"><img src="http://img.youtube.com/vi/@youTubeId/0.jpg" alt=""></div>
+                                            @*<div class="videoWrapper">
+                                        <iframe type="text/html" src="http://www.youtube.com/embed/@youTubeId" frameborder="0"></iframe>
+                                    </div>*@
+                                        }
+                                    }
+                                }
+                                @*<div class="item"><img src="~/assets/images/prosub6.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub2.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub3.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub4.jpg" alt=""></div>
+                        <div class="item"><img src="~/assets/images/prosub1.jpg" alt=""></div>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-spec">
+                        <div class="pro-spec-top">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="pro-spec-txt">
+                                        <h2>Specifications</h2>
+                                        @foreach (var item in Model.ProductsDetail.ProductsSpecificationsGet)
+                                        {
+                                            <h3>@item.SpecfName <span>@item.SpecfSSCatField</span></h3>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pro-spec-txt">
+                                        <h2 class="alt">Overview</h2>
+                                        <h3>Category <span>@Model.ProductsDetail.Name</span></h3>
+                                        <h3>Sub-Category <span>@Model.ProductsDetail.SubCategoryName</span></h3>
+                                        <h3>Year <span>@Model.ProductsDetail.YearofProc</span></h3>
+                                        <h3>Condition <span>@Model.ProductsDetail.ConditionName</span></h3>
+                                        <h3>Quantity Available <span>@Model.ProductsDetail.QuantityAvl</span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pro-spec-bottom">
+                            <h4>Product Brief <span>@Html.Raw(Model.ProductsDetail.Descriptions)</span> </h4>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <a class="btn btn-block btn-secondary" asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">Back</a>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-block btn-primary" onclick="FinalSubmit(@Model.ProductId)">Final Submit</button>
+                        </div>
+
+                    </div><br />
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+@section Scripts {
+    <script type="text/javascript">
+        function FinalSubmit(id) {
+            var result = confirm("You Want to Final Submit?");
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: "/ProductPreview?handler=FinalSubmit",
+                    data: { id: id },
+                    success: function (data) {
+                        if (data != null) {
+                            if (data === "unauthorized") {
+                                window.location.href = "/Account/Login";
+                            } else if (data === "success") {
+                               // window.location.reload(true);
+                                window.location.href = "/Products/";
+                            }
+                        }
+                    }
+                });
+                window.location.reload(true);
+                window.location.href = "/Account/Seller-Login";
+            }
+        }
+
+    </script>
+}

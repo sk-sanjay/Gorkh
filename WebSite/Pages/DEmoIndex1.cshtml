@@ -1,0 +1,368 @@
+﻿@page
+@model WebSite.Pages.DEmoIndex1Model
+@{
+    ViewData["Title"] = "Demo";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 profiletop">
+                <div class="card border-0">
+                    <img src="https://www.bootdey.com/img/Content/avatar/avatar6.png" alt="...">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h3 class="h4 mb-0">PECS</h3>
+                            <span class="text-primary">CEO &amp; Founder</span>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><a href="#!"><i class="fa fa-map-marker"></i><span class="pl-2">India</span></a></li>
+                            <li class="mb-2"><a href="#!"><i class="fa fa-envelope"></i><span class="pl-2">dakota@gmail.com</span></a></li>
+                            <li class="mb-2"><a href="#!"><i class="fa fa-phone"></i><span class="pl-2">98989889989</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <nav class="list-group">
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-user"></i>My Profile<span class="badge badge-primary badge-pill">6</span></a>
+                    <a class="list-group-item" href="#"><i class="fa fa-list"></i>My Listning</a>
+                    <a class="list-group-item" href="#"><i class="fa-list-alt"></i>Add Listning</a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-commenting"></i>Message<span class="badge badge-primary badge-pill">3</span></a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-file-o"></i>Draft<span class="badge badge-primary badge-pill">4</span></a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-tasks"></i>Service Requests<span class="badge badge-primary badge-pill">4</span></a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-heart"></i>Favorites<span class="badge badge-primary badge-pill">4</span></a>
+                </nav>
+            </div>
+            <div class="col-lg-9 profiletop">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="#" class="form" id="forms" onsubmit="event.preventDefault()">
+                            <div class="progressbar">
+                                <div class="progress" id="progress"></div>
+                                <div class="progress-step progress-step-active" data-title="Overview"></div>
+                                <div class="progress-step" data-title="Specifications"></div>
+                                <div class="progress-step" data-title="Description"></div>
+                                <div class="progress-step" data-title="Uploads"></div>
+                                <div class="progress-step" data-title="Preview"></div>
+                            </div>
+                            <div class="step-forms step-forms-active">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Country</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">State</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">City</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <label for="inputCity">Listning Title</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Category *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Sub-Category *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Manufacturer *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Model</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Serial No</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Year *</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Condition *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Status *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Price *</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Currency *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 pull-right">
+                                    <a href="#" class="formbutton btn btn-next">Next</a>
+                                </div>
+                                <div class="col-sm-2 pull-right">
+                                    <button type="button" class="btn btn-sm btncol">Save</button>
+                                    
+                                </div>
+
+                            </div>
+                            <div class="step-forms">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Country</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">State</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">City</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <label for="inputCity">Listning Title</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Category *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Sub-Category *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Manufacturer *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Model</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Serial No</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Year *</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Condition *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Status *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputCity">Price *</label>
+                                        <input type="text" class="form-control" id="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">Currency *</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 pull-right">
+                                    <a href="#" class="formbutton btn btn-next">Next</a>
+                                </div>
+                                <div class="col-sm-2 pull-right">
+                                    <a href="#" class="formbutton btn btn-save">Save</a>
+                                </div>
+                                <div class="col-sm-2 pull-right">
+                                    <a href="#" class="formbutton btn btn-prev">previous</a>
+                                </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group">  <a href="#" class="btn formbutton btn-prev">previous</a> <a href="#" class="btn formbutton btn-next">next</a> </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group">  <a href="#" class="btn formbutton btn-prev">previous</a> <a href="#" class="btn formbutton btn-next">next</a> </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group"> <a href="#" class="btn formbutton btn-prev">Previous</a> <input type="submit" value="Submit" id="submit-form" class="btn formbutton" /> </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const prevBtns = document.querySelectorAll(".btn-prev");
+    const nextBtns = document.querySelectorAll(".btn-next");
+    const progress = document.getElementById("progress");
+    const formSteps = document.querySelectorAll(".step-forms");
+    const progressSteps = document.querySelectorAll(".progress-step");
+
+
+    let formStepsNum = 0;
+
+    nextBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            formStepsNum++;
+            updateFormSteps();
+            updateProgressbar();
+
+        });
+    });
+
+    prevBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            formStepsNum--;
+            updateFormSteps();
+            updateProgressbar();
+
+        });
+    });
+
+    function updateFormSteps() {
+        formSteps.forEach((formStep) => {
+            formStep.classList.contains("step-forms-active") &&
+                formStep.classList.remove("step-forms-active");
+        });
+
+        formSteps[formStepsNum].classList.add("step-forms-active");
+    }
+
+    function updateProgressbar() {
+        progressSteps.forEach((progressStep, idx) => {
+            if (idx < formStepsNum + 1) { progressStep.classList.add("progress-step-active"); } else { progressStep.classList.remove("progress-step-active"); }
+        }); progressSteps.forEach((progressStep, idx) => {
+            if (idx < formStepsNum) { progressStep.classList.add("progress-step-check"); } else { progressStep.classList.remove("progress-step-check"); }
+        }); const progressActive = document.querySelectorAll(".progress-step-active"); progress.style.width = ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
+    } document.getElementById("submit-form").addEventListener("click", function () {
+        progressSteps.forEach((progressStep, idx) => {
+            if (idx <= formStepsNum) { progressStep.classList.add("progress-step-check"); } else { progressStep.classList.remove("progress-step-check"); }
+        }); var forms = document.getElementById("forms"); forms.classList.remove("form"); forms.innerHTML = '<div class="welcome"><div class="content"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg><h2>Thanks for signup!</h2><span>We will contact you soon!</span><div></div>';
+    });
+
+</script>

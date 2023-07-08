@@ -1,0 +1,608 @@
+﻿@page "{id?}"
+@using Microsoft.Extensions.Configuration
+@using WebSite.Helpers
+@inject IConfiguration _config;
+@model WebSite.Pages.ProductDetailsModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+@section meta
+{
+    <title>SURPLUSPLATFORM - The Trusted Platform for Used Industrial Machinery</title>
+    <meta name="description" content="Surplus-platform is a well-organized web platform for secondhand machines, tools, and industrial equipment used in a wide range of industries.">
+    @*<meta name="keywords" content="News Releases, Indian Oil new, iocl disinvestment news, iocl news, Indian Oil, Indian Oil Corporation, Indian Oil Corporation Ltd">*@
+}
+<style>
+    html {
+        background: #fff;
+        color: #333;
+    }
+
+    hr {
+        background: transparent;
+        border-top: 1px solid #ccc;
+        color: transparent;
+        height: 0;
+        margin: 1em 0;
+    }
+
+    pre, code {
+        font-size: 90%;
+    }
+
+    .sharebox {
+        margin: 1em 0;
+    }
+</style>
+<section class="search-sec alt hideforprint">
+    <div class="container">
+        <vc:search-headers></vc:search-headers>
+    </div>
+</section>
+@if (Model.ProductsDetail != null)
+{
+    <section class="site-breadcrumb hideforprint">
+        <div class="container">
+            <div class="breadcrumb-main">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a asp-page="ProductsBySubCat" asp-route-category_id="@Model.ProductsDetail.CatId">@Model.ProductsDetail.Name</a></li>
+                    @*<li><a href="#">@Model.ProductsDetail.Name</a></li>*@
+                    <li><a asp-page="ProductsBySubCat" asp-route-sub_category="@Model.ProductsDetail.SubCatId">@Model.ProductsDetail.SubCategoryName</a></li>
+                    @*<li><a href="#">@Model.ProductsDetail.SubCategoryName</a></li>*@
+                    <li><a href="#">@Model.ProductsDetail.SubSubCategoriesName</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="pro-display">
+        <div class="container">
+            @*<div id="printableArea">
+                    <partial name="_ProductDetailsPartial" model="Model.ProductsDetail" />
+                </div>*@
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="product-head">
+                        <div class="product-head-left">
+                            <h1>@Model.ProductsDetail.SubSubCategoriesName</h1>
+                            <div class="proMeta">
+                                <ul>
+
+                                    <li>Published on <span>@($"{Model.ProductsDetail.CreatedDate:dd-MM-yyyy}")</span></li>
+                                    <li>
+                                        Location: <span>@Model.ProductsDetail.CityName, @Model.ProductsDetail.StateName, @Model.ProductsDetail.CountryName</span>
+                                    </li>
+
+                                    @*<li>Category <span>@Model.ProductsDetail.Name</span></li>*@
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-head-right">
+                            <div class="proMeta-2">
+                                <h2>Code: @Model.ProductsDetail.ProductNumber</h2>
+                                <h3>Category: <span>@Model.ProductsDetail.Name</span> </h3>
+                                <h2 class="pricecol" id="price" style="display:none;"><strong> &#8377; @Model.ProductsDetail.ReservePrice.ToString("0")</strong> </h2>
+                                <div class="meta-icon hideforprint">
+                                    <button type="submit" onclick="Print();" class="btn"><i class="fa fa-print" aria-hidden="true"></i></button>
+                                    @*<a><input type="button" onclick="Print();" /><i class="fa fa-print" aria-hidden="true"></i></a>*@
+
+
+                                    <form method="post" asp-page-handler="DetailPrint" style="float: right;margin-left: 5px;">
+                                        <button type="submit" id="print" class="btn btn-success"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-show">
+                        <div class="slide-large">
+                            <div class="slider slider-for">
+                                @foreach (var item in Model.ProductsDetail.ProductsFileUpload)
+                                {
+                                    @if (item.FlagImage == 1)
+                                    {
+                                        <div class="item" data-toggle="modal" data-target="#imgModal" data-src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")"><img  src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt="@item.ProductImage"></div>
+                                    }
+                                    else
+                                    {
+                                        @if (item.ProductImage != null)
+                                        {
+                                            var fullLink = item.ProductImage.ToString();
+                                            var youTubeId = fullLink.Split('=').Last();
+                                            <div class="item">
+                                                @*<img src="http://img.youtube.com/vi/@youTubeId/0.jpg" alt="">*@
+                                                <iframe type="text/html" src="https://www.youtube.com/embed/@youTubeId" frameborder="0" width="500" height="500"></iframe>
+                                            </div>
+                                            @*<div class="videoWrapper">
+                                                    <iframe type="text/html" src="http://www.youtube.com/embed/@youTubeId" frameborder="0"></iframe>
+                                                </div>*@
+                                        }
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                        <div class="slide-thumb">
+                            <div class="slider slider-nav">
+                                @foreach (var item in Model.ProductsDetail.ProductsFileUpload)
+                                {
+                                    @if (item.FlagImage == 1)
+                                    {
+
+                                        <div class="item"><img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt="@item.ProductImage" loading="lazy"></div>
+                                    }
+                                    else
+                                    {
+                                        @if (item.ProductImage != null)
+                                        {
+                                            var fullLink = item.ProductImage.ToString();
+                                            var youTubeId = fullLink.Split('=').Last();
+                                            <div class="item"><img src="http://img.youtube.com/vi/@youTubeId/0.jpg" alt=""></div>
+                                            @*<div class="videoWrapper">
+                                                    <iframe type="text/html" src="http://www.youtube.com/embed/@youTubeId" frameborder="0"></iframe>
+                                                </div>*@
+                                        }
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-share text-end mb-2 hideforprint">
+                        @foreach (var item in Model.ModelVms)
+                        {
+                            <div>
+                                @*<a id="share_equipment" class="ad-box btn btn-success" data-remote="true" href="/share?equipment=for-sale-1-set-of-chlorine-chiller-used-at-chemical-industry-2014-15-model" style="background-color: #a78b44;">
+                                        <i class="fa fa-share-alt active"></i> <span class="hidetext">Share</span>
+                                    </a>*@
+
+                                @if (Model.ProductsBuyerFavorites != null)
+                                {
+
+                                    <form method="post" asp-page-handler="Favorites" style="display:inline">
+                                        <button type="submit" class="ad-box btn btn-success"><i class="fa fa-heart" style="background-color: #a78b44;"></i> Favorites</button>
+                                    </form>
+
+                                }
+                                else
+                                {
+
+                                    <form method="post" asp-page-handler="Favorites" style="display:inline">
+                                        <button type="submit" class="ad-box btn btn-success" style="background-color: #a78b44;"><i class="fa fa-heart"></i> Favorites</button>
+                                    </form>
+
+                                }
+
+
+                                <span class="ad-box cursor-default ad-box btn btn-success" style="cursor: none; background-color: #a78b44;">
+                                    <i class="fa fa-eye" aria-hidden="true"></i><span class="hidetext"> Visits: @item.totalVisitor</span>
+                                </span>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="pro-spec">
+                        <div class="pro-spec-top">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="pro-spec-txt">
+                                        <h2>Specifications</h2>
+                                        @foreach (var item in Model.ProductsDetail.ProductsSpecificationsGet)
+                                        {
+                                            <h3>@item.SpecfName - <span>@item.SpecfSSCatField</span></h3>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pro-spec-txt">
+                                        <h2 class="alt">Overview</h2>
+                                        <h3>Category - <span>@Model.ProductsDetail.Name</span></h3>
+                                        <h3>Sub-Category - <span>@Model.ProductsDetail.SubCategoryName</span></h3>
+                                        @*<h3>Manufacturer <span>Canny Coverage LTD</span></h3>*@
+                                        <h3>Year - <span>@Model.ProductsDetail.YearofProc</span></h3>
+                                        <h3>Condition - <span>@Model.ProductsDetail.ConditionName</span></h3>
+                                        @*<h3>Status : <span>Decommissioned</span></h3>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pro-spec-bottom">
+                            <h4>Product Brief <span>@Html.Raw(Model.ProductsDetail.Descriptions)</span> </h4>
+                        </div>
+                    </div>
+
+                    <div class="rel-products hideforprint">
+                        <h2>Related Products</h2>
+                        <div class="owl-carousel related-slide">
+
+                            @if (Model.RelatedProduct.Count >1)
+                            {
+                                @foreach (var item in Model.RelatedProduct)
+                                {
+                                    <div class="item">
+                                        <div class="related-slide-single">
+                                            <div class="related-slide-img">
+                                                
+                                                <img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt="">
+                                            </div>
+                                            <div class="related-slide-txt">
+                                                <h4>@item.ProductName</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                            else
+                            {
+                                <div class="item">
+                                    <div class="related-slide-single">
+                                        <div class="related-slide-img">
+                                            <img src="~/assets/images/related-1.jpg" alt="">
+                                        </div>
+                                        <div class="related-slide-txt">
+                                            <h4>Reciprocating Pump</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="related-slide-single">
+                                        <div class="related-slide-img">
+                                            <img src="~/assets/images/related-2.jpg" alt="">
+                                        </div>
+                                        <div class="related-slide-txt">
+                                            <h4>Centrifugal Compressor</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="related-slide-single">
+                                        <div class="related-slide-img">
+                                            <img src="../assets/images/related-3.jpg" alt="">
+                                        </div>
+                                        <div class="related-slide-txt">
+                                            <h4>Reciprocating Compressor</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="related-slide-single">
+                                        <div class="related-slide-img">
+                                            <img src="../assets/images/related-4.jpg" alt="">
+                                        </div>
+                                        <div class="related-slide-txt">
+                                            <h4>Centrifuge</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="related-slide-single">
+                                        <div class="related-slide-img">
+                                            <img src="../assets/images/related-1.jpg" alt="">
+                                        </div>
+                                        <div class="related-slide-txt">
+                                            <h4>Reciprocating Pump</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 hideforprint">
+                    <div class="pro-display-left">
+                        @*<h2 class="pricecol"><strong> &#8377; @Model.ProductsDetail.ReservePrice.ToString("0")</strong> </h2>*@
+
+                        <!-- <p>Price &#x20b9; 9500</p>
+                        <p>&#8377; (&#x20b9;) 9500</p>
+                        <p>&#8377; 9500</p> -->
+                        @*<a href="#">Show Interest</a>*@
+
+                        <!-- <a class="buy" href="#">Buy now</a> -->
+                        @*<a class="link-bdr" href="#">Ask Query from Seller via Admin </a>*@
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var RoleName = DataHelper.GetUserRole(User);
+                            var NickName = DataHelper.GetUserNickName(User);
+                            var BuyerId = DataHelper.GetBuyerId(User);
+                            var SellerId = DataHelper.GetSellerId(User);
+                            var Role = !string.IsNullOrEmpty(RoleName) ? RoleName : "Guest";
+                            @if (RoleName == "Buyer")
+                            {
+                                @if (User.IsInRole("Buyer") && !string.IsNullOrEmpty(BuyerId))
+                                {
+                                    @if (Model.Payment != null)
+                                    {
+
+                        <a asp-page="BuyerPayments" asp-route-pid="@Model.ProductsDetail.Id">
+                            Reserve Price -
+                            @{
+                                decimal price = Model.ProductsDetail.EstimatePrice;
+                                System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                            }
+                            @(String.Format(Indian, "{0:C0}", price)) Paid <i class="fa fa-check"></i>
+                        </a>
+                                    }
+                                    else
+                                    {
+
+                                        <a asp-page="BuyerPayments" asp-route-pid="@Model.ProductsDetail.Id">
+                                            Reserve Price -
+                                            @{
+                                                decimal price = Model.ProductsDetail.EstimatePrice;
+                                                System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                                            }
+                                            @(String.Format(Indian, "{0:C0}", price))
+
+                                        </a>
+                                    }
+                                    @if (Model.ProductsBuyerIntrests != null)
+                                    {
+                                        <form method="post" asp-page-handler="Interest">
+                                            <button type="submit">Show Interest <i class="fa fa-check"></i></button>
+                                        </form>
+
+
+
+                                    }
+                                    else
+                                    {
+                                        <form method="post" asp-page-handler="Interest">
+                                            <button type="submit">Show Interest</button>
+                                        </form>
+                                    }
+                                    <a data-toggle="modal" href="#" class="details link-bdr" data-id="@Model.ProductsDetail.Id">My Offer </a>
+                                    <a class="link-bdr" asp-page="ProductsBuyerQueries" asp-route-pid="@Model.ProductsDetail.Id">Ask Question? </a>
+                                }
+                            }
+                            else
+                            {
+
+                                <a asp-page="BuyerPayments" asp-route-pid="@Model.ProductsDetail.Id">
+                                    Reserve Price -
+                                    @{
+                                        decimal price = Model.ProductsDetail.EstimatePrice;
+                                        System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                                    }
+                                    @(String.Format(Indian, "{0:C0}", price))
+                                </a>
+                                <form method="post" asp-page-handler="Interest">
+                                    <button type="submit">Show Interest</button>
+                                </form>
+
+
+                            }
+                        }
+                        else
+                        {
+
+
+                    <a asp-page="BuyerPayments" asp-route-pid="@Model.ProductsDetail.Id">
+                        Reserve Price -
+                        @{
+                            decimal price = Model.ProductsDetail.EstimatePrice;
+                            System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                        }
+                        @(String.Format(Indian, "{0:C0}", price))
+                    </a>
+                            <form method="post" asp-page-handler="Interest">
+                                <button type="submit">Show Interest</button>
+                            </form>
+                            <a class="link-bdr" href="#" onclick="CheckBuyerLogin();">Ask Question? </a>
+                        }
+
+                        @*<a class="link-bdr" href="#">Add a similar machine for sale <span>HERE</span></a>*@
+                        @*<a class="link-bdr" asp-page="BuyerPayments" asp-route-pid="@Model.ProductsDetail.Id">Pay Now</a>*@
+
+
+                        <div class="addSpace"><p>AD Space</p></div>
+                    </div>
+                </div>
+            </div>
+            @*</div>*@
+
+
+        </div>
+
+    </section>
+    <div class="modal fade" id="imgModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <div class="modal-body">
+                    <img src="" alt="" class="img-full" id="imgid">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog productModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="heading">My Offer</h1>
+
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <span class="heading">Data Not Found</span>
+    </div>
+}
+<style>
+    @@media all and (min-width:700px) {
+        #ws-fig {
+            display: none
+        }
+    }
+</style>
+@section Scripts{
+    <script src="~/js/custom/buyeroffer.js" asp-append-version="true"></script>
+    <script src="~/assets/js/sharerbox.js"></script>
+    @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+    @*<script src="~/assets/js/watermark.js" asp-append-version="true"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>*@
+    @*<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>*@
+
+    <script type="text/javascript" asp-append-version="true">
+
+        //$(document).ready(function () {
+        //    var imgs = $(document).find($(".WP"));
+        //    $.each(imgs, function (key, value) {
+        //        //alert(key + ": " + value.src);
+        //        debugger;
+
+        //        watermark([value.src, "/assets/images/logo-surplus.png"])
+        //            .image(watermark.image.center(0.9))
+        //            .then(function (img) {
+        //                // var pre = document.querySelector('#composite-image img');
+        //                value.src = img.src;
+
+        //                //pre.parentNode.insertBefore(img, pre);
+        //                //console.log(img.src);
+        //            });
+        //    });
+
+
+
+        //})
+
+
+        window.onload = function () {
+            // Buttons list: 'site1, site2, site3'
+            // Buttons size: number
+            sharerboxIcons('facebook, twitter, whatsapp, linkedin', 45);
+
+            // Setup arguments: Behavior, Position, Color, Visibility, Description
+            sharerSetup('pop-up', 'left', 'black', true);
+        };
+
+        function GetOfferPrice() {
+            $("#exampleModal #hdn_offerprice").val($("#exampleModal #txt_price").val());
+
+        }
+        function CheckBuyerLogin() {
+            //alert("Hi");
+            $("#divClientAlert").addClass("alert-danger");
+            $("#divClientAlert > p.m-0").text("Please Login as a buyer to ask query!");
+            $("#divClientAlert").show();
+            SetTimeOut($("#divClientAlert"));
+            event.preventDefault();
+        }
+        function Print() {
+            $(".hideforprint").hide();
+            $("#price").show();
+
+
+            window.print();
+            $(".hideforprint").show();
+            $("#price").hide();
+        }
+
+        $(function () {
+            $('a.favorite').on('click', function (event) {
+                var url = "/ProductDetails?handler=Favorites";
+                var id = $(this).data('id');
+                if (typeof id != "undefined") {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { id: id },
+                        success: function (data) {
+                            if (data != null) {
+                                // $('.modal-body').html(data);
+                                //$("#exampleModal").modal("show");
+                                alert(data);
+                            }
+                        },
+                        complete: function () {
+                            $('.modal').on('shown.bs.modal', function (e) {
+                                $('.slider-for, .slider-nav').slick('setPosition');
+                                $('.wrap-modal-slider').addClass('open');
+                            })
+                            $('.slider-for').slick({
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                arrows: true,
+                                //fade: true,
+                                asNavFor: '.slider-nav'
+                            });
+                            $('.slider-nav').slick({
+                                slidesToShow: 4,
+                                slidesToScroll: 1,
+                                asNavFor: '.slider-for',
+                                //dots: true,
+                                arrows: false,
+                                //centerMode: true,
+                                focusOnSelect: true
+                            });
+                        }
+                    });
+                } else {
+
+                }
+            });
+        });
+
+
+
+        $('#imgModal').on('show.bs.modal', function (event) {
+           // debugger;
+            var name1 = $(event.relatedTarget).attr("data-name");
+            $(".linkname").html(name1);
+            $('#imgid').attr('src', $(event.relatedTarget).data('src'));
+            var href = $(event.relatedTarget).data('href');
+            if (href != '' && href != null) {
+                $('#link').attr('href', href);
+                $('#divlink').show();
+            }
+            else {
+                $('#divlink').hide();
+            }
+        });
+
+        $(".slick-track .slick-slide .item img").click(function (e) {
+            e.preventDefault();
+            var imgUrl = $(this).attr("src");
+            var caption = $(this).attr("alt");
+            console.log(imgUrl, caption);
+            $("#imgModal .modal-body img").attr("src", imgUrl);
+            $("#imgModal .modal-body img").attr("alt", caption);
+            // $("#imgModal .modal-title").html(caption);
+
+        });
+
+
+                                           // $('#offerModal').modal('show');
+
+
+
+
+
+
+    </script>
+}
+

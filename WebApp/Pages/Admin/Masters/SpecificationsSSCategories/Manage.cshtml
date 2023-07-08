@@ -1,0 +1,533 @@
+﻿@page "{id?}"
+@*@model WebApp.Pages.Admin.Masters.SpecificationsSSCategories.ManageModel*@
+@model ManageModel
+@{
+    ViewData["Title"] = "Manage Specification By Category";
+}
+@*@Html.AntiForgeryToken()*@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-12 offset-lg-1 offset-md-1">
+                <div class="card">
+                    <div class="card-header">
+                        @if (!Model.IsNew)
+                        {
+                            <h3 class="card-title float-left font-weight-bold">Edit Specification Mapping</h3>
+                            <div class="btn-group btn-group-sm float-right">
+                                <a href="#" class="text-dark mr-3" data-toggle="modal" data-target="#confirmationModal" title="Delete"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                @*<a class="text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>*@
+                            </div>
+                            <div class="clearfix"></div>
+                        }
+                        else
+                        {
+                            <h3 class="card-title float-left font-weight-bold">Specifications Mapping</h3>
+                            @*<a class="float-right text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>*@
+                            <div class="clearfix"></div>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <form method="post" asp-page-handler="Manage">
+                            @if (!Model.IsNew)
+                            {
+                                <input type="hidden" asp-for="SpecificationsSSCategory.Id" />
+                                <input type="hidden" asp-for="SpecificationsSSCategory.CreatedDate" />
+                                <input type="hidden" asp-for="SpecificationsSSCategory.CreatedBy" />
+                            }
+                            <div class="form-group">
+                                <label asp-for="SpecificationsSSCategory.CategoryId" class="col-form-label">Category<span class="required">*</span></label>
+                                <select asp-for="SpecificationsSSCategory.CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                                    <option value="">-select-</option>
+                                </select>
+                                <span asp-validation-for="SpecificationsSSCategory.CategoryId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="SpecificationsSSCategory.SubCategoryId" class="col-form-label">Sub Category<span class="required">*</span></label>
+                                <select asp-for="SpecificationsSSCategory.SubCategoryId" class="form-control">
+                                    <option value="">-select-</option>
+                                </select>
+                                <span asp-validation-for="SpecificationsSSCategory.SubCategoryId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SpecificationsSSCategory.SubSubCatId" class="col-form-label">Sub Sub Category<span class="required">*</span></label>
+                                <select asp-for="SpecificationsSSCategory.SubSubCatId" class="form-control">
+                                    <option value="">-select-</option>
+                                </select>
+                                <span asp-validation-for="SpecificationsSSCategory.SubSubCatId" class="text-danger"></span>
+                            </div>
+
+                            @*<div class="form-group">
+                                    <label asp-for="SpecificationsSSCategory.SpecfId" class="col-form-label">SpecfId<span class="required">*</span></label>
+                                    <input asp-for="SpecificationsSSCategory.SpecfId" class="form-control" placeholder="State Code" autocomplete="on" />
+                                    <span asp-validation-for="SpecificationsSSCategory.SpecfId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="SpecificationsSSCategory.Sequence" class="col-form-label">Sequence<span class="required">*</span></label>
+                                    <input asp-for="SpecificationsSSCategory.Sequence" class="form-control" placeholder="State Code" autocomplete="on" />
+                                    <span asp-validation-for="SpecificationsSSCategory.Sequence" class="text-danger"></span>
+                                </div>*@
+                            @*<div class="form-group">
+                                    <div class="custom-control custom-switch custom-switch-on-primary">
+                                        <input asp-for="SpecificationsSSCategory.IsActive" class="custom-control-input" checked="@Model.IsNew">
+                                        <label asp-for="SpecificationsSSCategory.IsActive" class="custom-control-label">Active</label>
+                                    </div>
+                                </div>*@
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    @*<button type="submit" class="btn btn-block btn-primary" id="btnSave">Save</button>*@
+                                    <input type="button" class="btn btn-primary" id="btnSave" value="Save" />
+
+                                </div>
+                                @*<div class="col-md-3">
+                                        <a class="btn btn-block btn-secondary" asp-page="Index">Back</a>
+                                    </div>*@
+                            </div>
+                            <div class="p-1"></div>
+                            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                                        <thead>
+                                            @{
+                                                int index = 0;
+                                                int sno = 1;
+                                            }
+                                            <tr>
+                                                <th class="text-center">S. No.</th>
+                                                <th class="search">Field Name</th>
+                                                <th class="search">Date Type</th>
+                                                <th class="search">Is Common</th>
+                                                <th class="search">Sequence No</th>
+                                                <th class="search">Is Mandatory</th>
+                                                <th class="text-center noExport noSort">Check</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ModelVms)
+                                            {
+                                                var sequenceno = "txtsequenceno" + sno;
+                                                var checkboxId = "checkboxId" + sno;
+                                                var specId = "txtspecId" + sno;
+                                                var ismandatory = "checkboxismandatory" + sno;
+                                                <tr>
+                                                    <td class="text-right">
+                                                        @{ sno++; }
+                                                        @{ index++; }
+                                                        @index
+                                                        @*<label id="@specId">@item.Id</label>*@
+                                                        <input type="hidden" asp-for="@item.Id" id="@specId" name="SpecName" />
+                                                    </td>
+                                                    <td>@item.SpecfName</td>
+                                                    <td>@item.TextType</td>
+                                                    <td>
+                                                        @(item.IsCommon==true? "Yes" : "No")
+                                                        <input type="hidden" asp-for="@item.IsCommon" id="IsCommon" name="IsCommon" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="@sequenceno" name="sequencenoname" onkeypress="return isNumber(event)" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="checkbox" id="@ismandatory" name="IsMandatoryName" />
+                                                    </td>
+
+                                                    @*<td class="text-center">
+                                                            <div class="custom-control custom-switch custom-switch-on-primary">
+                                                                <input asp-for="@item.IsCommon" class="custom-control-input">
+                                                                <label asp-for="@item.IsCommon" class="custom-control-label">Common</label>
+                                                            </div>
+                                                        </td>*@
+                                                    <td>
+                                                        <input type="checkbox" id="@checkboxId" name="chkname" checked="@(item.IsCommon == true)" />
+                                                    </td>
+
+                                                </tr>
+
+                                            }
+
+                                        </tbody>
+                                        @*<tfoot>
+                                            <tr>
+                                                <th class="text-center">S. No.</th>
+                                                <th class="search">Search Field Name</th>
+                                                <th>Date Type</th>
+                                                <th>Is Common</th>
+                                                <th>Sequence No</th>
+                                                <th>Is Mandatory</th>
+                                                <th class="text-center noExport noSort">Check</th>
+                                            </tr>
+                                        </tfoot>*@
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>No records has been added yet. Click 'Create New' to start adding.</p>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+    <script type="text/javascript" asp-append-version="true">
+        $("#SpecificationsSSCategory_CategoryId").on("change", function () {
+            var isc = $("#IsCommon").val();
+            var maincat = $("#SpecificationsSSCategory_CategoryId option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubCategory&maincat=' + maincat + '', (data) => {
+                    $("#SpecificationsSSCategory_SubCategoryId").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subCategoryName}</option>`;
+                        });
+                        $("#SpecificationsSSCategory_SubCategoryId").append(item1);
+                        /*Clear sub sub category*/
+                        $("#SpecificationsSSCategory_SubSubCatId").empty().append('<option value="">Select</option>');
+                        /*Clear table checked value*/
+                        $('input[name="sequencenoname"]').val('');
+                        $('input[name="chkname"]').prop('checked', false);
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>Select</option>";
+                        $("#SpecificationsSSCategory_SubCategoryId").append(item1);
+                        /*Hide sub sub category*/
+                        //var item2 = "<option value=''>Select</option>";
+                        $("#SpecificationsSSCategory_SubSubCatId").empty().append('<option value="">Select</option>');
+                        //$('#<%=ddlCities.ClientID %>').empty().append('<option selected="selected" value="0">Please select</option>');
+                        /*Clear table checked value*/
+                        $('input[name="sequencenoname"]').val('');
+                        $('input[name="chkname"]').prop('checked', false);
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $('#txtsequenceno' + sn).val('');
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                });
+            }
+        })
+        $("#SpecificationsSSCategory_SubCategoryId").on("change", function () {
+            var isc = $("#IsCommon").val();
+            var maincat = $("#SpecificationsSSCategory_SubCategoryId option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubSubCategoryBySubCategory2&subcategoryid=' + maincat + '', (data) => {
+                    $("#SpecificationsSSCategory_SubSubCatId").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subSubCategoriesName}</option>`;
+                        });
+                        $("#SpecificationsSSCategory_SubSubCatId").append(item1);
+                        $('input[name="sequencenoname"]').val('');
+                        //common field check
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>Select</option>";
+                        $("#SpecificationsSSCategory_SubSubCatId").append(item1);
+                        /*Clear table checked value*/
+                        $('input[name="sequencenoname"]').val('');
+                        $('input[name="chkname"]').prop('checked', false);
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                });
+            }
+        })
+
+        $("#SpecificationsSSCategory_SubSubCatId").on("change", function () {
+            $('input[name="sequencenoname"]').val('');
+            $('input[name="chkname"]').prop('checked', false);
+            var isc = $("#IsCommon").val();
+            var maincat = $("#SpecificationsSSCategory_SubSubCatId option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSpecificationsSSCategories&subsubcategoryid=' + maincat + '', (data) => {
+                    //$("#SpecificationsSSCategory_SubSubCatId").empty();
+                    if (data != '' && data != null) {
+                        $.each(data, function (k, v) {
+                            for (var i = 0; i < data.length; i++) {
+                                $('table tbody input[name="SpecName"]').each(function (l, c) {
+                                    var sn = l + 1;
+                                    if (c.value == data[i].specfId) {
+                                        //$('input[name="sequencenoname"]').val(data[i].sequence);
+                                        $('#txtsequenceno' + sn).val(data[i].sequence);
+                                        //$('input[name = "chkname"]').prop('checked', true);
+                                        //$(this).prop('checked', true);
+                                        $("#checkboxId" + sn).prop('checked', true);
+                                        if (data[i].isMandatory == true) {
+                                            $("#checkboxismandatory" + sn).prop('checked', true);
+                                        }
+                                    }
+                                });
+                            }
+                            //$('#tree1 li:not(.root-branch)').show();
+                            //$('#tree1 li:not(.branch)').show();
+                        });
+                        //commom field check
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                        });
+                    }
+                    else {
+                        //var item1 = "<option value='Select'>Select</option>";
+                        //$("#SpecificationsSSCategory_SubSubCatId").append(item1);
+                        $('input[name="sequencenoname"]').val('');
+                        $('input[name="chkname"]').prop('checked', false);
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                });
+            }
+        })
+
+        $('#btnSave').click(function (event) {
+
+            var flag = 0;
+            var catid = $('select#SpecificationsSSCategory_CategoryId').val();
+            if (catid == '') {
+                $("#divClientAlert").addClass("alert-danger");
+                $("#divClientAlert > p.m-0").text("Please select a category");
+                $("#divClientAlert").show();
+                SetTimeOut($("#divClientAlert"));
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            var subcatid = $('select#SpecificationsSSCategory_SubCategoryId').val();
+            if (subcatid == '') {
+                $("#divClientAlert").addClass("alert-danger");
+                $("#divClientAlert > p.m-0").text("Please select a sub category");
+                $("#divClientAlert").show();
+                SetTimeOut($("#divClientAlert"));
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            var subsubcatid = $('select#SpecificationsSSCategory_SubSubCatId').val();
+            if (subsubcatid == '') {
+                $("#divClientAlert").addClass("alert-danger");
+                $("#divClientAlert > p.m-0").text("Please select a sub sub category");
+                $("#divClientAlert").show();
+                SetTimeOut($("#divClientAlert"));
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            if ($('input[name="chkname"]:checked').length == 0) {
+                $("#divClientAlert").addClass("alert-danger");
+                $("#divClientAlert > p.m-0").text("Please select a specification to assign");
+                $("#divClientAlert").show();
+                SetTimeOut($("#divClientAlert"));
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            //debugger
+            var flag1 = 0;
+            if ($('input[name="chkname"]:checked').length > 0) {
+                $("table tbody input[name='chkname']:checked").each(function () {
+                    var Id = $(this).closest("tr")[0].rowIndex;
+                    debugger
+                    var sequenceno = $('#txtsequenceno' + Id).val();
+                    if (sequenceno == "") {
+                        $("#divClientAlert").addClass("alert-danger");
+                        $("#divClientAlert > p.m-0").text("Checked Specification Field(s) should have Sequence Number.");
+                        $("#divClientAlert").show();
+                        SetTimeOut($("#divClientAlert"));
+                        event.preventDefault();
+                        flag1 = -1;
+                        return;
+                    }
+
+                });
+                if (flag1 == 0) {
+
+                }
+                else {
+                    return true;
+                }
+            }
+            var flag2 = 0;
+            //find all inputs with ids beginning with "txtsequenceno" and of type="text"
+            $('input[id^="txtsequenceno"][type="text"]').each(
+                //start outerloop against each element
+                function (index, element) {
+                    //find all the items again
+                    var rv = true; // <=== Default return value
+                    $('input[id^="txtsequenceno"][type="text"]').each(
+                        //start inner loop on each item
+                        function (indexInner, elementInner) {
+                            if (index != indexInner) {
+                                if ($(element).val() != "") {
+                                    if ($(element).val() == $(elementInner).val()) {
+                                        //alert("2 boxes have the same value:" + element.id + ":" + elementInner.id);
+                                        var sn1 = index + 1;
+                                        var sn2 = indexInner + 1;
+                                        $("#divClientAlert").addClass("alert-danger");
+                                        $("#divClientAlert > p.m-0").text("Multple sequence no have the same value S.No.: " + sn1 + " and S.No.: " + sn2);
+                                        $("#divClientAlert").show();
+                                        SetTimeOut($("#divClientAlert"));
+                                        event.preventDefault();
+                                        flag2 = -1;
+                                        return rv = false;
+                                    }
+                                }
+                            }
+                        }
+                    );
+                    if (flag2 == 0) {
+
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            );
+            if (flag2 == 0) {
+
+            }
+            else {
+                return false;
+            }
+            getConfirm("Are you sure ?", function (result) {
+                if (flag == 0 && result && flag1 == 0 && flag2 == 0) {
+                    //latest code start
+                    var arr = [];
+                    var message = "";
+                    var fileData = new FormData();
+                    var CategoryId = $('#SpecificationsSSCategory_CategoryId').val();
+                    var SubCategoryId = $('#SpecificationsSSCategory_SubCategoryId').val();
+                    var SubSubCatId = $('#SpecificationsSSCategory_SubSubCatId').val();
+                    //var SpecfId= $("#SpecificationsSSCategory_SpecfId").val();
+                    //var Sequence = $("#SpecificationsSSCategory_Sequence").val();
+
+                    $("table tbody input[name='chkname']:checked").each(function () {
+                        var Id = $(this).closest("tr")[0].rowIndex;
+                        var specId = $('#txtspecId' + Id).val();
+                        //var specId = $('#txtspecId' + Id).html();
+                        var sequenceno = $('#txtsequenceno' + Id).val();
+                        //var ismandatory = $('#checkboxismandatory' + Id).val();
+                        var ismandatory;
+                        if ($('#checkboxismandatory' + Id).prop('checked') == true) {
+                            ismandatory = true;
+                        }
+                        else {
+                            ismandatory = false;
+                        }
+                        var checkboxId = $('#checkboxId' + Id).val();
+
+                        var CatId = CategoryId;
+                        var SubCatId = SubCategoryId;
+                        var SSubCatId = SubSubCatId;
+                        //var annualplanId = $('#txtId' + Id).val();
+
+                        arr.push({
+                            CategoryId: CatId, SubCategoryId: SubCatId, SubSubCatId: SSubCatId, SpecfId: specId, Sequence: sequenceno, IsMandatory: ismandatory
+                        });
+                    });
+                    //debugger
+                    //fileData.append("model", JSON.stringify(arr));
+                    //latest code end
+                    var rolemenus = JSON.stringify(arr);
+                    $.post('/Admin/Masters/SpecificationsSSCategories/Manage?handler=Manage', { roleMenus: rolemenus }, function (data) {
+                        if (data != null) {
+                            if (data === 'unauthorized') {
+                                $("#divClientAlert").addClass("alert-warning");
+                                $("#divClientAlert > p.m-0").text("Please login to access this resource");
+                                $("#divClientAlert").show();
+                                SetTimeOut($("#divClientAlert"));
+                                window.location.href = "/Account/Login";
+                            } else {
+                                $("#divClientAlert").addClass("alert-success");
+                                $("#divClientAlert > p.m-0").text(data);
+                                $("#divClientAlert").show();
+                                SetTimeOut($("#divClientAlert"));
+                            }
+                        }
+                    });
+                }
+                else {
+                    event.preventDefault();
+                }
+            });
+        });
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        //$('#tblDataTable').DataTable({
+        //    searching: true, paging: false, info: false,
+        //    dom: 'Qfrtip',
+        //    initComplete: function () {
+        //        var r = $('#tblDataTable tfoot tr');
+        //        r.find('th').each(function () {
+        //            if ($(this).hasClass('search')) {
+        //                $(this).css('padding', 5);
+        //                var title = $(this).text();
+        //                $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+        //            } else {
+        //                $(this).html('');
+        //            }
+        //        });
+        //        $('#tblDataTable thead').prepend(r);
+        //        this.api().columns().every(function () {
+        //            var that = this;
+        //            $('input', this.footer()).on('keyup change clear',
+        //                function () {
+        //                    if (that.search() !== this.value) {
+        //                        that
+        //                            .search(this.value)
+        //                            .draw();
+        //                    }
+        //                });
+        //        });
+        //    }
+        //});
+
+    </script>
+}

@@ -1,0 +1,47 @@
+﻿@page
+@model AboutModel
+@{
+    ViewData["Title"] = "About Us";
+}
+<div class="breadcrumb-area bg-gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+                    <li class="breadcrumb-item active">About us</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-wraper mt-5">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-12">
+                <div class="about-info-wrapper">
+                    <h2>Our company</h2>
+                    <p>
+                        Vivamus nisi quam, ultrices vitae ante in, cursus mattis tortor. Ut tellus nisl, fringilla non luctus gravida, maximus in enim. Pellentesque et pharetra leo. Vestibulum laoreet turpis nec enim ultricies eleifend. Aliquam tristique risus metus, et varius arcu tincidunt et. Nunc tempus orci a bibendum dignissim. Proin ante risus, volutpat sit amet feugiat vel, vulputate id tellus.
+                    </p>
+                    <p>Mauris faucibus posuere purus eget imperdiet. Curabitur eleifend ornare ullamcorper. Quisque euismod vestibulum efficitur. Vestibulum risus ipsum, dignissim sit amet tristique ut, pulvinar et massa. Sed placerat ex sem, vel ultricies nisi condimentum a. Quisque lacinia venenatis rutrum. Pellentesque tristique enim quis quam accumsan tristique. In hac habitasse platea dictumst. Quisque iaculis orci quis sollicitudin dignissim. Curabitur iaculis, enim nec convallis semper, eros urna aliquam nunc, id facilisis dolor felis eget urna. Sed posuere mauris non aliquet ullamcorper. Vestibulum vel viverra dui. In faucibus lacus in leo consequat, ut feugiat nisi euismod. Vivamus purus justo, auctor quis ante eget, congue malesuada ex. Nam condimentum condimentum sem, eget porta dolor efficitur eu.</p>
+                    <p>Aenean ut mattis nulla, ac tincidunt diam. Aliquam sed lacus imperdiet, fringilla risus a, convallis sapien. Cras tincidunt lacus quis ipsum sodales mattis. Quisque pharetra risus id sodales pulvinar. Aliquam placerat euismod maximus. Integer vitae rhoncus nunc. Mauris id lectus vitae elit elementum iaculis ut non massa. Ut scelerisque lacus et justo blandit, in tincidunt purus commodo. Vivamus suscipit sed erat sed iaculis.</p>
+                    <p>
+                        Integer malesuada odio in augue dignissim, sit amet consectetur tortor cursus. Ut nibh arcu, dignissim vel ornare vel, scelerisque nec turpis. Nullam quis ex sem. Aenean tincidunt arcu eget lobortis condimentum. Nulla facilisi. Suspendisse ac porta nulla, et accumsan risus. Vestibulum semper leo et scelerisque condimentum. Etiam ut odio vitae justo suscipit rutrum nec non ipsum. Nulla nunc nisl, volutpat in urna quis, molestie vehicula ex. Duis pulvinar, lacus at accumsan porttitor, arcu arcu sodales libero, ac maximus nisl urna id nisl. Quisque vel varius est. Quisque sagittis neque id dignissim maximus.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript" asp-append-version="true">
+        $('.main-menu-area li.first-level').each(function () {
+            var anchorTag = $(this).find('a.first-level');
+            if (anchorTag.text().toLowerCase() === "about us") {
+                anchorTag.parent().addClass('active');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@page
+@model WebApp.Pages.Admin.OtherLink.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="float-left card-title font-weight-bold">Page Headings</h3>
+            @*@if (Model.permissions["CanCreate"])
+            {
+                <a class="float-right" asp-page="Manage">
+                    <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+                </a>
+                <div class="clearfix"></div>
+            }*@
+        </div>
+        <div class="card-body">
+            @if (Model.Headings != null && Model.Headings.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="search" style="width: 70px;">S. No.</th>
+                                <th class="search">Page Heading</th>
+
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Headings)
+                            {
+                            <tr>
+                                <td class="text-right">
+                                    @{ index++; }
+                                    @index
+                                </td>
+                                <td>@item.EnglishHeadingName</td>
+
+                                @*<td class="text-center"><i class="@(item.IsActive?"fa fa-check-circle text-success":"fa fa-minus")"></i></td>*@
+                                <td class="text-center">
+                                    @*@if (Model.permissions["CanEdit"])
+            {*@
+                                    <a asp-page="Edit" asp-route-id="@item.Id">
+                                        <i class="fa fa-edit text-dark" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                    </a>
+                                    @*}*@
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                        @*<tfoot>
+                            <tr>
+                                <th class="search">State Name</th>
+                                <th class="text-center noExport noSort">Edit</th>
+                            </tr>
+                        </tfoot>*@
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet. Click 'Create New' to start adding.</p>
+            }
+        </div>
+    </div>
+</section>

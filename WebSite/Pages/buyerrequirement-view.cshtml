@@ -1,0 +1,231 @@
+﻿@page "{id?}"
+@using Microsoft.Extensions.Configuration
+@using WebSite.Helpers
+@model WebSite.Pages.buyerrequirement_viewModel
+@{
+}
+@*<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main">
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="#">Can’t find your requirement</a></li>
+            </ul>
+        </div>
+    </div>
+</section>*@
+<style>
+    .invoice-head td {
+        padding: 0 8px;
+    }
+
+    .invoice-body {
+        background-color: transparent;
+    }
+
+    .invoice-thank {
+        GettProductsDetailsById margin-top: 60px;
+        padding: 5px;
+    }
+
+    address {
+        margin-top: 15px;
+    }
+
+    .slide-large {
+        border: none !important;
+        margin-top: 20px;
+    }
+
+    .BorderImg {
+        border: 2px solid black;
+        width: 18%;
+    }
+
+    .slide-large .item {
+        text-align: center;
+    }
+
+    .slide-large .slick-slide img {
+        display: inline-block;
+    }
+
+    .slide-large .slick-arrow {
+        width: 44px;
+        height: 44px;
+        background: #987e37;
+        border-radius: 100%;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        margin-top: -22px;
+        border: none;
+        z-index: 9;
+        font-size: 0px;
+    }
+
+        .slide-large .slick-arrow::after {
+            content: '\f105';
+            font-family: 'FontAwesome';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: #FFF;
+            text-align: center;
+            line-height: 44px;
+            font-size: 22px;
+        }
+
+    .slick-prev.slick-arrow::after {
+        content: '\f104';
+    }
+
+    .slick-prev.slick-arrow {
+        right: inherit;
+        left: 30px;
+    }
+
+    .slide-large .slick-arrow:focus {
+        outline: none;
+    }
+
+    .slide-large .slick-arrow {
+        right: 5px;
+    }
+
+    .slick-prev.slick-arrow {
+        left: 5px;
+    }
+
+    .fontCol {
+        color: #987e37
+    }
+
+    .breadcrumb-main ul li {
+        display: block;
+        margin: 0;
+    }
+
+    .productModal .slide-large {
+        margin: 0;
+    }
+
+    .slide-thumb {
+        margin-top: 5px;
+    }
+
+        .slide-thumb .item {
+            border: 1px solid #c7c7c7;
+        }
+
+        .slide-thumb .slick-slide {
+            margin: 0 3px;
+        }
+
+        .slide-thumb .slick-list {
+            margin-left: -3px;
+            margin-right: -3px;
+        }
+
+        .slide-thumb .slick-current .item {
+            border: 1px solid #987e37;
+        }
+
+    .imgpadding {
+        padding: 7px;
+    }
+</style>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="heading">Can’t find your requirement</h1>
+            <div class="btn-group btn-group-sm float-right">
+                <a class="btn btn-sm btn-secondary float-right" href="/buyerrequirement-details"><i class="fa fa-arrow-left"></i> Back</a>
+                @*<div class="clearfix"></div>*@
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.BuyerRequirements != null)
+            {
+                <div style="width: 100%;font-size: 20px;font-weight: 700;padding-bottom: 10px;text-align: center;">@Model.BuyerRequirements.ProductListingTitle</div>
+                <div class="row">
+
+                    <table class="table table-bordered">
+
+                        <tbody>
+                            <tr>
+                                <td><strong>Category</strong></td>
+                                <td>@Model.BuyerRequirements.Category</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sub-Category</strong></td>
+                                <td>
+                                    @if (Model.BuyerRequirements.SubCategory == null)
+                                    {
+                                        <p>NA</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@Model.BuyerRequirements.SubCategory</p>
+
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sub-Sub Category</strong></td>
+                                <td>
+                                    @if (Model.BuyerRequirements.SubSubCategoryName == null)
+                                    {
+                                        <p>NA</p>
+
+                                    }
+                                    else
+                                    {
+                                        <p>@Model.BuyerRequirements.SubSubCategoryName</p>
+
+                                    }
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Added On</strong></td>
+                                <td>@Model.BuyerRequirements.CreatedDate</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Description </strong></td>
+                                <td>@Model.BuyerRequirements.Descrition</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <p><strong>Do you have a similar machine to sell? Add your listing for FREE by clicking <a href="/ProductListing" id="checkRole">HERE</a></strong></p>
+                </div>
+
+
+            }
+        </div>
+    </div>
+
+
+
+</section>
+@section Scripts{
+    
+    <script type="text/javascript" asp-append-version="true">
+    var isSupplier='@User.IsInRole("Seller")';
+    $("#checkRole").click(function (event) {
+        debugger;
+        if (isSupplier=='False') {
+            event.preventDefault();
+            alert('Please Login as Seller to add products')
+        }
+    });
+    </script>
+}

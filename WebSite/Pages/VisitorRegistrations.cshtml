@@ -1,0 +1,147 @@
+﻿@page
+@model WebSite.Pages.VisitorRegistrationsModel
+@{
+}
+<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main">
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="#">Visitor Registration</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="inner-content">
+
+    <h1 class="heading">Visitor Registration</h1>
+    <div class="card-body">
+        <form method="post">
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+
+                        <div class="form-label-group">
+                            <label asp-for="VisitorRegistrationsdto.FirstName">First Name<span class="required">*</span></label>
+                            <input type="text" id="txtFirstName" asp-for="VisitorRegistrationsdto.FirstName" class="form-control" placeholder="First Name" />
+                            <span asp-validation-for="VisitorRegistrationsdto.FirstName" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="VisitorRegistrationsdto.LastName">Last Name<span class="required">*</span></label>
+                            <input asp-for="VisitorRegistrationsdto.LastName" type="text" class="form-control" placeholder="Last Name" />
+                            <span asp-validation-for="VisitorRegistrationsdto.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+
+                        <div class="form-label-group">
+                            <label asp-for="VisitorRegistrationsdto.CompanyName">Company Name<span class="required"></span></label>
+                            <input type="text" id="txtFirstName" asp-for="VisitorRegistrationsdto.CompanyName" class="form-control" placeholder="Company Name" />
+                            
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="VisitorRegistrationsdto.ContactNo">Mobile/Cell Number<span class="required">*</span></label>
+                            <input asp-for="VisitorRegistrationsdto.ContactNo" id="txtMobileNo" type="text" class="form-control" maxlength="10" placeholder="Mobile/Cell Number" />
+                            <span asp-validation-for="VisitorRegistrationsdto.ContactNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="VisitorRegistrationsdto.Email">Email (User ID)<span class="required">*</span></label>
+                            <input asp-for="VisitorRegistrationsdto.Email" type="text" id="txtemailid" class="form-control" placeholder="Email (User ID)" />
+                            <span asp-validation-for="VisitorRegistrationsdto.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label>Verify Email</label>
+                            <input type="text" asp-for="VisitorRegistrationsdto.VeryfyEmail" id="txtVerifyemailid" class="form-control" placeholder="Verify Email" />
+                            <span asp-validation-for="VisitorRegistrationsdto.VeryfyEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+
+
+                    <div class="col-md-12">
+                        <div class="form-label-group">
+                            <label asp-for="VisitorRegistrationsdto.Address">Address<span class="required"></span></label>
+                            <textarea type="text" asp-for="VisitorRegistrationsdto.Address" class="form-control" placeholder="Address" style="height: 100px;"></textarea>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="mx-auto col-md-4">
+                <button type="submit" id="btnsubmit" class="btn btn-block btn-primary">Submit</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+@section Scripts{
+
+    <script type="text/javascript" asp-append-version="true">
+        $(document).ready(function () {
+            $("#txtMobileNo").keypress(function (e) {
+                //if the letter is not digit then display error and don't type anything
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    //display error message
+                    $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                    return false;
+                }
+            });
+        })
+
+        $('#txtemailid').on('blur', function () {
+            var name = $(this).val();
+            if (name.length > 0) {
+                debugger;
+                $.get('?handler=GetbyEmail', { email: name })
+                    .done(function (data) {
+                        if (data != null) {
+                            debugger;
+                            alert('Email ID Already Exist')
+                            $("#txtemailid").val("");
+                        }
+                    });
+
+
+            }
+        });
+        
+
+    </script>
+
+}

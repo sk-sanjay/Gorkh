@@ -1,0 +1,316 @@
+﻿@page
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebSite.Pages.buyerrequirementModel
+@{
+    ViewData["Title"] = "Can’t find your requirement";
+}
+<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main">
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="#">Can’t find your requirement</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="inner-content">
+    @if (TempData["Message"] != null)
+    {
+        var message = ((string)TempData["Message"]);
+        <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+            <strong>
+                <p style="font-weight:bold;color:red" class="m-0">@TempData["Message"]</p>
+            </strong>
+        </div>
+    }
+
+    <h1 class="heading">
+        Can’t find your requirement
+    </h1>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.FullName">Full Name<span class="required">*</span></label>
+                            @*<p>@Model.BuyerSellervm1.FirstName</p>*@
+                            <input type="text" asp-for="BuyerRequirementsdto.FullName" class="form-control" placeholder="Full Name" readonly />
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.EmailID">Email Id<span class="required">*</span></label>
+                            <input type="text" id="txtemailid" asp-for="BuyerRequirementsdto.EmailID" class="form-control" placeholder="Email Id" />
+                            <span asp-validation-for="BuyerRequirementsdto.EmailID" class="text-danger"></span>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.ProductListingTitle">Product Listing Title<span class="required">*</span></label>
+                            <input type="text" asp-for="BuyerRequirementsdto.ProductListingTitle" class="form-control" placeholder="Product Listing Title" />
+                            <span asp-validation-for="BuyerRequirementsdto.ProductListingTitle" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.CategoryId">Category<span class="required">*</span></label>
+
+                            <select asp-for="BuyerRequirementsdto.CategoryId" asp-items="Model.Category" id="ddlCategory" class="custom-select">
+                                <option value="">--Select--</option>
+
+                            </select>
+                            <span asp-validation-for="BuyerRequirementsdto.CategoryId" class="text-danger"></span>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.SubCategoryId">Sub-Category<span class="required">*</span></label>
+
+                            <select asp-for="BuyerRequirementsdto.SubCategoryId" id="ddlSubCategory" class="custom-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="BuyerRequirementsdto.SubCategoryId" class="text-danger"></span>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.SubSubCategoryName">Sub-Sub-Category<span class="required">*</span></label>
+
+                            <input type="text" asp-for="BuyerRequirementsdto.SubSubCategoryName" class="form-control" placeholder="Sub-Sub-Category" />
+                            <span asp-validation-for="BuyerRequirementsdto.SubSubCategoryName" class="text-danger"></span>
+
+
+                        </div>
+                        
+                        @*<div class="form-label-group">
+            <label asp-for="BuyerRequirementsdto.SubSubCategoryId">Sub-Sub-Category<span class="required">*</span></label>
+
+            <select asp-for="BuyerRequirementsdto.SubSubCategoryId" id="ddlSubSubCategory" class="custom-select">
+                <option value="">--Select--</option>
+
+            </select>
+            <span asp-validation-for="BuyerRequirementsdto.SubSubCategoryId" class="text-danger"></span>
+
+
+        </div>*@
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.upload1">Upload File</label>
+                            <input type="file" asp-for="BuyerRequirementsdto.upload1" class="form-control" />
+
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label>Product Condition<span class="required">*</span></label>
+                            <select asp-items="Model.Condition" asp-for="BuyerRequirementsdto.ProductCondition" id="ddlConditions" class="custom-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="BuyerRequirementsdto.ProductCondition" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.Qty">Qty.<span class="required">*</span></label>
+                            <input type="text" maxlength="2" asp-for="BuyerRequirementsdto.Qty" class="form-control" placeholder="Qty." />
+                            <span asp-validation-for="BuyerRequirementsdto.Qty" class="text-danger"></span>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerRequirementsdto.Descrition">Description</label>
+                            <textarea type="text" id="txtFirstName" asp-for="BuyerRequirementsdto.Descrition" class="form-control" placeholder="Description"></textarea>
+                            <span asp-validation-for="BuyerRequirementsdto.Descrition" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="mx-auto col-md-4">
+                        <button type="submit" id="btnsubmit" class="btn btn-block btn-primary">Save</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+
+        $("#ddlCategory").on("change", function () {
+
+            var maincat = $("#ddlCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubCategory&maincat=' + maincat + '', (data) => {
+                    $("#ddlSubCategory").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subCategoryName}</option>`;
+                        });
+                        $("#ddlSubCategory").append(item1);
+                        /*Clear sub sub category*/
+                        $("#ddlSubSubCategory").empty().append('<option value="">--Select--</option>');
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $("#ddlSubCategory").append(item1);
+                        /*Hide sub sub category*/
+                        //var item2 = "<option value=''>Select</option>";
+                        $("#ddlSubSubCategory").empty().append('<option value="">--Select--</option>');
+                    }
+                });
+            }
+        })
+
+        $("#ddlSubCategory").on("change", function () {
+            var isc = $("#IsCommon").val();
+            $("#specificationsdiv").empty();
+            var maincat = $("#ddlSubCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubSubCategoryBySubCategory2&subcategoryid=' + maincat + '', (data) => {
+                    $("#ddlSubSubCategory").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subSubCategoriesName}</option>`;
+                        });
+                        $("#ddlSubSubCategory").append(item1);
+                        $('input[name="sequencenoname"]').val('');
+                        //common field check
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $("#ddlSubSubCategory").append(item1);
+                    }
+                });
+            }
+        })
+        $('#txtemailid').on('blur', function () {
+            var name = $(this).val();
+            if (name.length > 0) {
+               
+                $.get('?handler=GetbyEmail', { email: name })
+                    .done(function (data) {
+                        if (data != null) {
+                            var SellerId = data.sellerId//alert(data)
+                            var BuyerId = data.buyerId//alert(data)
+                            var name = data.firstName
+                            if (BuyerId != "0") {
+                                $("#BuyerRequirementsdto_FullName").val(name);
+
+                                // $("#txtemailid").val("");
+                            }
+                            else {
+                                alert("Please Register as a Buyer to upload your requirements ")
+                                $("#BuyerRequirementsdto_FullName").val("");
+                                $("#txtemailid").val("");
+
+
+
+                            }
+
+
+
+
+                        }
+                        else {
+                            alert('You are not registered with this Email Id.')
+                            $("#BuyerRequirementsdto_FullName").val("");
+                            $("#txtemailid").val("");
+                        }
+                    });
+            }
+
+        });
+
+    </script>
+}
+-----------------------------------
+
+
+

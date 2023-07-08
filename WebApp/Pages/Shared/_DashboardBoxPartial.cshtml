@@ -1,0 +1,16 @@
+﻿@model DashboardStatsVM
+<div class="row">
+    @foreach (var box in Model.Rows)
+    {
+    <div class="small-box @box.BoxBackgroundClass">
+        <div class="inner">
+            <h3>@box.Count</h3>
+            <p>@box.DisplayText</p>
+        </div>
+        <div class="icon">
+            <i class="@box.IconClass"></i>
+        </div>
+        <a href="@box.TargetUrl" class="small-box-footer">@box.TargetUrlText <i class="@box.TargetUrlIconClass"></i></a>
+    </div>
+    }
+</div>

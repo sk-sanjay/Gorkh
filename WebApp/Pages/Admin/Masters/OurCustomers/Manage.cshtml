@@ -1,0 +1,68 @@
+﻿@page
+@model WebApp.Pages.Admin.Masters.OurCustomers.ManageModel
+@{
+    ViewData["Title"] = "Manage Our Customers";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 offset-lg-3 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        @if (!Model.IsNew)
+                        {
+                        <h3 class="card-title float-left font-weight-bold">Edit Our Customers</h3>
+                            <div class="btn-group btn-group-sm float-right">
+                                <a href="#" class="text-dark mr-3" data-toggle="modal" data-target="#confirmationModal" title="Delete"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                <a class="text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        }
+                        else
+                        {
+                    <h3 class="card-title float-left font-weight-bold">Create Our Customers</h3>
+                            <a class="float-right text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                            <div class="clearfix"></div>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            @if (!Model.IsNew)
+                            {
+                                <input type="hidden" asp-for="OurCustomers.Id" />
+                                <input type="hidden" asp-for="OurCustomers.CreatedDate" />
+                                <input type="hidden" asp-for="OurCustomers.CreatedBy" />
+                                <input type="hidden" asp-for="OurCustomers.Logo" />
+                            }
+                            <div class="form-group">
+                                <label asp-for="OurCustomers.CompanyName" class="col-form-label">Company Name<span class="required">*</span></label>
+                                <input asp-for="OurCustomers.CompanyName" class="form-control" placeholder="Company Name" autocomplete="off" />
+                                <span asp-validation-for="OurCustomers.CompanyName" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label asp-for="OurCustomers.Logo" class="col-form-label">Logo<span class="required">*</span></label>
+                                <input type="file" id="UserImage" name="UserImage">
+                                <span asp-validation-for="OurCustomers.Logo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch custom-switch-on-primary">
+                                    <input asp-for="OurCustomers.IsActive" class="custom-control-input" checked="@Model.IsNew">
+                                    <label asp-for="OurCustomers.IsActive" class="custom-control-label">Active</label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3 offset-md-3">
+                                    <button type="submit" class="btn btn-block btn-primary">Save</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-block btn-secondary" asp-page="Index">Back</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

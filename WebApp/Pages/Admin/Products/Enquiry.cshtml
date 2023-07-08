@@ -1,0 +1,141 @@
+﻿@page "{pid?}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebApp.Pages.Admin.Products.EnquiryModel
+@{
+    ViewData["Title"] = "Product Enquiry";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-12 offset-lg-1 offset-md-1">
+                <div class="card">
+                    <div class="card-header">
+                        @*@if (!Model.IsNew)
+                            {
+                                <h3 class="card-title float-left font-weight-bold">Edit Specification Mapping</h3>
+                                <div class="btn-group btn-group-sm float-right">
+                                    <a href="#" class="text-dark mr-3" data-toggle="modal" data-target="#confirmationModal" title="Delete"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                    <a class="text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                                </div>
+                                <div class="clearfix"></div>
+                            }*@
+                        @*else
+                            {*@
+                        <h3 class="card-title float-left font-weight-bold">Product Query</h3>
+                        <a class="float-right text-dark" asp-page="Index"><i class="fa fa-arrow-left" data-toggle="tooltip" data-placement="top" title="Back"></i></a>
+                        <div class="clearfix"></div>
+                        @*}*@
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            @*@if (!Model.IsNew)
+                                {
+                                    <input type="hidden" asp-for="SpecificationsSSCategory.Id" />
+                                    <input type="hidden" asp-for="SpecificationsSSCategory.CreatedDate" />
+                                    <input type="hidden" asp-for="SpecificationsSSCategory.CreatedBy" />
+                                }*@
+                            <b>Products Name:</b> @Model.ProductsSellerDetail.SubSubCategoriesName
+                            <div class="form-group">
+                                <label asp-for="ProductsEnquiry.Descriptions" class="col-form-label">Description<span class="required">*</span></label>
+                                @*<input asp-for="ProductsEnquiry.Descriptions" class="form-control" placeholder="Description" autocomplete="on" />*@
+                                <textarea asp-for="ProductsEnquiry.Descriptions" id="txtDescriptions" class="form-control" placeholder="Description"></textarea>
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductsEnquiry.EnquiryFile" class="col-form-label">Image</label>
+                                <input type="file" id="UserImage" name="UserImage">
+                                <span class="text-danger"></span>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-3 offset-md-3">
+                                    <button type="submit" class="btn btn-block btn-primary" id="btnSave">Save</button>
+                                    @*<input type="button" class="btn btn-primary" id="btnSave" value="Save" />*@
+
+                                </div>
+                                @*<div class="col-md-3">
+                                        <a class="btn btn-block btn-secondary" asp-page="Index">Back</a>
+                                    </div>*@
+                            </div>
+                            <div class="p-3"></div>
+                            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                                        <thead>
+                                            @*@{
+                                                    int index = 0;
+                                                }*@
+                                            <tr>
+                                                @*<th class="text-center">S. No.</th>*@
+                                                <th class="search">Query Details</th>
+                                                <th class="search" width="100">File</th>
+                                                <th class="search" width="100">Sent By</th>
+                                                <th class="search" width="200">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ModelVms)
+                                            {
+                                                <tr>
+                                                    @*<td class="text-center">
+                                                            @{ index++; }
+                                                            @index
+                                                        </td>*@
+                                                    <td>
+                                                        @{
+                                                            if (item.CreatedBy == "Admin")
+                                                            {
+                                                                <span style="float:right;">@Html.Raw(item.Descriptions)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span style="float:left;">@Html.Raw(item.Descriptions)</span>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (item.EnquiryFile != null)
+                                                        {
+                                                            <img id="imgPreview" class="img-thumbnail" width="100"
+                                                                 src="@($"{_config["BaseUrl"]}/img/penquiry/{item.EnquiryFile}")"
+                                                                 alt="Image"
+                                                                 asp-append-version="true">
+                                                        }
+                                                    </td>
+                                                    <td>@item.CreatedBy</td>
+                                                    <td>@($"{item.CreatedDate:dd-MM-yyyy hh:mm tt}")</td>
+                                                </tr>
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    @*<link href="~/plugins/summernote/summernote.css" rel="stylesheet" />
+        <script src="~/plugins/summernote/summernote.js"></script>*@
+    <link href="~/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
+    <script src="~/plugins/summernote/summernote-bs4.js"></script>
+    <script type="text/javascript" asp-append-version="true">
+        $(document).ready(function () {
+            $('#txtDescriptions').summernote({
+                placeholder: 'Description',
+                //height: 300,
+                minHeight: 100,
+                focus: true
+
+            });
+        });
+    </script>
+}

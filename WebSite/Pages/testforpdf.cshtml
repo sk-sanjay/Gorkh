@@ -1,0 +1,8 @@
+﻿@page "{id?}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model WebSite.Pages.testforpdfModel
+@{
+    Layout = "_GeneratePdfLayout";
+}
+<partial name="_ProductDetailsPartial" model="Model.ProductsDetail" />

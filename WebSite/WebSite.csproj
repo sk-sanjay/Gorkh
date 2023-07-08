@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	  <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\js\customs\**" />
+    <Content Remove="wwwroot\js\customs\**" />
+    <EmbeddedResource Remove="wwwroot\js\customs\**" />
+    <None Remove="wwwroot\js\customs\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Pages\Account\Profile.cshtml" />
+    <Content Remove="Pages\BuyerRegistration.cshtml" />
+    <Content Remove="Pages\Profile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pages\Index.cshtml.cs~RF152cc72d.TMP" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+		<ProjectReference Include="..\Infrastructure.IoC\Infrastructure.IoC.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\Files\Enquiry\" />
+	  <Folder Include="wwwroot\plugins\" />
+	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+		<PackageReference Include="UAParser" Version="3.1.47" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
+	  <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Account\Profile.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Pages\Account\Profile.cshtml" />
+	  <_ContentIncludedByDefault Remove="Pages\BuyerRegistration.cshtml" />
+	  <_ContentIncludedByDefault Remove="Pages\Profile.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Pages\Account\Profile.cshtml" />
+	  <None Include="Pages\BuyerRegistration.cshtml" />
+	  <None Include="Pages\Profile.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\BuyerRegistration.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Profile.cshtml" />
+	</ItemGroup>
+
+</Project>

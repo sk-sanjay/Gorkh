@@ -1,0 +1,77 @@
+﻿@page
+@model WebSite.Pages.ProductsPurchasesViewModel
+@{
+    ViewData["Title"] = "Reserve Price Paid";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class="card card-register mx-auto mt-5 col-md-9">
+
+                <div class="card-header">
+                    <h2 class="card-title float-left">Reserve Price Paid</h2>
+                    @*<a class="float-right" asp-page="/ProductListing">
+                            <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i> Add New Listing
+                        </a>*@
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card-body">
+                        @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                        {
+                            <div class="table-responsive">
+                                <table id="tblDataTable" class="table">
+                                    <thead>
+                                        @{
+                                            int index = 0;
+                                        }
+                                        <tr>
+                                            @*<th class="text-center noExport noSort"></th>*@
+                                            <th class="text-center">S. No.</th>
+                                            <th class="search">Product Code</th>
+                                            <th class="search">Product Name</th>
+                                            <th class="search text-right">Reserve Price Paid</th>
+                                            <th class="search">Paid Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ModelVms)
+                                        {
+                                            <tr>
+                                                @*<td class="text-center"></td>*@
+                                                <td class="text-center">
+                                                    @{ index++; }
+                                                    @index
+                                                </td>
+                                                <td>
+                                                    <a asp-page="ProductDetails" asp-route-id="@item.ProductId" target="_blank">
+                                                        @item.ProductNumber
+                                                    </a>
+                                                </td>
+                                                <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                                <td class="text-right">@item.ReservePrice.ToString("#,#")</td>
+                                                <td>@($"{item.CreatedDate:dd-MM-yyyy hh:mm tt}")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No records has been added yet.</p>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="Shared/_BuyerViewsPartial" />
+</section>

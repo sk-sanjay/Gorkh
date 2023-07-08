@@ -1,0 +1,146 @@
+﻿@page "{ProductId?}"
+@model WebSite.Pages.ProductDescriptionModel
+@{
+    ViewData["Title"] = "Products Descriptions";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+
+            <div class="card card-register mx-auto mt-5 col-md-9">
+                @if (TempData["Message2"] != null)
+                {
+                    var message = ((string)TempData["Message2"]);
+                    <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                        <strong>
+                            <p style="font-weight:bold;color:red" class="m-0">@TempData["Message2"]</p>
+                        </strong>
+                    </div>
+                }
+                @if (Model.ProductId != null && Model.ProductsLocationsVM != null && Model.ProductsDescription == null && Model.ProductsFileUploadsVM.Count == 0 || Model.ProductsFileUploadsVM==null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <div class="progress-step progress-step-active" data-title="Description"></div>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+                }
+                else if (Model.ProductId != null && Model.ProductsLocationsVM != null && Model.ProductsDescription != null && Model.ProductsFileUploadsVM.Count == 0 || Model.ProductsFileUploadsVM ==null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+                }
+                else if (Model.ProductId != null && Model.ProductsLocationsVM != null && Model.ProductsDescription != null && Model.ProductsFileUploadsVM.Count > 0)
+                {
+            <div class="progressbar">
+                <div class="progress" id="progress"></div>
+                <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                <a asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">
+                    <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                </a>
+                <a asp-page="ProductPreview" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Preview"></div></a>
+            </div>
+                }
+                else
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <div class="progress-step progress-step-active" data-title="Description"></div>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+                }
+
+
+                <div class="card-header"><h2>Item Brief</h2></div>
+
+                <div class="card-body">
+                    <form id="myform" method="post">
+                        @if (!Model.IsNew)
+                        {
+                            <input type="hidden" asp-for="ProductsDescription.Id" />
+                            @*<input type="hidden" asp-for="ProductsLocation.CreatedDate" />
+                    <input type="hidden" asp-for="ProductsLocation.CreatedBy" />*@
+                        }
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsDescription.Descriptions">Description<span class="required">*</span></label>
+                                        @*<input asp-for="ProductsDescription.Descriptions" type="text" id="txtDescriptions" class="form-control" placeholder="Description" />*@
+                                        <textarea asp-for="ProductsDescription.Descriptions" id="txtDescriptions" class="form-control"></textarea>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <a class="btn btn-block btn-secondary" asp-route-ProductId="@Model.ProductId" asp-page="ProductLocation">Back</a>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-block btn-primary">Save & Next</button>
+                            </div>
+                            @*<div class="col-md-2">
+                        <a class="btn btn-block btn-secondary" asp-route-ProductId="@Model.ProductId" asp-page="ProductFile">Next</a>
+                    </div>*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    @*<link href="~/plugins/summernote/summernote.css" rel="stylesheet" />
+        <script src="~/plugins/summernote/summernote.js"></script>*@
+    <link href="~/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
+    <script src="~/plugins/summernote/summernote-bs4.js"></script>
+    <script type="text/javascript" asp-append-version="true">
+        $(document).ready(function () {
+            $('#txtDescriptions').summernote({
+                placeholder: 'Description',
+                //height: 300,
+                minHeight: 100,
+                focus: true
+
+            });
+        });
+        // Store form state at page load
+
+        var initial_form_state = $('#myform').serialize();
+        // Store form state after form submit
+        $('#myform').submit(function () {
+            initial_form_state = $('#myform').serialize();
+        });
+        // Check form changes before leaving the page and warn user if needed
+        $(window).bind('beforeunload', function (e) {
+            var form_state = $('#myform').serialize();
+            if (initial_form_state != form_state) {
+                var message = "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+                e.returnValue = message; // Cross-browser compatibility (src: MDN)
+                return message;
+            }
+        });
+    </script>
+}

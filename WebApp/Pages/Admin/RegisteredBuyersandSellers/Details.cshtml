@@ -1,0 +1,318 @@
+﻿@page "{email?}"
+@using Microsoft.Extensions.Configuration
+@using WebApp.Helpers
+@inject IConfiguration _config;
+@model WebApp.Pages.Admin.RegisteredBuyersandSellers.DetailsModel
+@{
+}
+<style>
+    .invoice-head td {
+        padding: 0 8px;
+    }
+
+    .invoice-body {
+        background-color: transparent;
+    }
+
+    .invoice-thank {
+        GettProductsDetailsById margin-top: 60px;
+        padding: 5px;
+    }
+
+    address {
+        margin-top: 15px;
+    }
+
+    .slide-large {
+        border: none !important;
+        margin-top: 20px;
+    }
+
+    .BorderImg {
+        border: 2px solid black;
+        width: 18%;
+    }
+
+    .slide-large .item {
+        text-align: center;
+    }
+
+    .slide-large .slick-slide img {
+        display: inline-block;
+    }
+
+    .slide-large .slick-arrow {
+        width: 44px;
+        height: 44px;
+        background: #987e37;
+        border-radius: 100%;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        margin-top: -22px;
+        border: none;
+        z-index: 9;
+        font-size: 0px;
+    }
+
+        .slide-large .slick-arrow::after {
+            content: '\f105';
+            font-family: 'FontAwesome';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: #FFF;
+            text-align: center;
+            line-height: 44px;
+            font-size: 22px;
+        }
+
+    .slick-prev.slick-arrow::after {
+        content: '\f104';
+    }
+
+    .slick-prev.slick-arrow {
+        right: inherit;
+        left: 30px;
+    }
+
+    .slide-large .slick-arrow:focus {
+        outline: none;
+    }
+
+    .slide-large .slick-arrow {
+        right: 5px;
+    }
+
+    .slick-prev.slick-arrow {
+        left: 5px;
+    }
+
+    .fontCol {
+        color: #987e37
+    }
+
+    .breadcrumb-main ul li {
+        display: block;
+        margin: 0;
+    }
+
+    .productModal .slide-large {
+        margin: 0;
+    }
+
+    .slide-thumb {
+        margin-top: 5px;
+    }
+
+        .slide-thumb .item {
+            border: 1px solid #c7c7c7;
+        }
+
+        .slide-thumb .slick-slide {
+            margin: 0 3px;
+        }
+
+        .slide-thumb .slick-list {
+            margin-left: -3px;
+            margin-right: -3px;
+        }
+
+        .slide-thumb .slick-current .item {
+            border: 1px solid #987e37;
+        }
+
+    .imgpadding {
+        padding: 7px;
+    }
+</style>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title float-left" style="font-size: 2.1rem;">User Details</h2>
+            <div class="btn-group btn-group-sm float-right">
+                <a class="btn btn-sm btn-secondary float-right" href="/Admin/RegisteredBuyersandSellers"><i class="fa fa-arrow-left"></i> Back</a>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.BuyerSellerRegistrations != null)
+            {
+                <section class="content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="span8">
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="span4">
+
+                            <address>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Registration Number  </strong>
+                                                    </td>
+                                                    <td>
+                                                        <strong><span class="fontCol"> &nbsp; : @Model.BuyerSellerRegistrations.UniqueCode</span></strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Registered On </strong>
+                                                    </td>
+                                                    <td>
+                                                        <strong><span class="fontCol"> &nbsp; : @($"{Model.BuyerSellerRegistrations.CreatedDate:dd-MM-yyyy}")</span></strong>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </address>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="span4">
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <table class="table table-bordered">
+
+                        <tbody>
+                            <tr>
+                                <td><strong>First Name</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.FirstName</td>
+                            </tr>
+                            <tr>
+                                <td><strong>First Name</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.LastName</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Company Name</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.CompanyName</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Company Website</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.CompanyWebsite</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Email (User ID)</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Email</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Mobile/Cell Number</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Mobile</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Landline No</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.LandlineNo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Organisation Type</strong></td>
+                                <td>
+                                    @if (Model.BuyerSellerRegistrations.OrganisationTypes != null)
+                                    {
+                                        @Model.BuyerSellerRegistrations.OrganisationTypes.Name
+                                    }
+                                    else
+                                    {
+                                        <p>-</p>
+                                    }
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Organisation</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Category.Name</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Department</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Department</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Countries</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Countries.Name</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>State</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.States.StateName</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>City</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Cities.CityName</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Address</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.AddressLine1 @Model.BuyerSellerRegistrations.AddressLine2</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Postal / Zip Code</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.ZipCode</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description of product</strong></td>
+                                <td>@Model.BuyerSellerRegistrations.Descriptionofproduct</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="span8 well invoice-body col-12">
+                        <table class="table table-bordered">
+
+                            <tbody>
+
+
+                                <!--<tr>
+                                    <td colspan="2">-->
+                                @*<p><strong>Prodcut Brief </strong><span>@Html.Raw(Model.ProductsDetail.Descriptions)</span> </p>*@
+                                <!--<p><a class="btn btn-sm btn-secondary float-right" href="/Admin/RegisteredBuyersandSellers"><i class="fa fa-arrow-left"></i> Back</a></p>
+                                    </td>
+                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+</section>

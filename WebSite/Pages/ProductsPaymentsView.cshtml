@@ -1,0 +1,102 @@
+﻿@page
+@model WebSite.Pages.ProductsPaymentsViewModel
+@{
+    ViewData["Title"] = "Reserve Price Paid";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class="mx-auto mt-2 col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Reserve Price Paid</h2>
+                    </div>
+                    <div class="card-body">
+                        
+                        @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                        {
+                            <div class="table-responsive" style="display:block; overflow-x:auto; white-space:nowrap;">
+                                <table id="tblDataTable" class="table">
+                                    <thead>
+                                        @{
+                                            int index = 0;
+                                        }
+                                        <tr>
+                                            @*<th class="text-center noExport noSort"></th>*@
+                                            <th class="text-center">S. No.</th>
+                                            <th class="search">Product Code</th>
+                                            <th class="search">Product Name</th>
+                                            <th class="search">Payment mode</th>
+                                            <th class="search">Number</th>
+                                            <th class="search text-right">Reserve Price Paid</th>
+                                            <th class="search">Drawn On</th>
+                                            <th class="search">Ch / BG Date</th>
+                                            <th class="search">Paid Date</th>
+                                            <th class="search">Payment Status</th>
+                                            <th class="search">Rec. Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ModelVms)
+                                        {
+                                            <tr>
+                                                @*<td class="text-center"></td>*@
+                                                <td class="text-center">
+                                                    @{ index++; }
+                                                    @index
+                                                </td>
+                                                <td>
+                                                    <a asp-page="ProductDetails" asp-route-id="@item.ProductId" target="_blank">
+                                                        @item.ProductNumber
+                                                    </a>
+                                                </td>
+                                                <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                                <td>
+                                                    @if (item.PaymentModeId == 1)
+                                                    {<p>Online</p>}
+                                                    else if (item.PaymentModeId == 2)
+                                                    { <p>Offline</p>}
+                                                    else if (item.PaymentModeId == 3)
+                                                    { <p>Bank Guarantee</p>}
+
+                                                </td>
+                                                <td>
+                                                    @if (item.DdChequeNo != null)
+                                                    {<p>DD / Ch. No. : @item.DdChequeNo</p>}
+                                                else if (item.BgNo != null)
+                                                { <p>BG No. : @item.BgNo</p>}
+                                                </td>
+                                                <td class="text-right">@item.ReservePrice.ToString("#,#")</td>
+                                                <td>@item.DrawnOn</td>
+                                                <td>@($"{item.ChAndBgDate:dd-MM-yyyy}")</td>
+                                                <td>@($"{item.CreatedDate:dd-MM-yyyy hh:mm tt}")</td>
+                                                <td>
+                                                    @if (item.PaymentStatus != null)
+                                                    {@item.PaymentStatus}
+                                                else
+                                                { <p>Pending approval from admin </p>}
+                                                </td>
+                                                <td>
+                                                    @($"{item.RecDate:dd-MM-yyyy hh:mm tt}")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No records has been added yet.</p>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <partial name="Shared/_BuyerViewsPartial" />
+</section>

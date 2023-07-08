@@ -1,0 +1,240 @@
+﻿@page "{ProductId?}"
+@model WebSite.Pages.ProductLocationModel
+@{
+    ViewData["Title"] = "Products Locations";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+
+            <div class="card card-register mx-auto mt-5 col-md-9">
+                @if (TempData["Message1"] != null)
+                {
+                    var message = ((string)TempData["Message1"]);
+                    <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                        <strong>
+                            <p style="font-weight:bold;color:red" class="m-0">@TempData["Message1"]</p>
+                        </strong>
+                    </div>
+                }
+                @if (Model.ProductId != null && Model.ProductsLocation != null && Model.ProductsDescriptionsVM == null && Model.ProductsFileUploadsVM.Count == 0 || Model.ProductsFileUploadsVM == null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <div class="progress-step" data-title="Description"></div>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+                }
+                else if (Model.ProductId != null && Model.ProductsLocation != null && Model.ProductsDescriptionsVM != null && Model.ProductsFileUploadsVM.Count == 0 || Model.ProductsFileUploadsVM == null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+                }
+                else if (Model.ProductId != null && Model.ProductsLocation != null && Model.ProductsDescriptionsVM != null && Model.ProductsFileUploadsVM.Count > 0)
+                {
+            <div class="progressbar">
+                <div class="progress" id="progress"></div>
+                <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                <a asp-page="ProductLocation" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                <a asp-page="ProductDescription" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                <a asp-page="ProductFile" asp-route-ProductId="@Model.ProductId">
+                    <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                </a>
+                <a asp-page="ProductPreview" asp-route-ProductId="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Preview"></div></a>
+            </div>
+                }
+
+                else
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.ProductId"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <div class="progress-step progress-step-active" data-title="Item Location"></div>
+                        <div class="progress-step" data-title="Description"></div>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>
+
+                }
+
+                <div class="card-header"><h2>Item Location</h2></div>
+                <div class="card-body">
+                    <form id="myform" method="post">
+                        @if (!Model.IsNew)
+                        {
+                            <input type="hidden" asp-for="ProductsLocation.Id" />
+                            @*<input type="hidden" asp-for="ProductsLocation.CreatedDate" />
+                    <input type="hidden" asp-for="ProductsLocation.CreatedBy" />*@
+                        }
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsLocation.CountryId">Country<span class="required">*</span></label>
+                                        <select asp-for="ProductsLocation.CountryId" asp-items="Model.Country" id="ddlCountry" class="custom-select">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                        <span asp-validation-for="ProductsLocation.CountryId" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsLocation.StateId">State<span class="required">*</span></label>
+                                        <select asp-for="ProductsLocation.StateId" asp-items="Model.State" id="ddlState" class="custom-select">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                        <span asp-validation-for="ProductsLocation.StateId" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsLocation.AddressLine1">Address Line 1<span class="required">*</span></label>
+                                        <input asp-for="ProductsLocation.AddressLine1" type="text" id="txtAddress1" class="form-control" placeholder="Address Line 1" />
+                                        <span asp-validation-for="ProductsLocation.AddressLine1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsLocation.AddressLine2">Address Line 2</label>
+                                        <input asp-for="ProductsLocation.AddressLine2" type="text" id="txtAddress2" class="form-control" placeholder="Address Line 2" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsLocation.CityId">City<span class="required">*</span></label>
+                                        <select asp-for="ProductsLocation.CityId" asp-items="Model.City" id="ddlCity" class="custom-select">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                        <span asp-validation-for="ProductsLocation.CityId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label asp-for="ProductsLocation.ZipCode">Postal / Zip Code</label>
+                                        <input asp-for="ProductsLocation.ZipCode" type="text" class="form-control" placeholder="Postal / Zip Code" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <a class="btn btn-block btn-secondary" asp-page="ProductListing" asp-route-id="@Model.ProductId">Back</a>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-block btn-primary">Save & Next</button>
+                            </div>
+                           
+                            @*<div class="col-md-2">
+            <a class="btn btn-block btn-secondary" asp-route-ProductId="@Model.ProductId" asp-page="ProductDescription">Next</a>
+        </div>*@
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+
+        $("#ddlCountry").on("change", function () {
+            debugger;
+            var maincat = $("#ddlCountry option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetStatebyCountryid&countryid=' + maincat + '', (data) => {
+                    $("#ddlState").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.stateName}</option>`;
+                        });
+                        $("#ddlState").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlState").append(item1);
+                    }
+                });
+            }
+        })
+
+        $("#ddlState").on("change", function () {
+            debugger;
+            var maincat = $("#ddlState option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetCitybystateid&stateid=' + maincat + '', (data) => {
+                    $("#ddlCity").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.cityName}</option>`;
+                        });
+                        $("#ddlCity").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlCity").append(item1);
+                    }
+                });
+            }
+        })
+
+
+        // Store form state at page load
+        
+        var initial_form_state = $('#myform').serialize();
+        // Store form state after form submit
+        $('#myform').submit(function () {
+            initial_form_state = $('#myform').serialize();
+        });
+        // Check form changes before leaving the page and warn user if needed
+        $(window).bind('beforeunload', function (e) {
+            var form_state = $('#myform').serialize();
+            if (initial_form_state != form_state) {
+                var message = "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+                e.returnValue = message; // Cross-browser compatibility (src: MDN)
+                return message;
+            }
+        });
+      </script>
+}

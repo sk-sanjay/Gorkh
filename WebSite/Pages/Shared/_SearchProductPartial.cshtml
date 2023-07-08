@@ -1,0 +1,126 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model IEnumerable<Products1VM>
+
+    
+
+    <div class="prView">
+
+
+
+        <div class="listView">
+            <ul>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    @*<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">*@
+                                    <a data-id="@item.Id" class="details">
+                                        <div class="listView-img"><img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="listView-mid">
+                                        <h3>@item.SubSubCategoriesName</h3>
+                                        <div class="mt-1 pt-2">
+                                            <h4><i class="fa fa-map-marker" aria-hidden="true"></i> @item.StateName</h4> <span> <strong>Year</strong> 2016</span>
+                                        </div>
+                                        <div class="mt-1 pt-2">
+                                            <h5>
+                                                @{
+                                                    decimal price = item.EstimatePrice;
+                                                    System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                                                }
+                                                @(String.Format(Indian, "{0:C0}", price))
+                                            </h5>
+                                            <span> <strong>Quantity</strong> @item.QuantityAvl</span>
+                                        </div>
+                                        <div class="desc">@Html.Raw(item.Descriptions)</div>
+                                        @*<p><a asp-page="ProductDetails" asp-route-id="@item.Id">Read More</a></p>*@
+                                        <p><strong>Category</strong> @item.CategoryName</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="listView-right">
+                                        <div class="">
+                                            <div class="listView-single">Code <span>@item.ProductNumber</span></div>
+                                            <div class="listView-single">Manufacturer <span>Canny Coverage LTD.</span></div>
+                                            <div class="listView-single">Published on <span>@($"{item.CreatedDate:dd-MM-yyyy}")</span></div>
+                                        </div>
+                                        <div class="listView-btn">
+                                            <a asp-page="ProductDetails" asp-route-id="@item.Id">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="proList gridView">
+            <ul>
+                @*<li>
+                        <div class="pro-slide-single">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <div class="pro-slide-img"><img src="assets/images/product1.jpeg" alt=""></div>
+                            </a>
+                            <div class="pro-slide-txt">
+                                <div class="prolike act">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                </div>
+                                <h3>Spare Parts</h3>
+                                <h4>Haryana</h4>
+                                <h5>&#8377; 275000.00</h5>
+                                <p>Code: EIPRCP210001</p>
+                                <p>Quantity: 50</p>
+                                <a class="descLink" href="#"><span>Description</span> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </li>*@
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <li class="line-content">
+                            <div class="pro-slide-single">
+                                @*<a data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">*@
+                                <a href="javascript:void(0)" data-id="@item.Id" class="details">
+                                    <div class="pro-slide-img"><img src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" alt=""></div>
+                                </a>
+                                <div class="pro-slide-txt">
+                                    <div class="prolike">
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                    </div>
+                                    @*<h3>Spare Parts</h3>*@
+                                    <h3>@item.SubSubCategoriesName</h3>
+                                    <h4>@item.StateName</h4>
+                                    @*<h5>&#8377; @item.ReservePrice.ToString("#,#")</h5>*@
+                                    <h5>
+                                        @{
+                                            decimal price = item.EstimatePrice;
+                                            System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+                                        }
+                                        @(String.Format(Indian, "{0:C0}", price))
+                                    </h5>
+                                    <p>Code: @item.ProductNumber</p>
+                                    <p>Quantity: @item.QuantityAvl</p>
+                                    <a class="descLink" asp-page="ProductDetails" asp-route-id="@item.Id"><span>Description</span> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    @*<button class="btn btn-sm btn-dark details" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>*@
+                                    @*<button class="btn btn-sm btn-dark details" data-id="@item.Id">Details</button>*@
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+
+    </div>

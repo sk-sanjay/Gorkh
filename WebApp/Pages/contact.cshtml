@@ -1,0 +1,103 @@
+﻿@page
+@model ContactModel
+@{
+    ViewData["Title"] = "Contact Us";
+}
+<div class="breadcrumb-area bg-gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Contact</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-wraper">
+    <div class="container-fluid  p-0">
+        <div class="row no-gutters">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="contact-form-inner">
+                    <h2>SPEAK YOUR MIND</h2>
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <span asp-validation-for="ContactusDto.FirstName" class="text-danger"></span>
+                                <input asp-for="ContactusDto.FirstName" type="text" class="form-control" placeholder="First Name" />
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <span asp-validation-for="ContactusDto.LastName" class="text-danger"></span>
+                                <input asp-for="ContactusDto.LastName" type="text" class="form-control" placeholder="Last Name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <span asp-validation-for="ContactusDto.EmailId" class="text-danger"></span>
+                                <input asp-for="ContactusDto.EmailId" type="text" class="form-control" placeholder="Email id" />
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <span asp-validation-for="ContactusDto.PhoneNo" class="text-danger"></span>
+                                <input asp-for="ContactusDto.PhoneNo" type="text" class="form-control" placeholder="Phone number" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span asp-validation-for="ContactusDto.Subject" class="text-danger"></span>
+                                <input asp-for="ContactusDto.Subject" type="text" class="form-control" placeholder="Subject" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span asp-validation-for="ContactusDto.Message" class="text-danger"></span>
+                                <textarea rows="5" cols="20" asp-for="ContactusDto.Message" class="form-control" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="contact-submit-btn">
+                            <button class="submit-btn" type="submit">Send Email</button>
+                            <p class="form-messege"></p>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.ContactusDto.info))
+                        {
+                            <div class="col">
+                                <label>@Model.ContactusDto.info</label>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 pl-0 pr-0">
+                <div class="contact-address-area">
+                    <h2>CONTACT US</h2>
+                    @*<ul>
+                            <li>
+                                <i class="fa fa-map-marker">&nbsp;</i> Address : 12/3452 Main Street, Anytown, Haryana-123456
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope">&nbsp;</i> <a href="mailto:customercare@abc.com">customercare@abc.com</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-phone"></i>&nbsp; +919876543210
+                            </li>
+                        </ul>*@
+                    <h3>
+                        Working hours
+                    </h3>
+                    <p class="m-0"><strong>Monday &ndash; Friday</strong>: &nbsp;10:00AM &ndash; 06:00PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript" asp-append-version="true">
+        $('.main-menu-area li.first-level').each(function() {
+            var anchorTag = $(this).find('a.first-level');
+            if (anchorTag.text().toLowerCase() === "contact us") {
+                anchorTag.parent().addClass('active');
+            }
+        });
+    </script>
+}

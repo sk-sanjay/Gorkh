@@ -1,0 +1,878 @@
+﻿@page "{id?}"
+@model WebSite.Pages.ProductListingModel
+@{
+    ViewData["Title"] = "Product Listing";
+    //Layout = "_LayoutLoginIndex";
+}
+@*<section class="site-breadcrumb">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Buyer Registration</a></li>
+        </ul>
+    </section>*@
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+        <div class="row">
+
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+
+            <div class="mx-auto mt-2 col-md-9">
+
+                @if (TempData["Message"] != null)
+                {
+                    var message = ((string)TempData["Message"]);
+                    <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+                        <strong>
+                            <p style="font-weight:bold;color:red" class="m-0">@TempData["Message"]</p>
+                        </strong>
+                    </div>
+                }
+                @if (Model.id != null && Model.ProductsLocationsVM != null && Model.ProductsDescriptionsVM == null && Model.ProductsFileUploadsVM.Count == 0 || Model.ProductsFileUploadsVM == null)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.id"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.id"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <div class="progress-step" data-title="Description"></div>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                        @*<div class="progress-step" data-title="Preview"></div>*@
+                    </div>
+                }
+
+                else if (Model.id != null && Model.ProductsLocationsVM != null && Model.ProductsDescriptionsVM != null && Model.ProductsFileUploadsVM.Count == 0 || Model.ProductsFileUploadsVM == null)
+                {
+            <div class="progressbar">
+                <div class="progress" id="progress"></div>
+                <a asp-page="ProductListing" asp-route-id="@Model.id"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                <a asp-page="ProductLocation" asp-route-ProductId="@Model.id"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                <a asp-page="ProductDescription" asp-route-ProductId="@Model.id"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                <div class="progress-step" data-title="Uploads"></div>
+                <div class="progress-step" data-title="Preview"></div>
+                @*<div class="progress-step" data-title="Preview"></div>*@
+            </div>
+                }
+                else if (Model.id != null && Model.ProductsLocationsVM != null && Model.ProductsDescriptionsVM != null && Model.ProductsFileUploadsVM.Count > 0)
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <a asp-page="ProductListing" asp-route-id="@Model.id"><div class="progress-step progress-step-active" data-title="Overview"></div></a>
+                        <a asp-page="ProductLocation" asp-route-ProductId="@Model.id"><div class="progress-step progress-step-active" data-title="Item Location"></div></a>
+                        <a asp-page="ProductDescription" asp-route-ProductId="@Model.id"><div class="progress-step progress-step-active" data-title="Description"></div></a>
+                        <a asp-page="ProductFile" asp-route-ProductId="@Model.id">
+                            <div class="progress-step progress-step-active" data-title="Uploads"></div>
+                        </a>
+                        <a asp-page="ProductPreview" asp-route-ProductId="@Model.id"><div class="progress-step progress-step-active" data-title="Preview"></div></a>
+                        
+                    </div>
+                }
+
+                else
+                {
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <div class="progress-step progress-step-active" data-title="Overview"></div>
+                        <div class="progress-step" data-title="Item Location"></div>
+                        <div class="progress-step" data-title="Description"></div>
+                        <div class="progress-step" data-title="Uploads"></div>
+                        <div class="progress-step" data-title="Preview"></div>
+                    </div>}
+
+                <div class="card-header"><h2>Product Listing</h2></div>
+                <div class="card-body">
+                    <form method="post">
+                        @if (!Model.IsNew)
+                        {
+                            <input type="hidden" asp-for="Product.Id" />
+
+                            <input type="hidden" asp-for="Product.CreatedDate" />
+                            <input type="hidden" asp-for="Product.CreatedBy" />
+                        }
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Sale Type<span class="required">*</span></label>
+                                        <select id="ddlSaleType" asp-for="Product.SaleType" class="custom-select">
+                                            <option value="">--Select--</option>
+                                            <option value="Reserve Price">Reserve Price</option>
+                                            <option value="Online Auction">Online Auction</option>
+                                        </select>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Seller Type<span class="required">*</span></label>
+                                        <select id="ddlSellerType" asp-for="Product.SellerType" class="custom-select">
+                                            <option value="">--Select--</option>
+                                            <option value="Central PSU">Central PSU</option>
+                                            <option value="State PSU">State PSU</option>
+                                            <option value="Public Ltd.">Public Ltd.</option>
+                                            <option value="Private Ltd.">Private Ltd.</option>
+                                            <option value="Proprietary/Individual">Proprietary/Individual</option>
+                                        </select>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Product Category<span class="required">*</span></label>
+                                        <select asp-items="Model.Category" asp-for="Product.CategoryId" id="ddlCategory" class="custom-select">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Sub Category<span class="required">*</span></label>
+                                        <select id="ddlSubCategory" asp-for="Product.SubCategoryId" asp-items="Model.SubCategory" class="custom-select">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                        <span class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Sub Sub Category<span class="required">*</span></label>
+                                        <select id="ddlSubSubCategory" asp-for="Product.SubSubCatId" asp-items="Model.SubSubCategory" class="custom-select">
+                                            <option value="">--Select--</option>
+
+                                        </select>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Product Condition<span class="required">*</span></label>
+                                        <select asp-items="Model.Condition" asp-for="Product.ConditionId" id="ddlConditions" class="custom-select">
+                                            <option value="0">--Select--</option>
+                                        </select>
+                                        <span class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @*<div class="card-header"><h3>Specification</h3></div>*@
+                        <div class="form-group">
+                            <div id="specificationsdiv" class="form-row">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+
+
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Quantity Available<span class="required">*</span></label>
+                                        <input type="text" id="txtQuantityAvl" asp-for="Product.QuantityAvl" class="form-control" placeholder="Quantity Available" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Year of Procurement<span class="required">*</span></label>
+                                        <select id="ddlYearofProc" asp-for="Product.YearofProc" asp-items="Model.YearofProcs" class="custom-select">
+                                            <option value="0">--select--</option>
+                                        </select>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Inventory ID, if any</label>
+                                        <input type="text" id="txtInventoryId" asp-for="Product.InventoryId" class="form-control" placeholder="Inventory ID, if any" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Serial No.(If any)</label>
+                                        <input type="text" id="txtSerialNo" asp-for="Product.SerialNo" class="form-control" placeholder="Serial No." />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Enter the Estimate Price (INR)<span class="required">*</span></label>
+                                        <input type="text" id="txtEstimatePrice" asp-for="Product.EstimatePrice" class="form-control" placeholder="Enter the Estimate Reserve Price (INR)" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label>Reserve Price (INR)<span class="required">*</span></label>
+                                        <input type="text" id="txtReservePrice" asp-for="Product.ReservePrice" class="form-control" placeholder="2% of Estimate Price" readonly />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:none">
+                            <div class="card-header"><h3>Item Location</h3></div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Country<span class="required">*</span></label>
+                                            <select asp-items="Model.Country" id="ddlCountry" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>State<span class="required">*</span></label>
+                                            <select id="ddlState" class="custom-select">
+                                                <option value="0">--Select--</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Address Line 1<span class="required">*</span></label>
+                                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address Line 1" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Address Line 2<span class="required">*</span></label>
+                                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address Line 2" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>City<span class="required">*</span></label>
+                                            <select id="ddlCity" class="custom-select">
+                                                <option value="0">--Select--</option>
+
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Postal / Zip Code<span class="required">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Postal / Zip Code" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Upload Pictures<span class="required">*</span></label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Put YouTube Videos Link<span class="required">*</span></label>
+                                            <input type="text" id="txtVideos" class="form-control" placeholder="Put YouTube Videos Link" />
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-label-group">
+                                            <label>Additional Information, if any<span class="required">*</span></label>
+                                            <textarea class="form-control" placeholder="Additional Information, if any"></textarea>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Terms / Conditions & Commercials
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<input type="button" class="btn btn-primary" id="btnSave" value="Save" />*@
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <input type="button" class="btn btn-block btn-primary" id="btnSave" value="Save & Next" />
+                            </div>
+                            @*<div class="col-md-2">
+                        <a class="btn btn-block btn-secondary" asp-page="Index">Next</a>
+                    </div>*@
+                            @*@if (Model.id != null)
+                    {
+                        <div class="col-md-2">
+                            <a class="btn btn-block btn-secondary" asp-route-ProductId="@Model.id" asp-page="ProductLocation">Next</a>
+                        </div>
+                    }*@
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+        window.onload = function () {
+            //Reference the DropDownList.
+            var ddlYears = document.getElementById("ddlYearofProc");
+
+            //Determine the Current Year.
+            var currentYear = (new Date()).getFullYear();
+
+            //Loop and add the Year values to DropDownList.
+            for (var i = 1950; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddlYears.appendChild(option);
+            }
+            setTimeout(loadAfterTime, 1000)
+        };
+        function loadAfterTime() {
+            var maincat = $("#ddlSubSubCategory option:selected").val();
+            //  bindspecfication(maincat);
+            bindspecfication1(maincat);
+        }
+
+        $("#ddlCategory").on("change", function () {
+            var isc = $("#IsCommon").val();
+            $("#specificationsdiv").empty();
+            var maincat = $("#ddlCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubCategory&maincat=' + maincat + '', (data) => {
+                    $("#ddlSubCategory").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subCategoryName}</option>`;
+                        });
+                        $("#ddlSubCategory").append(item1);
+                        /*Clear sub sub category*/
+                        $("#ddlSubSubCategory").empty().append('<option value="">--Select--</option>');
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $("#ddlSubCategory").append(item1);
+                        /*Hide sub sub category*/
+                        //var item2 = "<option value=''>Select</option>";
+                        $("#ddlSubSubCategory").empty().append('<option value="">--Select--</option>');
+                    }
+                });
+            }
+        })
+
+        $("#ddlSubCategory").on("change", function () {
+            var isc = $("#IsCommon").val();
+            $("#specificationsdiv").empty();
+            var maincat = $("#ddlSubCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSubSubCategoryBySubCategory2&subcategoryid=' + maincat + '', (data) => {
+                    $("#ddlSubSubCategory").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.subSubCategoriesName}</option>`;
+                        });
+                        $("#ddlSubSubCategory").append(item1);
+                        $('input[name="sequencenoname"]').val('');
+                        //common field check
+                        $('table tbody input[name="IsCommon"]').each(function (l, c) {
+                            var sn = l + 1;
+                            if (c.value == isc) {
+                                $("#checkboxId" + sn).prop('checked', true);
+                            }
+                            $("#checkboxismandatory" + sn).prop('checked', false);
+                        });
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value=''>--Select--</option>";
+                        $("#ddlSubSubCategory").append(item1);
+                    }
+                });
+            }
+        })
+
+        $("#ddlSubSubCategory").on("change", function () {
+            debugger
+            var maincat = $("#ddlSubSubCategory option:selected").val();
+            // bindspecfication(maincat);
+            bindspecfication1(maincat);
+        })
+
+        function bindspecfication(maincat) {
+            // var maincat = $("#ddlSubSubCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSpecificationsSSCategoriesjoin&subsubcategoryid=' + maincat + '', (data) => {
+                    $("#specificationsdiv").empty();
+                    if (data != '' && data != null) {
+
+                        $.each(data, function (i, item) {
+                            var sno = i + 1;
+                            var ids = "txtspecfname" + sno;
+                            var divid = "divs" + sno;
+                            var specId = "txtspecId" + sno;
+                            var ismandat = "";
+                            if (item.isMandatory == true) {
+                                ismandat = "*";
+                            }
+                            var rows;
+                            if (item.specfName == "Manufacturer") {
+                                rows = "<div class='col-md-6 target' id='" + divid + "'>"
+                                    + "<div class='form-label-group'>"
+                                    + "<label id='ddlname" + sno + "'>" + item.specfName + "</span></label><span class='required' >" + ismandat + ""
+                                    + "<input type='hidden' value='" + item.specfId + "' id='" + specId + "' name='SpecName' />"
+                                    + "<input type='text' id='ddlManufacturer' class='form-control' placeholder='Manufacturer' />"
+                                    //+ "<select id='ddlManufacturer' class='custom-select'>"
+                                    //+ "<option value=''>--Select--</option>"
+                                    //+ " </select>"
+                                    + "<span class='text-danger'></span>"
+                                    + "</div>"
+                                    + "</div>"
+                                //$.getJSON('?handler=GetDropdown', (data) => {
+                                //    $("#ddlManufacturer").empty();
+                                //    if (data != '' && data != null) {
+                                //        /*  $("#ddlManufacturer").show();*/
+                                //        var item1 = "<option value=''>--Select--</option>";
+                                //        $.each(data, function (i, item) {
+                                //            item1 += `<option value="${item.id}">${item.text}</option>`;
+                                //        });
+                                //        $("#ddlManufacturer").append(item1);
+                                //    }
+                                //    else {
+                                //        /*  $("#ddlSubCategoryId").hide();*/
+                                //        var item1 = "<option value=''>--Select--</option>";
+                                //        $("#ddlManufacturer").append(item1);
+                                //    }
+                                //});
+                            }
+                            else if (item.specfName == "Year of purchase") {
+                                rows = "<div class='col-md-6 target' id='" + divid + "'>"
+                                    + "<div class='form-label-group'>"
+                                    + "<label id='ddlname" + sno + "'>" + item.specfName + "<span class='required'>" + ismandat + "</span></label>"
+                                    + "<input type='hidden' value='" + item.specfId + "' id='" + specId + "' name='SpecName' />"
+                                    //+ "<input type='text' id='" + ids + "' class='form-control' placeholder='mmm' />"
+                                    + "<select id='ddlYearofpurchase' class='custom-select'>"
+                                    + "<option value=''>--Select--</option>"
+                                    + " </select>"
+                                    + "<span class='text-danger'></span>"
+                                    + "</div>"
+                                    + "</div>"
+                                $(function () {
+                                    //Reference the DropDownList.
+                                    var ddlYears1 = document.getElementById("ddlYearofpurchase");
+
+                                    //Determine the Current Year.
+                                    var currentYear = (new Date()).getFullYear();
+
+                                    //Loop and add the Year values to DropDownList.
+                                    for (var i = 1990; i <= currentYear; i++) {
+                                        var option = document.createElement("OPTION");
+                                        option.innerHTML = i;
+                                        option.value = i;
+                                        ddlYears1.appendChild(option);
+                                    }
+                                });
+                            }
+                            else {
+                                rows = "<div class='col-md-6 target' id='" + divid + "'>"
+                                    + "<div class='form-label-group'>"
+                                    + "<label>" + item.specfName + "<span class='required'>" + ismandat + "</span></label>"
+                                    + "<input type='hidden' value='" + item.specfId + "' id='" + specId + "' name='SpecName' />"
+                                    + "<input type='text' id='" + ids + "' class='form-control' placeholder='' />"
+                                    + "<span class='text-danger'></span>"
+                                    + "</div>"
+                                    + "</div>"
+                            }
+                            $('#specificationsdiv').append(rows);
+                        });
+                    }
+                    else {
+                        //var item1 = "<option value='Select'>Select</option>";
+                        //$("#SpecificationsSSCategory_SubSubCatId").append(item1);
+                    }
+                });
+            }
+
+        }
+
+
+        function bindspecfication1(maincat) {
+            // var maincat = $("#ddlSubSubCategory option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetSpecificationsSSCategoriesjoin1&subsubcategoryid=' + maincat + '', (data) => {
+                    $("#specificationsdiv").empty();
+                    if (data != '' && data != null) {
+                        debugger;
+                        $.each(data, function (i, item) {
+                            debugger;
+                            var sno = i + 1;
+                            var ids = "txtspecfname" + sno;
+                            if (item.textValue != null)
+                                var txtvalue = item.textValue;
+                            else
+                                var txtvalue = "";
+                            var prchildid = item.productchildid;
+                            var divid = "divs" + sno;
+                            var specId = "txtspecId" + sno;
+                            var ismandat = "";
+                            if (item.isMandatory == true) {
+                                ismandat = "*";
+                            }
+                            var rows;
+                            if (item.specfName == "Manufacturer") {
+                                
+                                rows = "<div class='col-md-6 target' id='" + divid + "'>"
+                                    + "<div class='form-label-group'>"
+                                    + "<label id='ddlname" + sno + "'>" + item.specfName + "</span></label><span class='required' >" + ismandat + ""
+                                    + "<input type='hidden' value='" + item.specfId + "' id='" + specId + "' name='SpecName' />"
+                                    + "<input type='text' id='ddlManufacturer' value='" + item.textValue+"' class='form-control' placeholder='Manufacturer' />"
+                                    //+ "<select id='ddlManufacturer' class='custom-select'>"
+                                    //+ "<option value=''>--Select--</option>"
+                                    //+ " </select>"
+                                    + "<span class='text-danger'></span>"
+                                    + "</div>"
+                                    + "</div>"
+                                //$.getJSON('?handler=GetDropdown', (data) => {
+                                //    $("#ddlManufacturer").empty();
+                                //    if (data != '' && data != null) {
+                                //        /*  $("#ddlManufacturer").show();*/
+                                //        var item1 = "<option value=''>--Select--</option>";
+                                //        $.each(data, function (i, item) {
+                                //            item1 += `<option value="${item.id}">${item.text}</option>`;
+                                //        });
+                                //        $("#ddlManufacturer").append(item1);
+                                //        if (item.specfName == "Manufacturer") {
+                                //            debugger;
+                                //            var valued = item.textValue;
+                                //           // $("#ddlManufacturer").val(valued);
+                                //            $("#ddlManufacturer option:contains(" + valued + ")").attr("selected", true);
+                                //            //$("#ddlManufacturer").
+                                //        }
+                                        
+                                //    }
+                                //    else {
+                                //        /*  $("#ddlSubCategoryId").hide();*/
+                                //        var item1 = "<option value=''>--Select--</option>";
+                                //        $("#ddlManufacturer").append(item1);
+                                //    }
+                                //});
+                            }
+                            else if (item.specfName == "Year of purchase") {
+                                rows = "<div class='col-md-6 target' id='" + divid + "'>"
+                                    + "<div class='form-label-group'>"
+                                    + "<label id='ddlname" + sno + "'>" + item.specfName + "<span class='required'>" + ismandat + "</span></label>"
+                                    + "<input type='hidden' value='" + item.specfId + "' id='" + specId + "' name='SpecName' />"
+                                    //+ "<input type='text' id='" + ids + "' class='form-control' placeholder='mmm' />"
+                                    + "<select id='ddlYearofpurchase' class='custom-select'>"
+                                    + "<option value=''>--Select--</option>"
+                                    + " </select>"
+                                    + "<span class='text-danger'></span>"
+                                    + "</div>"
+                                    + "</div>"
+                                $(function () {
+                                    //Reference the DropDownList.
+                                    var ddlYears1 = document.getElementById("ddlYearofpurchase");
+
+                                    //Determine the Current Year.
+                                    var currentYear = (new Date()).getFullYear();
+
+                                    //Loop and add the Year values to DropDownList.
+                                    for (var i = 1990; i <= currentYear; i++) {
+                                        var option = document.createElement("OPTION");
+                                        option.innerHTML = i;
+                                        option.value = i;
+                                        ddlYears1.appendChild(option);
+                                    }
+                                });
+                            }
+                            else {
+                                rows = "<div class='col-md-6 target' id='" + divid + "'>"
+                                    + "<div class='form-label-group'>"
+                                    + "<label>" + item.specfName + "<span class='required'>" + ismandat + "</span></label>"
+                                    + "<input type='hidden' value='" + item.specfId + "' id='" + specId + "' name='SpecName' />"
+                                    + "<input type='text' id='" + ids + "' value='" + txtvalue + "' class='form-control' placeholder='' />"
+                                    + "<span class='text-danger'></span>"
+                                    + "</div>"
+                                    + "</div>"
+                            }
+                            $('#specificationsdiv').append(rows);
+                        });
+                    }
+                    else {
+                        //var item1 = "<option value='Select'>Select</option>";
+                        //$("#SpecificationsSSCategory_SubSubCatId").append(item1);
+                    }
+                });
+            }
+
+        }
+        $("#ddlCountry").on("change", function () {
+            debugger;
+            var maincat = $("#ddlCountry option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetStatebyCountryid&countryid=' + maincat + '', (data) => {
+                    $("#ddlState").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.stateName}</option>`;
+                        });
+                        $("#ddlState").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlState").append(item1);
+                    }
+                });
+            }
+        })
+
+        $("#ddlState").on("change", function () {
+            debugger;
+            var maincat = $("#ddlState option:selected").val();
+            if (maincat != null) {
+                $.getJSON('?handler=GetCitybystateid&stateid=' + maincat + '', (data) => {
+                    $("#ddlCity").empty();
+                    if (data != '' && data != null) {
+                        /*  $("#ddlSubCategoryId").show();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $.each(data, function (i, item) {
+                            item1 += `<option value="${item.id}">${item.cityName}</option>`;
+                        });
+                        $("#ddlCity").append(item1);
+
+                    }
+                    else {
+                        /*  $("#ddlSubCategoryId").hide();*/
+                        var item1 = "<option value='Select'>Select</option>";
+                        $("#ddlCity").append(item1);
+                    }
+                });
+            }
+        })
+
+        $('#btnSave').click(function (event) {
+
+            var flag = 0;
+            var catid = $('select#ddlCategory').val();
+            if (catid == '') {
+                //$("#divClientAlert").addClass("alert-danger");
+                //$("#divClientAlert > p.m-0").text("Please select a category");
+                //$("#divClientAlert").show();
+                //SetTimeOut($("#divClientAlert"));
+                alert("Please select a category");
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            var subcatid = $('select#ddlSubCategory').val();
+            if (subcatid == '') {
+                alert("Please select a sub category");
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            var subsubcatid = $('select#ddlSubSubCategory').val();
+            if (subsubcatid == '') {
+                alert("Please select a sub sub category");
+                event.preventDefault();
+                flag++;
+                return;
+            }
+            if (flag == 0) {
+                //latest code start
+                var arr = [];
+                var message = "";
+                var fileData = new FormData();
+                var saleType = $('#ddlSaleType').val();
+                var id = $('#Product_Id').val();
+                var sellerType = $('#ddlSellerType').val();
+                var categoryId = $('#ddlCategory').val();
+                var subCategoryId = $('#ddlSubCategory').val();
+                var subSubCatId = $('#ddlSubSubCategory').val();
+
+                var conditionId = $('#ddlConditions').val();
+                var quantityAvl = $('#txtQuantityAvl').val();
+                var yearofProc = $('#ddlYearofProc').val();
+                var inventoryId = $('#txtInventoryId').val();
+                var serialNo = $('#txtSerialNo').val();
+                var estimatePrice = $('#txtEstimatePrice').val();
+                var reservePrice = $('#txtReservePrice').val();
+                //var arr1 = { SaleType: saleType, SellerType: sellerType, CategoryId: categoryId, SubCategoryId: subCategoryId}
+                debugger
+                $(".target").each(function (i, v) {
+                    //var Id = $(this).closest("divs")[0].rowIndex;
+                    //var images = $(this).find(".scrolling img");
+                    //var Id = $(this).closest('.row').find('.inputQty');
+                    var Id = i + 1;
+                    //var isddl = $('label[name="ddlname"]').innerHTML;
+                    //var isddl = $('#ddlname' + Id).innerHTML;
+                    var isddl = $('#ddlname' + Id).text();
+                    //var isddl2 = $('#ddlname' + Id).val();
+                    
+                    if (isddl == "Manufacturer") {
+                        //var specfname = $('#ddlManufacturer').val();
+                       // var specfname = $('#ddlManufacturer option:selected').text();
+                        var specfname = $('#ddlManufacturer').val();
+                    }
+                    else if (isddl == "Year of purchase") {
+                        var specfname = $('#ddlYearofpurchase').val();
+                    }
+                    else {
+                        var specfname = $('#txtspecfname' + Id).val();
+                    }
+                    
+                    //var specfname = $('#txtspecfname' + Id).val();
+                    var specfId = $('#txtspecId' + Id).val();
+                    arr.push({
+                        SpecfId: specfId, SpecfSSCatField: specfname
+                    });
+                });
+                var arr1 = {
+                    SaleType: saleType, SellerType: sellerType, CategoryId: categoryId, SubCategoryId: subCategoryId, SubSubCatId: subSubCatId,
+                    ConditionId: conditionId, QuantityAvl: quantityAvl, YearofProc: yearofProc, InventoryId: inventoryId, SerialNo: serialNo, EstimatePrice: estimatePrice, ReservePrice: reservePrice,
+                    ProductsSpecifications: arr, Id: id
+                }
+                debugger
+                //arr.push({
+                //    SaleType: SaleType, SellerType: SellerType, CategoryId: CategoryId, SubCategoryId: SubCategoryId, SubSubCatId: SubSubCatId
+                //});
+                //debugger
+                //fileData.append("model", JSON.stringify(arr));
+                //latest code end
+                var productdata = JSON.stringify(arr1);
+                //fileData.append = JSON.stringify(arr);
+                //fileData.append("model", JSON.stringify(arr));
+                //fileData.append("model", JSON.stringify(arr1));
+                //fileData.append = JSON.stringify(arr1);
+
+                $.post('/ProductListing?handler=Manage', { productData: productdata }, function (data) {
+                    if (data != null) {
+                        debugger;
+                        if (data === 'unauthorized') {
+                            //$("#divClientAlert").addClass("alert-warning");
+                            //$("#divClientAlert > p.m-0").text("Please login to access this resource");
+                            //$("#divClientAlert").show();
+                            //SetTimeOut($("#divClientAlert"));
+                            //window.location.href = "/Account/Login";
+                            alert("Save Failed");
+                        } else {
+                            //$("#divClientAlert").addClass("alert-success");
+                            //$("#divClientAlert > p.m-0").text(data);
+                            //$("#divClientAlert").show();
+                            //SetTimeOut($("#divClientAlert"));
+
+                            //alert("Save Successfully");
+                            // window.location = "ProductLocation";
+                            //  window.location.href = `ProductLocation/${data.id}`;
+                            //$("#divClientAlert").addClass("alert-success");
+                            //$("#divClientAlert > p.m-0").text("Save Successfully");
+                            //$("#divClientAlert").show();
+                            //SetTimeOut($("#divClientAlert"));
+                            window.location.href = "/ProductLocation/" + data.id;
+                        }
+                    }
+                });
+                //$.ajax({
+                //    url: '/ProductListing?handler=Manage',
+                //    type: 'POST',
+                //    dataType: 'json',
+                //    data: fileData,
+                //    cache: false,
+                //    processData: false
+                //});
+            }
+            else {
+                event.preventDefault();
+            }
+
+        });
+
+        $('#txtEstimatePrice').keyup(function () {
+            var disamount = $('#txtEstimatePrice').val();
+            var linetotal = 2;
+            var priceafterdisc = (((disamount) / 100) * linetotal);
+            $('#txtReservePrice').val(priceafterdisc);
+            
+        });
+
+    </script>
+}

@@ -1,0 +1,124 @@
+﻿@page
+@model WebSite.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Manage Profile";
+    Layout = "_LayoutLoginIndex";
+}
+@section Styles{
+    <link href="~/css/test.css" rel="stylesheet" />
+}
+<section class="content sectionbg">
+    <div class="container">
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class="col-lg-9 profiletop">
+                <div class="card">
+                    <h5 class="card-header">Manage Profile</h5>
+                    <div class="card-body">
+                        <form method="post">
+                            <input type="hidden" asp-for="UserProfileDto.ProfileImage" />
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.FirstName" class="col-form-label">Name*</label>
+                                    <input asp-for="BuyerSellerdto.FirstName" class="form-control" placeholder="Name">
+                                    <span asp-validation-for="BuyerSellerdto.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.LastName" class="col-form-label">Last Name*</label>
+                                    <input asp-for="BuyerSellerdto.LastName" class="form-control" placeholder="Name">
+                                    <span asp-validation-for="BuyerSellerdto.LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.CompanyName" class="col-form-label">Company Name*</label>
+                                    <input asp-for="BuyerSellerdto.CompanyName" class="form-control" placeholder="Company Name">
+                                    <span asp-validation-for="BuyerSellerdto.CompanyName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.CompanyWebsite" class="col-form-label">Company Website</label>
+                                    <input asp-for="BuyerSellerdto.CompanyWebsite" class="form-control" placeholder="Company Website">
+                                    <span asp-validation-for="BuyerSellerdto.CompanyWebsite" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group col-md-4">
+
+                                    <label asp-for="BuyerSellerdto.Email" class="col-form-label">Email*</label>
+                                    <input asp-for="BuyerSellerdto.Email" class="form-control" placeholder="Email">
+                                    <span asp-validation-for="BuyerSellerdto.Email" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.Mobile" class="col-form-label">Mobile*</label>
+                                    <input asp-for="BuyerSellerdto.Mobile" class="form-control" placeholder="Company Website">
+                                    <span asp-validation-for="BuyerSellerdto.Mobile" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.LandlineNo" class="col-form-label">LandlineNo*</label>
+                                    <input asp-for="BuyerSellerdto.LandlineNo" class="form-control" placeholder="LandlineNo">
+                                    <span asp-validation-for="BuyerSellerdto.LandlineNo" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.Organisation" class="col-form-label">Organisation*</label>
+                                    <input asp-for="BuyerSellerdto.LandlineNo" class="form-control" placeholder="Organisation">
+                                    <span asp-validation-for="BuyerSellerdto.Organisation" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.Department" class="col-form-label">Department*</label>
+                                    <input asp-for="BuyerSellerdto.Department" class="form-control" placeholder="Organisation">
+                                    <span asp-validation-for="BuyerSellerdto.Department" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.Countries.Name" class="col-form-label">Country*</label>
+                                    <input asp-for="BuyerSellerdto.Countries.Name" class="form-control" placeholder="Country">
+                                    <span asp-validation-for="BuyerSellerdto.Countries.Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.States.StateName" class="col-form-label">State*</label>
+                                    <input asp-for="BuyerSellerdto.States.StateName" class="form-control" placeholder="State">
+                                    <span asp-validation-for="BuyerSellerdto.States.StateName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.Cities.CityName" class="col-form-label">City*</label>
+                                    <input asp-for="BuyerSellerdto.Cities.CityName" class="form-control" placeholder="Organisation">
+                                    <span asp-validation-for="BuyerSellerdto.Cities.CityName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.AddressLine1" class="col-form-label">AddressLine1*</label>
+                                    <input asp-for="BuyerSellerdto.AddressLine1" class="form-control" placeholder="AddressLine1">
+                                    <span asp-validation-for="BuyerSellerdto.AddressLine1" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.AddressLine2" class="col-form-label">AddressLine2*</label>
+                                    <input asp-for="BuyerSellerdto.AddressLine2" class="form-control" placeholder="AddressLine2">
+                                    <span asp-validation-for="BuyerSellerdto.AddressLine2" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="BuyerSellerdto.Descriptionofproduct" class="col-form-label">Description of Product*</label>
+                                    <input asp-for="BuyerSellerdto.Descriptionofproduct" class="form-control" placeholder="Organisation">
+                                    <span asp-validation-for="BuyerSellerdto.Descriptionofproduct" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

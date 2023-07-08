@@ -1,0 +1,272 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration _config;
+@model ProductsDetailsVM
+@{
+    Layout = "_GeneratePdfLayout";
+}
+<style>
+    .invoice-head td {
+        padding: 0 8px;
+    }
+
+    .invoice-body {
+        background-color: transparent;
+    }
+
+    .invoice-thank {
+        margin-top: 60px;
+        padding: 5px;
+    }
+
+    address {
+        margin-top: 15px;
+    }
+
+    .slide-large {
+        border: none !important;
+        margin-top: 20px;
+    }
+
+    .BorderImg {
+        border: 2px solid black;
+        width: 18%;
+    }
+
+    .slide-large .item {
+        text-align: center;
+    }
+
+    .slide-large .slick-slide img {
+        display: inline-block;
+    }
+
+    .slide-large .slick-arrow {
+        width: 44px;
+        height: 44px;
+        background: #987e37;
+        border-radius: 100%;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        margin-top: -22px;
+        border: none;
+        z-index: 9;
+        font-size: 0px;
+    }
+
+        .slide-large .slick-arrow::after {
+            content: '\f105';
+            font-family: 'FontAwesome';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: #FFF;
+            text-align: center;
+            line-height: 44px;
+            font-size: 22px;
+        }
+
+    .slick-prev.slick-arrow::after {
+        content: '\f104';
+    }
+
+    .slick-prev.slick-arrow {
+        right: inherit;
+        left: 30px;
+    }
+
+    .slide-large .slick-arrow:focus {
+        outline: none;
+    }
+
+    .slide-large .slick-arrow {
+        right: 5px;
+    }
+
+    .slick-prev.slick-arrow {
+        left: 5px;
+    }
+    .fontCol {
+        color: #987e37
+    }
+
+    .breadcrumb-main ul li {
+        display: block;
+        margin: 0;
+    }
+
+    .productModal .slide-large {
+        margin: 0;
+    }
+
+    .slide-thumb {
+        margin-top: 5px;
+    }
+
+        .slide-thumb .item {
+            border: 1px solid #c7c7c7;
+        }
+
+        .slide-thumb .slick-slide {
+            margin: 0 3px;
+        }
+
+        .slide-thumb .slick-list {
+            margin-left: -3px;
+            margin-right: -3px;
+        }
+
+        .slide-thumb .slick-current .item {
+            border: 1px solid #987e37;
+        }
+
+    .imgpadding {
+        padding: 7px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="span8">
+            <h2 style="margin-top: 20px;">@Model.SubSubCategoriesName</h2>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="span4">
+
+                <address>
+                    <strong>Published on <span class="fontCol">@($"{Model.CreatedDate:dd-MM-yyyy}")</span></strong>&nbsp;
+                    <strong>Category : <span class="fontCol">@Model.Name</span></strong>
+                    
+                </address>
+                <address>
+                    <strong>Location  <span class="fontCol">@Model.StateName, @Model.CountryName</span></strong>&nbsp;
+                    <strong>Code  <span class="fontCol">@Model.ProductNumber</span></strong>&nbsp;
+                    <strong>Price <span class="fontCol">
+    @{
+        decimal price = Model.EstimatePrice;
+        System.Globalization.CultureInfo Indian = new System.Globalization.CultureInfo("hi-IN");
+    }
+    @(String.Format(Indian, "{0:C0}", price))
+</span></strong>&nbsp;
+                </address>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="span4">
+
+
+            </div>
+        </div>
+
+
+    </div>
+    <div>&nbsp;</div>
+    <div class="row">
+        <div style="text-align:center;">
+            <div class="col md-12">
+                @{int i = 0;}
+                @foreach (var item in Model.ProductsFileUpload)
+                {
+                    if (i == 0)
+                    {
+                        @if (item.FlagImage == 1)
+                        {
+                            <img class="WP" src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" />
+
+                        }
+                    }
+                    i++;
+                }
+
+
+            </div>
+
+            <div class="span8 invoice-body">
+                <div class="pro-show">
+                    <div class="slide-large">
+                        <div class="slider">
+                            @foreach (var item in Model.ProductsFileUpload)
+                            {
+                                @if (item.FlagImage == 1)
+                                {
+                                    <img class="BorderImg WP" src="@($"{_config["SiteUrl"]}/img/products/{item.ProductImage}")" />
+
+                                }
+                            }
+
+
+                            @*<img class="BorderImg" src="/assets/images/product2.jpeg" />
+                                <img class="BorderImg" src="/assets/images/product2.jpeg" />
+                                <img class="BorderImg" src="/assets/images/product2.jpeg" />*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div>&nbsp;</div>
+
+    <div class="row">
+        <div class="span8 well invoice-body">
+            <table class="table table-bordered">
+
+                <tbody>
+                    <tr>
+                        <td><strong>Specifications</strong></td>
+                        <td><strong>Overview</strong></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            @foreach (var item in Model.ProductsSpecificationsGet)
+                            {
+                                <p><strong>@item.SpecfName</strong>  <span>@item.SpecfSSCatField</span></p>
+                            }
+                        </td>
+                        <td>
+                            <p><strong>Category</strong> <span>@Model.Name</span></p>
+                            <p><strong>Sub-Category</strong>  <span>@Model.SubCategoryName</span></p>
+
+                            <p><strong>Year</strong>  <span>@Model.YearofProc</span></p>
+                            <p><strong>Condition</strong>  <span>@Model.ConditionName</span></p>
+
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="page-break-after: always;"><br /><br /><br /><br /></div>
+    <div class="row">
+        <div class="span8 well invoice-body">
+            <table class="table table-bordered">
+
+                <tbody>
+
+                   
+                    <tr>
+                        <td colspan="2">
+                            <p><strong>Prodcut Brief </strong><span>@Html.Raw(Model.Descriptions)</span> </p>
+                            @*<strong>Product Brief</strong><br /> <span>@Html.Raw(Model.Descriptions)</span>*@
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+

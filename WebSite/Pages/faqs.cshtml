@@ -1,0 +1,347 @@
+﻿@page
+@model WebSite.Pages.faqsModel
+@{
+}
+<style>
+    .accordion-button:not(.collapsed) {
+        background-color: #b49c54 !important;
+        color: white;
+    }
+    .accordion-button:focus {
+        box-shadow: 0 0 0 0.25rem rgb(217 217 217) !important;
+    }
+</style>
+<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main">
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="inner-content">
+
+    <h1 class="heading">FAQs (Frequently Asked Questions)</h1>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    In what business, Surplus Platform is?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>A value-added Service launched on e-commerce platform for sellers-buyers virtual meet. If you want to sell equipment, machineries, plants, scrap, finished surplus material or any industrial assets, we make buyers available for you as win-win situation</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    How do I register at your website?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p> Simply <a href="https://www.matexnet.com/Main/Member.aspx" target="_blank">click here</a> , fill in the form and send us the required KYC (Know Your Customer) documentation and we'll email you with a user ID and temporary password.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    What documents I have to submit to register?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Surplus Platform Llp follows a structured KYC (Know Your Customer) process. To register on the site, the self-attested copies of the following documents are required:</p>
+                    <h3 class="sub-heading">In case of an individual:</h3>
+                    <ul class="bullet">
+                        <li>Photo-ID Proof (Either Aadhar card, Passport or Driving License )</li>
+                        <li>
+                            Proof of address (Either Voter ID, Passport)
+                        </li>
+                        <li>
+                            One Passport size photograph
+                        </li>
+                    </ul>
+                    <h3 class="sub-heading">In case of a company:</h3>
+                    <ul class="bullet">
+                        <li>Permanent Account Number (PAN) card</li>
+                        <li>Tax Identification Number (TIN)</li>
+                        <li>Copy of registration certificate under any specific statue/Act of the government</li>
+                        <li>Passport size photo of the authorized person.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                    Do I have to register on surplusplatform.com to take part in an auction on the site?
+                </button>
+            </h2>
+            <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Yes. Registration is a must which is free on the site. To take part in the auctions, other terms and conditions including remittance of prescribed EMD (Earnest Money Deposit) will apply.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                    Can I change my user ID?
+                </button>
+            </h2>
+            <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>No, given User ID can’t be changed at your end.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                    How often should I change my password?
+                </button>
+            </h2>
+            <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>You will receive an automated prompt to change your password after 30 days. However, it is advisable to change your password frequently for security purposes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                    What is a security deposit/EMD?
+                </button>
+            </h2>
+            <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>The security deposit/ EMD (Earnest money deposit) is the amount that bidder has to deposit with Surplus Platform Llp to participate in the particular lot being auctioned. It is collected in advance via RTGS or in form of Demand Draft at our registered office. It will be stand forfeited if you fail to fulfill the auction terms.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                   How much is the Security deposit/ EMD?
+                </button>
+            </h2>
+            <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Security deposit is the 12% of the Reserved Price.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                    What is Reserve price ?
+                </button>
+            </h2>
+            <div id="collapse9" class="accordion-collapse collapse" aria-labelledby="heading9" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Reserve price is the minimum price set by seller (auctioneer) for the sale of a particular lot/product.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                    Can I get a refund of my security deposit?
+                </button>
+            </h2>
+            <div id="collapse10" class="accordion-collapse collapse" aria-labelledby="heading10" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Yes, if you are not the highest bidder. In the event that you win an auction and then decide not to go through with the purchase, your security deposit will not be refunded.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                    How long does it take to receive the security deposit refund?
+                </button>
+            </h2>
+            <div id="collapse11" class="accordion-collapse collapse" aria-labelledby="heading11" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>If you are not the highest bidder, you will get the refund of security deposit within 10 working days. </p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                  How does online bidding work ?
+                </button>
+            </h2>
+            <div id="collapse12" class="accordion-collapse collapse" aria-labelledby="heading12" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Online bidding is a web browser based program for which no installation is required. It enables registered buyers to join a live auction through an internet connection and bid in real time along with other internet bidders. To be in real time, registered buyers must log in auction centre and clock on a “Bid Live” button before or during a live auction. Once connected, the Bidder’s screen will provide all the information required to bid in real time. </p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse13" aria-expanded="false" aria-controls="collapse13">
+                    And how does e-Auction format work ?
+                </button>
+            </h2>
+            <div id="collapse13" class="accordion-collapse collapse" aria-labelledby="heading13" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>
+                        In the standard auction format, bidders are invited to submit bids for listed lot/items prior to set finishing time of the auction. The auction starts from the reserve price and may go beyond seller expected price. At the end of the auction, the seller will select H1 (1st highest) as winning bid. On selection of successful bidder by seller, that bidder will be notified by Surplus Platform Llp at which time both seller & successful bidder are obligated to complete the transaction.
+                        Once the auction has started, the seller will not be able to change the reserved price.
+                    </p>
+                    <p>For any completed auction, the final purchase  price and winning bidder quote will be confidential and not released to other parties.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse14" aria-expanded="false" aria-controls="collapse14">
+                    How do I know that I am the highest bidder?
+                </button>
+            </h2>
+            <div id="collapse14" class="accordion-collapse collapse" aria-labelledby="heading14" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Your bid status will be clearly visible to you all the time during the e-Bidding event in the e-Auction box.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse15" aria-expanded="false" aria-controls="collapse15">
+                    How many times and how long am I able to bid for a material?
+                </button>
+            </h2>
+            <div id="collapse15" class="accordion-collapse collapse" aria-labelledby="heading15" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Each auction has a “Time Left" indicator at the top of the auction box. This will inform you how long you have to place your bid and also you can bid multiple times until you are not the highest bidder. Each auction has a “Time Left" indicator at the top of the auction box. This will inform you how long you leave to place your bid and also you can bid multiple times until you are not the highest bidder</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse16" aria-expanded="false" aria-controls="collapse16">
+                    Whom should we pay for the material?
+                </button>
+            </h2>
+            <div id="collapse16" class="accordion-collapse collapse" aria-labelledby="heading16" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p> Other than security amount/ EMD, you are requested to pay balance amount directly to the purchaser. </p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse17" aria-expanded="false" aria-controls="collapse17">
+                    How much time we will get to lift the material?
+                </button>
+            </h2>
+            <div id="collapse17" class="accordion-collapse collapse" aria-labelledby="heading17" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>The time period for lifting the material is completely situational and may vary with material category.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse18" aria-expanded="false" aria-controls="collapse18">
+                    Does the bid amount include all of the auction fees?
+                </button>
+            </h2>
+            <div id="collapse18" class="accordion-collapse collapse" aria-labelledby="heading18" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>No. The bid amount only includes the basic price you are willing to pay for the material (applicable Taxes extra).  The documentation fees and transportation costs are not included in the bid and will be added on top of the bid amount. All this will be informed to you before the e-Auction.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse19" aria-expanded="false" aria-controls="collapse19">
+                    What is “e-Auction Participation” form?
+                </button>
+            </h2>
+            <div id="collapse19" class="accordion-collapse collapse" aria-labelledby="heading19" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>e-Auction Participation form is an agreement between Seller/Buyer/ and SP which contains pre-approved/confirmed details of the subject material along with all the terms and conditions regarding lifting and payments.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse20" aria-expanded="false" aria-controls="collapse20">
+                    What is minimum increment?
+                </button>
+            </h2>
+            <div id="collapse20" class="accordion-collapse collapse" aria-labelledby="heading20" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Minimum Increment is that amount which you need to add in the current maximum price to take your price/offer/bid at the higher side.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse21" aria-expanded="false" aria-controls="collapse21">
+                    When I start bidding?
+                </button>
+            </h2>
+            <div id="collapse21" class="accordion-collapse collapse" aria-labelledby="heading21" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>You will be able to place bid after the registration. But we require the refundable security amount for the particular case to activate your ID.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading22">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse22" aria-expanded="false" aria-controls="collapse22">
+                    How do I place bid?
+                </button>
+            </h2>
+            <div id="collapse22" class="accordion-collapse collapse" aria-labelledby="heading22" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>After completing the registration and depositing your refundable security deposit for the particular case, we activate you for the bidding and you will see that particular product ID in your activated list. Click on that ID and a popup window will appear and there you can see the current maximum amount and you place your bid by increasing min. increment amount.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading23">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse23" aria-expanded="false" aria-controls="collapse23">
+                   Can I cancel my bid?
+                </button>
+            </h2>
+            <div id="collapse23" class="accordion-collapse collapse" aria-labelledby="heading23" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Once a bid is placed, it cannot be cancelled or reduced in any way. Maine sure that you are confident in your bid before you place it. If you end up winning the bid that you placed by accident, you will be responsible for the auctioned material and completing the sale.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading24">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse24" aria-expanded="false" aria-controls="collapse24">
+                    Do bidders need a dealer’s GST No.?
+                </button>
+            </h2>
+            <div id="collapse24" class="accordion-collapse collapse" aria-labelledby="heading24" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>No. At the time of Auction or submitting your offer/bid, firm GST No. is not required although you may be asked to provide at the time of billing by the seller. This is completely situational and vary with the case to case.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

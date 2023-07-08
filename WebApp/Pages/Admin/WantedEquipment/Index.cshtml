@@ -1,0 +1,79 @@
+﻿@page
+@model WebApp.Pages.Admin.WantedEquipment.IndexModel
+@{
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">WantedEquipment</h3>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="search" style="width:70px">S. No.</th>
+                                @*<th class="text-center noExport noSort"></th>*@
+                            <th class="search">Product Listing Title</th>
+                                <th class="search">Category</th>
+                                <th class="search">Sub-Category</th>
+                                <th class="search">Added Date</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                            <tr>
+                                <td class="text-right">
+                                    @{ index++; }
+                                    @index
+                                    <input type="hidden" asp-for="@item.Id" id="hdUId" name="Id" />
+                                    <input type="hidden" asp-for="@item.IsActive" id="IsActive" name="IsActive" />
+                                </td>
+                                @*<td class="text-center"></td>*@
+                                <td>@item.ProductListingTitle</td>
+                                <td>@item.Category</td>
+                                <td>@item.SubCategory</td>
+                                @*<td>@item.CreatedDate</td>*@
+                            <td>@($"{item.CreatedDate:dd/MM/yyyy hh:mm tt}")</td>
+                                <td>
+                                    <a asp-page="Details" asp-route-id="@item.Id">View Details</a>
+                                </td>
+
+
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="search" style="width:70px">S. No.</th>
+                                <th class="search">Product Listing Title</th>
+                                <th class="search">Category</th>
+                                <th class="search">Sub-Category</th>
+                                <th class="search">Added Date</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records founds !</p>
+            }
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+    <script src="~/js/custom/Categories.js" asp-append-version="true"></script>
+    
+}

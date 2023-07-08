@@ -1,0 +1,525 @@
+﻿@page
+@model WebSite.Pages.Seller_RegistrationModel
+@{
+    ViewData["Title"] = "Seller Registration";
+}
+<section class="site-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-main">
+            <ul>
+                <li><a href="/index">Home</a></li>
+                <li><a href="#">Seller Registration</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="inner-content">
+
+    @if (TempData["Message"] != null && TempData["Message_error"] == null)
+    {
+        var message = ((string)TempData["Message"]);
+        <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+            <strong>
+                <p style="font-weight:bold;color:green" class="m-0">@TempData["Message"]</p>
+            </strong>
+        </div>
+    }
+    else if (TempData["Message"] == null && TempData["Message_error"] != null)
+    {
+        var message = ((string)TempData["Message_error"]);
+        <div id="divAlertMessage" class="alert alert-@(!string.IsNullOrEmpty(message) ? message : "secondary") alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="fa fa-times"></i></button>
+            <strong>
+                <p style="font-weight:bold;color:red" class="m-0">@TempData["Message_error"]</p>
+            </strong>
+        </div>
+    }
+
+    <h1 class="heading">Seller Registration</h1>
+    @*<div class="card-header"><h2>Seller Registration</h2></div>*@
+    <div class="card-body">
+        <form method="post">
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.FirstName">First Name<span class="required">*</span></label>
+                            <input type="text" id="txtFirstName" asp-for="BuyerSellerdto.FirstName" class="form-control" placeholder="First Name" />
+                            <span asp-validation-for="BuyerSellerdto.FirstName" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.LastName">Last Name<span class="required">*</span></label>
+                            <input asp-for="BuyerSellerdto.LastName" type="text" class="form-control" placeholder="Last Name" />
+                            <span asp-validation-for="BuyerSellerdto.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+
+
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.CompanyName">Company Name<span class="required">*</span></label>
+                            <input type="text" id="txtFirstName" asp-for="BuyerSellerdto.CompanyName" class="form-control" placeholder="Company Name" />
+                            <span asp-validation-for="BuyerSellerdto.CompanyName" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.CompanyWebsite">Company Website</label>
+                            <input asp-for="BuyerSellerdto.CompanyWebsite" type="text" class="form-control" placeholder="Company Website" />
+                            @*<span asp-validation-for="Buyersdto.LastName" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.Email">Email (User ID)<span class="required">*</span></label>
+                            <input asp-for="BuyerSellerdto.Email" type="text" id="txtemailid" class="form-control" placeholder="Email (User ID)" />
+                            <span asp-validation-for="BuyerSellerdto.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label>Verify Email</label>
+                            <input type="text" asp-for="BuyerSellerdto.VeryfyEmail" id="txtVerifyemailid" class="form-control" placeholder="Verify Email" />
+                            <span asp-validation-for="BuyerSellerdto.VeryfyEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.Mobile">Mobile/Cell Number<span class="required">*</span></label>
+                            <input asp-for="BuyerSellerdto.Mobile" id="txtMobileNo" type="text" class="form-control" placeholder="Mobile/Cell Number" />
+                            <span asp-validation-for="BuyerSellerdto.Mobile" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.LandlineNo">Landline No.</label>
+                            <input asp-for="BuyerSellerdto.LandlineNo" id="txtMobileNo" type="text" class="form-control" placeholder="Landline No." />
+                            @*<span asp-validation-for="BuyerSellerdto.LandlineNo" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.Organisation">Organisation<span class="required">*</span></label>
+
+                            <select asp-for="BuyerSellerdto.Organisation" asp-items="Model.Category" id="Organisation" class="custom-select">
+                                <option value="">--Select--</option>
+
+                            </select>
+                            <span asp-validation-for="BuyerSellerdto.Organisation" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.Department">Department<span class="required">*</span></label>
+                            <input type="text" asp-for="BuyerSellerdto.Department" class="form-control" placeholder="Departement">
+                            <span asp-validation-for="BuyerSellerdto.Department" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.Country">Country<span class="required">*</span></label>
+                            <select asp-for="BuyerSellerdto.Country" asp-items="Model.Country" id="ddlCountry" class="custom-select">
+                                <option value="">--Select--</option>
+
+                            </select>
+                            <span asp-validation-for="BuyerSellerdto.Country" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.State">State<span class="required">*</span></label>
+                            <select asp-for="BuyerSellerdto.State" asp-items="Model.State" id="ddlState" class="custom-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="BuyerSellerdto.State" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.AddressLine1">Address Line 1<span class="required">*</span></label>
+                            <input asp-for="BuyerSellerdto.AddressLine1" type="text" id="txtAddress1" class="form-control" placeholder="Address Line 1" />
+                            <span asp-validation-for="BuyerSellerdto.AddressLine1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.AddressLine2">Address Line 2<span class="required">*</span></label>
+                            <input asp-for="BuyerSellerdto.AddressLine2" type="text" id="txtAddress2" class="form-control" placeholder="Address Line 2" />
+                            <span asp-validation-for="BuyerSellerdto.AddressLine2" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.City">City<span class="required">*</span></label>
+                            <select asp-for="BuyerSellerdto.City" id="ddlCity" class="custom-select">
+                                <option value="">--Select--</option>
+
+                            </select>
+                            <span asp-validation-for="BuyerSellerdto.City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <label asp-for="BuyerSellerdto.ZipCode">Postal / Zip Code<span class="required">*</span></label>
+                            <input asp-for="BuyerSellerdto.ZipCode" id="txtzipcode" type="text" class="form-control" placeholder="Postal / Zip Code" />
+                            <span asp-validation-for="BuyerSellerdto.ZipCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+
+                    <label asp-for="BuyerSellerdto.Descriptionofproduct">Description of product/service being displayed<span class="required">*</span></label>
+                    <textarea type="text" asp-for="BuyerSellerdto.Descriptionofproduct" class="form-control" placeholder="Description of product/service being displayed" style="height: 100px;"></textarea>
+                    @*<input asp-for="BuyerSellerdto.Descriptionofproduct" type="text" class="form-control" placeholder="Description of product/service being displayed" />*@
+                    <span asp-validation-for="BuyerSellerdto.Descriptionofproduct" class="text-danger"></span>
+
+
+
+
+                </div>
+            </div>
+            <div class="form-check">
+                <input asp-for="BuyerSellerdto.TermsAndConditions" class="form-check-input" type="checkbox" id="checktnc" />
+                <label class="form-check-label">I have read and agree with the <span data-toggle="modal" data-target="#DeclarationModal"><a href="#"> Terms and Conditions</a></span>.</label>
+                @*@Html.CheckBoxFor(@Model.Sellerdto.TermsAndConditions)*@
+                <span asp-validation-for="BuyerSellerdto.TermsAndConditions" class="text-danger"></span>
+            </div>
+            <div class="mx-auto col-md-4">
+                <button type="submit" id="btnsubmit" class="btn btn-block btn-primary">Submit</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="modal fade" id="DeclarationModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modelbg">
+
+                    <h4 class="modal-title text-white">USER AGREEMENT</h4>
+                    <button type="button" class="close closebg" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body modelcontent">
+                    <p>By accepting this agreement, user confirms that he or she is at least eighteen (18) years old. In case of a person accepting this agreement on behalf of a legal entity or governmental bodies, such person has all necessary power and authority to enter into this agreement and to carry out such user’s obligations hereunder and to grant the rights herein granted by such user. </p>
+                    <hr /><p><strong>1. Our Services</strong></p><hr />
+                    <div class="content px-4">
+                        <ol type="a" class="listmodel">
+                            <li> www.surplusplatform.com (SP) is our marketplace website which allows users to offer, sell, bid and buy just about any asset in a variety of pricing formats at locations across the world.  SP site is a core component of the services that SP provide.</li>
+                            <li>
+                                We provide guidance to users as part of our add – on services, such as pricing, reserves, shipping, inventories, photographing, listing creation and related services etc. Such guidance is solely for informational purposes. A user may decide to follow guidance or it may not. Further, while our customer support team may help facilitate the resolution of disputes through various programs, we have no control over and do not guarantee any of the following - <br />
+                                Quality, safety or legality of items advertised; the truth or accuracy of users’ content or listings; the ability of sellers to sell items; the ability of buyers to pay for items; or that a buyer or seller will actually complete a transaction or return an item.
+                            </li>
+                            <li>User, opted to register  as a buyer on our site is deemed to consent for  read, understood and acceptance of this agreement. User, opted to register as a seller on our site is deemed to consent for read, understood and acceptance of this agreement.</li>
+                            <li>Seller, upon request and approval by us in our sole discretion, we can enable a user to sell assets using our services and thus become a seller.</li>
+                            <li>Policy enforcement - When a dispute between users arises, we may consider such users’ performance history and the specific circumstances in applying our policies. We may choose to be more lenient with policy enforcement in an effort to do what we believe is the right action for our buyers and sellers and no such choice shall be deemed a waiver of our right to enforce our policies in accordance with their respective terms.</li>
+                        </ol>
+                    </div>
+                    <hr /><p><strong>2. Restrictions on Use of Services</strong></p><hr />
+                    <div class="content px-4">
+                        <p>No user may -  </p>
+                        <ol type="a" class="listmodel">
+                            <li>upload, post, email, transmit or otherwise make available any content that (i) is illegal, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, invasive of another’s privacy  or otherwise objectionable; (ii) infringes any patent, trademark, trade secret, copyright or other proprietary right of any party; (iii) consists of unsolicited or unauthorized advertising, promotional materials, junk mail, spam, commercial electronic messages or any other form of solicitation; (iv) contains software viruses or any other code, files, programs or devices designed or intended to interrupt, destroy or limit the functionality or proper operation of our services or any software or hardware comprising our site; or (v) violates the terms of this agreement.</li>
+                            <li>impersonate another person or entity (including, but not limited to, our employees or agents) or falsely state or otherwise misrepresent such user’s affiliation with another person or entity.</li>
+                            <li>use our services in any way that violates any local, state, national or international law or regulation or that is otherwise prohibited by this agreement, including, without limitation, laws prohibiting the export of certain assets and laws requiring a seller to have an export license for selling to a buyer that is not the same nationality of the seller.</li>
+                            <li>use our services in any manner that could damage, disable, overburden, or impair our services.</li>
+                            <li>use our services if such user cannot form a legally binding contract i.e. if the user is under 18 years old.</li>
+                            <li>use our services if we have temporarily or indefinitely suspended such user’s account.</li>
+                            <li>take any action that imposes an unreasonable or disproportionately large load on our Site or our support infrastructure for Services.</li>
+                            <li>interfere with or disrupt any computer networks involved in the provision of our services or disobey any requirements, procedures, policies or regulations of networks connected to our services.</li>
+                            <li>interfere with another’s use of our services.</li>
+                            <li>use our services in such a way as to gain unauthorized access to our computer systems or the computer systems of others.</li>
+                            <li>sell, share, transfer, trade, loan or exploit for any commercial purpose our services, including, but not limited to, any user’s account and password.</li>
+                        </ol>
+                    </div>
+                    <hr /><p><strong>3.	Reservation of rights</strong></p><hr />
+                    <div class="content px-4">
+                        <p>a. We reserve the right to do any of the following up to the time of a completed transaction:</p>
+                        <div class="px-5">
+                            <ol type="a" class="listLang">
+                                <li> withdraw any assets offered for sale.</li>
+                                <li> if assets have been grouped together for auction as a single listing, combine (including in lot), sub-divide, alter or amend any Listing.</li>
+                                <li>regulate bidding on any auction including, but not limited to, refusing to accept any bid or facilitating automatic bids on behalf of buyers.</li>
+                                <li>delay or reschedule the sale of any Asset for any reason.</li>
+                                <li>delay or rescind a transaction if any party should claim possession of or title to all or part of an asset prior to its removal from the seller’s premises.</li>
+                            </ol>
+                        </div><br />
+                        <p>b. We reserve the right to do any of the following at any time:</p>
+                        <div class="px-5">
+                            <ol type="a" class="listLang">
+                                <li>accept or reject any listing, offer to sell or purchase, bid or order.</li>
+                                <li>limit the bid or order amounts proposed by a buyer, either alone or in the aggregate.</li>
+                                <li>refuse to do business with any user, including any existing or former user without assigning any reason thereof.</li>
+                                <li>limit, suspend, restrict or terminate our services, a user’s account, a user’s access to our services and a user’s activities using our services with or without cause or notice to a user.</li>
+                                <li>limit or cancel quantities purchased (e.g., per person, per business or per order).</li>
+                                <li>revoke any stated offer to correct any errors, inaccuracies or omissions, including after a bid or offer to purchase has been submitted and whether or not the bid or offer to purchase has been confirmed or payment has been received.</li>
+                                <li>modify or discontinue part or all of our services at any time.</li>
+                                <li>make any bid or offer to purchase contingent on providing valid credit information, funding earnest money for a bid, or entering into a standalone bid deposit agreement and making a bid deposit; and</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <hr /><p><strong>4.	Disclaimer of Warranties</strong></p><hr />
+                    <div class="px-4">
+                        <p>We try to keep our services safe, secure, and functioning properly, but we cannot guarantee the continuous operation of or access to our services. Bid or order updates and other notification functionality in our services may not occur in real time. Such functionality is subjected to delays beyond our control. We do not warrant error-free or uninterrupted services. Prices and availability of assets described in listings are subject to change without notice. You agree that you are making use of the services at your own risk and that the services are being provided on as-is-where-is basis. Our services are designed to serve business and governmental buyers and sellers hence buyers are expected to be competent and capable of self-evaluating and inspecting  as-is-where-is and with all fault basis. As most assets are used or surplus assets coming from corporations or governmental parties, our services are not suitable for personal, family or household use. Buyers should not expect sellers to provide any mass market or consumer warranties customarily offered by retail websites.</p>
+                    </div>
+                    <hr /><p><strong>5.	Limitation on Liability</strong></p><hr />
+                    <div class="px-4">
+                        <p>In no event will liquidity services be liable for indirect, incidental, exemplary, punitive, special, limited or consequential damages or losses including without limitation, lost profits arising out of or in connection with agreement. To the extent permitted by applicable law, such limitations to our liability apply to: (i) the ability or inability of a user to use our Services; (ii) pricing, reserve setting, listing preparation, shipping or any other guidance provided by us; (iii) delays or disruptions in our services; (iv) viruses or other malicious software obtained by accessing, or linking to, our services; (v) glitches, bugs, errors, or inaccuracies of any kind in our services; (vi) damage to user’s hardware device or other computer systems or software from using any of our services; (vii) suspension or other action taken regarding user’s account; (viii) User’s need to modify practices, content or User’s loss of or inability to do business, because of changes to this agreement or our services; (ix) User’s inability to import or export assets, or fines or costs incurred related to the import or export of assets; (x) any act or omission of a third party, including without limitation third-party sellers and their agents; or (xi) any dispute between a user and a third party, including claims relating to assets sold by a seller on behalf of a third party.</p>
+                    </div>
+                    <hr /><p><strong>6.	Defence</strong></p><hr />
+                    <div class="px-4">
+                        <p>Each user agrees to defend and indemnify the liquidity services, its affiliated and related entities, and their respective shareholders, directors, officers, employees,  representatives etc. and permitted successors and assigns and hold them harmless from and against any and all damages, claims, suits, actions, liabilities, loss, costs and expenses. </p>
+                    </div>
+                    <hr /><p><strong>7.	Term and Termination</strong></p><hr />
+                    <div class="px-4">
+                        <p>The term of this agreement commences when a user accesses or uses our services and continues in full force and effect until we provide written notice of termination to such user or user provides notice to our support services department that user is closing its account. Termination will immediately cancel any active listing for a user’s account which a listing contract has not been formed between a buyer and seller. Notwithstanding any termination of this agreement, the terms of this agreement shall continue to apply to all outstanding listing contracts until been fully settled and until such user has settled all outstanding amounts owed  in accordance with this agreement.</p>
+                    </div>
+                    <hr /><p><strong>8.	 Communication & Notices</strong></p><hr />
+                    <div class="content px-4">
+                        <ol type="a" class="listmodel">
+                            <li>Electronic signatures in global and national commerce act - User acknowledges and agrees by accessing or using this site, including by clicking the electronic link indicating user’s agreement to be bound to this agreement during registration on our site, user is consenting to the use of electronic records and signatures in connection with the use of our services. </li>
+                            <li>Notices - With the exception of service of legal process, inquiries and notices should be addressed to support services.</li>
+                            <li>Asset and Site Promotion - Except as otherwise agreed to by us in writing, each seller grants to us the right and license to use such seller’s name and trademark in connection with the services that we provide to such seller, including the promotion of such seller’s assets or our general marketing to attract buyers to our services. We are under no express obligation to provide marketing for a specific Listing unless engaged through a written agreement between a seller and us.</li>
+                            <li>Miscellaneous State/Local Sales and other Tax - Buyers may be subjected to sales, use and/or value-added taxes. Buyers are responsible for contacting  the appropriate tax authority office, completing any requisite forms and paying any taxes that may be imposed.</li>
+                            <li>Currency of Payment - Payment shall be made in the currency specified on the relevant Listing. If currency is not specified, the default currency will be Indian Rupees. Any bank charges in respect of conversion or transfer of monies shall be borne by buyer in respect of bids.</li>
+                            <li>Method of Payment - Unless otherwise permitted, payment shall be made via bank wire transfer. Cash payments are not permitted. As a sole discretion, may permit buyer to pay via credit card if payment in full is less than current limit set forth on the site.</li>
+                        </ol>
+                    </div>
+                    @*<div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="checktnc" name="option1" />
+                            <label class="form-check-label" style="color:green">I accept the Terms and Conditions.</label>
+                        </div>*@
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnanc" data-dismiss="modal" style="background-color:green">Accept and Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="checkmailModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modelbg">
+                    <button type="button" class="close closebg" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body modelcontent" style="height: auto;">
+                    <p>
+                        <b>
+                            You are already registered with this Email as a Buyer, if you want to register as a Seller also, please <a href="/Account/SellerRegistration" style="color:blue">Click Here</a>
+                        </b>
+                    </p>
+
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-success" onclick="hide();" data-dismiss="modal" style="background-color:green">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*<partial name="Shared/_DeclarationPartial" model="Model.Sellerdto" />*@
+</section>
+@section Scripts{
+
+    <script type="text/javascript" asp-append-version="true">
+        $(document).ready(function () {
+            $("#btnsubmit").attr('disabled', 'disabled');
+
+            $('#btnanc').click(function () {
+                $("#checktnc").attr("checked", true);
+                $('#btnsubmit').removeAttr('disabled');
+            });
+            $('#checktnc').click(function () {
+                //check if checkbox is checked
+                if ($(this).is(':checked')) {
+
+                    $('#btnsubmit').removeAttr('disabled'); //enable input
+
+                } else {
+                    $('#btnsubmit').attr('disabled', true); //disable input
+                }
+            });
+
+            $("#txtMobileNo").keypress(function (e) {
+                //if the letter is not digit then display error and don't type anything
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    //display error message
+                    $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                    return false;
+                }
+            });
+
+            $("#ddlCountry").on("change", function () {
+                debugger;
+                var maincat = $("#ddlCountry option:selected").val();
+                if (maincat != null) {
+                    $.getJSON('?handler=GetStatebyCountryid&countryid=' + maincat + '', (data) => {
+                        $("#ddlState").empty();
+                        if (data != '' && data != null) {
+                            /*  $("#ddlSubCategoryId").show();*/
+                            var item1 = "<option value='Select'>Select</option>";
+                            $.each(data, function (i, item) {
+                                item1 += `<option value="${item.id}">${item.stateName}</option>`;
+                            });
+                            $("#ddlState").append(item1);
+
+                        }
+                        else {
+                            /*  $("#ddlSubCategoryId").hide();*/
+                            var item1 = "<option value='Select'>Select</option>";
+                            $("#ddlState").append(item1);
+                        }
+                    });
+                }
+            })
+
+            $("#ddlState").on("change", function () {
+                debugger;
+                var maincat = $("#ddlState option:selected").val();
+                if (maincat != null) {
+                    $.getJSON('?handler=GetCitybystateid&stateid=' + maincat + '', (data) => {
+                        $("#ddlCity").empty();
+                        if (data != '' && data != null) {
+                            /*  $("#ddlSubCategoryId").show();*/
+                            var item1 = "<option value='Select'>Select</option>";
+                            $.each(data, function (i, item) {
+                                item1 += `<option value="${item.id}">${item.cityName}</option>`;
+                            });
+                            $("#ddlCity").append(item1);
+
+                        }
+                        else {
+                            /*  $("#ddlSubCategoryId").hide();*/
+                            var item1 = "<option value='Select'>Select</option>";
+                            $("#ddlCity").append(item1);
+                        }
+                    });
+                }
+            })
+        })
+
+        $('#txtemailid').on('blur', function () {
+            var name = $(this).val();
+            if (name.length > 0) {
+                debugger;
+                $.get('?handler=GetbyEmail', { email: name })
+                    .done(function (data) {
+                        if (data != null) {
+                            debugger;
+                            var SellerId = data.sellerId//alert(data)
+                            var BuyerId = data.buyerId//alert(data)
+                            if (BuyerId != "0" && SellerId == "0") {
+                                var title = "Greetings";
+                                var body = this.value;
+                                var title = "Greetings";
+                                var body = this.value;
+                                $("#checkmailModal .modal-title").html(title);
+                                $("#checkmailModal .modal-body").html(body);
+                                $("#checkmailModal").modal("show");
+                                $("#txtemailid").val("");
+
+
+                            }
+                            else if (SellerId != "0" && BuyerId == "0") {
+                                alert("You are already registered as Seller ")
+                                $("#txtemailid").val("");
+
+
+
+                            }
+                            else if (SellerId != "0" && BuyerId != "0") {
+                                alert("You are already registered as Seller and Buyer")
+                                $("#txtemailid").val("");
+                            }
+                            else if (SellerId == "0" && BuyerId == "0") {
+                                alert("Email Id Already Used!")
+                                $("#txtemailid").val("");
+                            }
+
+
+                            }
+                        });
+            }
+           
+        });
+        $('#txtMobileNo').on('blur', function () {
+            var name = $(this).val();
+            if (name.length > 0) {
+              
+                $.get('?handler=GetbyMobile', { mobile: name })
+                    .done(function (data) {
+                        if (data != null) {
+                            debugger;
+                            alert('Mobile Number Already Exist')
+                            $("#txtMobileNo").val("");
+                        }
+                    });
+            }
+        });
+
+    </script>
+
+}

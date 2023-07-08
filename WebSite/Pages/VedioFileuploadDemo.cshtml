@@ -1,0 +1,190 @@
+﻿@page
+@model WebSite.Pages.VedioFileuploadDemoModel
+@{
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 profiletop">
+                <div class="card border-0">
+                    <img src="https://www.bootdey.com/img/Content/avatar/avatar6.png" class="mx-auto" width="200" height="200" alt="...">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h3 class="h4 mb-0">PECS</h3>
+                            <span class="text-primary">CEO &amp; Founder</span>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><a href="#!"><i class="fa fa-map-marker"></i><span class="pl-2">India</span></a></li>
+                            <li class="mb-2"><a href="#!"><i class="fa fa-envelope"></i><span class="pl-2">dakota@gmail.com</span></a></li>
+                            <li class="mb-2"><a href="#!"><i class="fa fa-phone"></i><span class="pl-2">98989889989</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <nav class="list-group">
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-user"></i>My Profile<span class="badge badge-primary badge-pill">6</span></a>
+                    <a class="list-group-item" href="#"><i class="fa fa-list"></i>My Listning</a>
+                    <a class="list-group-item" href="#"><i class="fa-list-alt"></i>Add Listning</a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-commenting"></i>Message<span class="badge badge-primary badge-pill">3</span></a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-file-o"></i>Draft<span class="badge badge-primary badge-pill">4</span></a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-tasks"></i>Service Requests<span class="badge badge-primary badge-pill">4</span></a>
+                    <a class="list-group-item with-badge" href="#"><i class="fa fa-heart"></i>Favorites<span class="badge badge-primary badge-pill">4</span></a>
+                </nav>
+            </div>
+            <div class="col-lg-9 profiletop">
+                <div class="card">
+                    <div class="card-header">
+                        Demo
+                    </div>
+                    <div class="card-body">
+                        <form action="/" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="drop-zone">
+                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                        <input type="file" name="myFile" class="drop-zone__input">
+                                    </div>
+                                </div><hr />
+                                <div>
+                                    <img src="~/assets/images/sqrpop.jpg" class="img-thumbnail" />
+                                    <img src="~/assets/images/sqrpop.jpg" class="img-thumbnail" />
+                                    <img src="~/assets/images/sqrpop.jpg" class="img-thumbnail" />
+                                    <img src="~/assets/images/sqrpop.jpg" class="img-thumbnail" />
+                                </div><br />
+                                <div class="form-group mt-2">
+                                    <button type="submit" class="btn  btncol">Submit</button>
+                                </div>
+                            </div>
+                        </form><hr />
+                        <div class="card-header">
+                            Upload a Vedio
+                        </div>
+                        <div class="form-group col-md-8">
+                            <div class="mt-4">
+                                <label for="youtube-id">Enter youtube video URL:</label>
+                                <input id="youtube-id" type="text" class="js-youtube-vid" placeholder="YSuo0j2xsj8">
+                            </div>
+                            
+                        </div><br />
+                        <div class="form-group col-md-3">
+                            <button type="submit" class="btn  btncol">Submit</button>
+                        </div>
+                    </div><hr />
+                    <div class="card-body" style="overflow-x:auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Listning Is</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td><img src="abc.png"></td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td class="text-white">
+                                        <a href="#" class="btn-sm btn-dark">View</a>
+                                        <a href="#" class="btn-sm btn-danger" style="margin-left:2px;">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
+
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
+
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  }
+
+  // First time - there is no thumbnail element, so lets create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+
+    $(".js-youtube-vid").on("change", function () {
+        var newval = "",
+            $this = $(this);
+
+        if ((newval = $this.val().match(/(\?|&)v=([^&#]+)/))) {
+            $this.val(newval.pop());
+        } else if ((newval = $this.val().match(/(\.be\/)+([^\/]+)/))) {
+            $this.val(newval.pop());
+        } else if ((newval = $this.val().match(/(\embed\/)+([^\/]+)/))) {
+            $this.val(newval.pop().replace("?rel=0", ""));
+        }
+    });
+
+</script>

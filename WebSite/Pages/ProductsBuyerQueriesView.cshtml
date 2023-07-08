@@ -1,0 +1,70 @@
+﻿@page
+@model WebSite.Pages.ProductsBuyerQueriesViewModel
+@{
+    ViewData["Title"] = "Product Buyer Query";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container content">
+
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+            <div class=" mx-auto mt-2 col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Product Buyer Query</h2>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+                        {
+                            <div class="table-responsive">
+                                <table id="tblDataTable" class="table">
+                                    <thead>
+                                        @{
+                                            int index = 0;
+                                        }
+                                        <tr>
+                                            @*<th class="text-center noExport noSort"></th>*@
+                                            <th class="text-center">S. No.</th>
+                                            <th class="search">Product Code</th>
+                                            <th class="search">Product Name</th>
+                                            <th class="search">View</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ModelVms)
+                                        {
+                                            <tr>
+                                                @*<td class="text-center"></td>*@
+                                                <td class="text-center">
+                                                    @{ index++; }
+                                                    @index
+                                                </td>
+                                                <td>
+                                                    <a asp-page="ProductDetails" asp-route-id="@item.ProductId" target="_blank">
+                                                        @item.ProductNumber
+                                                    </a>
+                                                </td>
+                                                <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                                <td>
+                                                    <a asp-page="ProductsBuyerQueries" asp-route-pid="@item.Id">
+                                                        <i class="fa fa-question-circle text-dark" data-toggle="tooltip" data-placement="top" title="Query"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No records has been added yet. Click 'Add New Listing' to start adding.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="Shared/_BuyerViewsPartial" />
+</section>

@@ -1,0 +1,109 @@
+﻿@page
+@model WebApp.Pages.Admin.Masters.SubCategory.IndexModel
+@{
+    ViewData["Title"] = "Sub Category";
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Sub Category</h3>
+            <a asp-page="Manage" class="float-right">
+                <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Add New Sub-Category">Add New</i>
+            </a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="search">S. No.</th>
+                                <th class="search">Sub Category Name</th>
+                                <th class="search">Category Id</th>
+                              
+
+                                <th class="text-center noExport noSort">Active</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms.OrderByDescending(x => x.Id))
+                            {
+                                <tr>
+
+                                    <td>
+                                        @{ index++; }
+                                        @index
+                                    </td>
+                                    <td>@item.SubCategoryName</td>
+                                    <td>@item.CategoryId</td>
+
+                                    <td class="text-center"><i class="@(item.IsActive?"fa fa-check-circle text-success":"fa fa-minus")"></i></td>
+                                    <td class="text-center">
+                                        <a asp-route-id="@item.Id" asp-page="manage" class="ml-2 mr-2">
+                                            <i class="fa fa-edit text-dark" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                        </a>
+                                        @*@if (item.Status)
+                                            {
+                                                <a onclick='Delete(@item.Id);'><i class="fa fa-trash text-dark" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                            }*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                @*<th class="text-center noExport noSort"></th>*@
+                                <th class="search">S. No.</th>
+                                <th class="search">Category Name</th>
+                                <th class="search">Short Name</th>
+
+                                <th class="text-center noExport noSort">Active</th>
+                                <th class="text-center noExport noSort">Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet. Click 'Create New' to start adding.</p>
+            }
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+        $('#tblDataTable').DataTable({
+            initComplete: function () {
+                var r = $('#tblDataTable tfoot tr');
+                r.find('th').each(function () {
+                    if ($(this).hasClass('search')) {
+                        $(this).css('padding', 5);
+                        var title = $(this).text();
+                        $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+                    } else {
+                        $(this).html('');
+                    }
+                });
+                $('#tblDataTable thead').prepend(r);
+                this.api().columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change clear',
+                        function () {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                });
+            }
+        });
+    </script>
+}

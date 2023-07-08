@@ -1,0 +1,99 @@
+﻿@page
+@model WebApp.Pages.Admin.Products.ProductsPaymentsModel
+@{
+    ViewData["Title"] = "Reserve Price Paid";
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title float-left font-weight-bold">Buyer Reserve Price Paid</h3>
+            @*<a class="float-right" asp-page="Manage">
+                    <i class="fa fa-plus text-dark" data-toggle="tooltip" data-placement="top" title="Create"></i>
+                </a>*@
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            @if (Model.ModelVms != null && Model.ModelVms.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="tblDataTable" class="table table-sm table-bordered table-striped">
+                        <thead>
+                            @{
+                                int index = 0;
+                            }
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Product Code</th>
+                                <th class="search">Product Name</th>
+                                <th class="search text-right">Reserve Price Paid</th>
+                                <th class="search text-right">Total Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ModelVms)
+                            {
+                                <tr>
+                                    <td class="text-right">
+                                        @{ index++; }
+                                        @index
+                                    </td>
+                                    <td>@item.ProductNumber</td>
+                                    <td>@item.SubSubCategory.SubSubCategoriesName</td>
+                                    <td class="text-right">@item.ReservePrice.ToString("#,#")</td>
+                                    <td class="text-right">
+                                        <a asp-page="ProductsPaymentsDetails" asp-route-id="@item.Id">
+                                            @item.TotalPaidBuyer
+                                            </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="text-center">S. No.</th>
+                                <th class="search">Product Number</th>
+                                <th class="search">Product Name</th>
+                                <th class="search text-right">Reserve Price Paid</th>
+                                <th class="search text-right">Total Paid</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No records has been added yet.</p>
+            }
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" asp-append-version="true">
+        $('#tblDataTable').DataTable({
+            initComplete: function () {
+                var r = $('#tblDataTable tfoot tr');
+                r.find('th').each(function () {
+                    if ($(this).hasClass('search')) {
+                        $(this).css('padding', 5);
+                        var title = $(this).text();
+                        $(this).html('<input type="text" class="form-control" placeholder="' + title + '" />');
+                    } else {
+                        $(this).html('');
+                    }
+                });
+                $('#tblDataTable thead').prepend(r);
+                this.api().columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change clear',
+                        function () {
+                            if (that.search() !== this.value) {
+                                that
+                                    .search(this.value)
+                                    .draw();
+                            }
+                        });
+                });
+            }
+        });
+    </script>
+}

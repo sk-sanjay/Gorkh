@@ -1,0 +1,251 @@
+﻿@page
+@model WebSite.Pages.DemoDashboardModel
+
+@{
+    ViewData["Title"] = "Seller- DashBoard";
+}
+<link href="~/css/test.css" rel="stylesheet" />
+<section class="content sectionbg">
+    <div class="container">
+        <div class="row">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle link-sign profiletop" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
+                    <i class="icon-icon-9"></i> <span></span>
+                </button>
+                <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                    @*<a asp-page="/Account/Profile" class="dropdown-item"><i class="fa fa-user mr-2"></i> Profile</a>*@
+                    <a asp-page="/Account/ChangePassword" class="dropdown-item"><i class="fa fa-key mr-2"></i> Change Password</a>
+                    <div class="dropdown-divider"></div>
+                    <a asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/")" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i> Signout</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <partial name="Shared/_DashboardSellerLeftPartial" />
+
+            <div class="col-lg-8 profiletop">
+
+
+                @*<div >
+                        <a asp-page="/Account/Profile" class="dropdown-item">Profile</a>
+                        <a asp-page="/Account/ChangePassword" class="dropdown-item"> Change Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/")" class="dropdown-item">Signout</a>
+                    </div>*@
+
+                <div class="card">
+                    <div class="card-body">
+                        <form action="#" class="form" id="forms" onsubmit="event.preventDefault()">
+                            <div class="progressbar">
+                                <div class="progress" id="progress"></div>
+                                <div class="progress-step progress-step-active" data-title="Account"></div>
+                                <div class="progress-step" data-title="Social"></div>
+                                <div class="progress-step" data-title="Personal"></div>
+                                <div class="progress-step" data-title="Uploads"></div>
+                                <div class="progress-step" data-title="Preview"></div>
+                            </div>
+                            <div class="step-forms step-forms-active">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Sale Type<span class="required">*</span></label>
+                                            <select id="ddlSaleType" class="custom-select">
+                                                <option value="">--Select--</option>
+                                                <option value="Reserve Price">Reserve Price</option>
+                                                <option value="Online Auction">Online Auction</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label>Seller Type<span class="required">*</span></label>
+                                            <select id="ddlSellerType" class="custom-select">
+                                                <option value="">--Select--</option>
+                                                <option value="Central PSU">Central PSU</option>
+                                                <option value="State PSU">State PSU</option>
+                                                <option value="Public Ltd.">Public Ltd.</option>
+                                                <option value="Private Ltd.">Private Ltd.</option>
+                                                <option value="Proprietary/Individual">Proprietary/Individual</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name-f">First Name</label>
+                                            <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name-l">Last name</label>
+                                            <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address-1">Address Line-1</label>
+                                            <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name-f">Email</label>
+                                            <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name-l">Email</label>
+                                            <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address-1">Address Line-1</label>
+                                            <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                        </div>
+                                        <div class="col-sm-6 pull-right">
+                                            <a href="#" class="formbutton btn btn-next">Next</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group">  <a href="#" class="btn formbutton btn-prev">previous</a> <a href="#" class="btn formbutton btn-next">next</a> </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group">  <a href="#" class="btn formbutton btn-prev">previous</a> <a href="#" class="btn formbutton btn-next">next</a> </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group">  <a href="#" class="btn formbutton btn-prev">previous</a> <a href="#" class="btn formbutton btn-next">next</a> </div>
+                            </div>
+                            <div class="step-forms">
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-f">Email</label>
+                                    <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="name-l">Email</label>
+                                    <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter your last name." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="address-1">Address Line-1</label>
+                                    <input type="address" class="form-control" name="Locality" id="address-1" placeholder="Locality/House/Street no." required>
+                                </div>
+                                <div class="btns-group"> <a href="#" class="btn formbutton btn-prev">Previous</a> <input type="submit" value="Submit" id="submit-form" class="btn formbutton" /> </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const prevBtns = document.querySelectorAll(".btn-prev");
+    const nextBtns = document.querySelectorAll(".btn-next");
+    const progress = document.getElementById("progress");
+    const formSteps = document.querySelectorAll(".step-forms");
+    const progressSteps = document.querySelectorAll(".progress-step");
+
+
+    let formStepsNum = 0;
+
+    nextBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            formStepsNum++;
+            updateFormSteps();
+            updateProgressbar();
+
+        });
+    });
+
+    prevBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            formStepsNum--;
+            updateFormSteps();
+            updateProgressbar();
+
+        });
+    });
+
+    function updateFormSteps() {
+        formSteps.forEach((formStep) => {
+            formStep.classList.contains("step-forms-active") &&
+                formStep.classList.remove("step-forms-active");
+        });
+
+        formSteps[formStepsNum].classList.add("step-forms-active");
+    }
+
+    function updateProgressbar() {
+        progressSteps.forEach((progressStep, idx) => {
+            if (idx < formStepsNum + 1) { progressStep.classList.add("progress-step-active"); } else { progressStep.classList.remove("progress-step-active"); }
+        }); progressSteps.forEach((progressStep, idx) => {
+            if (idx < formStepsNum) { progressStep.classList.add("progress-step-check"); } else { progressStep.classList.remove("progress-step-check"); }
+        }); const progressActive = document.querySelectorAll(".progress-step-active"); progress.style.width = ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
+    } document.getElementById("submit-form").addEventListener("click", function () {
+        progressSteps.forEach((progressStep, idx) => {
+            if (idx <= formStepsNum) { progressStep.classList.add("progress-step-check"); } else { progressStep.classList.remove("progress-step-check"); }
+        }); var forms = document.getElementById("forms"); forms.classList.remove("form"); forms.innerHTML = '<div class="welcome"><div class="content"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg><h2>Thanks for signup!</h2><span>We will contact you soon!</span><div></div>';
+    });
+
+</script>

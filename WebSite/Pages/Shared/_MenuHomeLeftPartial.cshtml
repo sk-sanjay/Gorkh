@@ -1,0 +1,32 @@
+﻿@model List<CategoriesVM>
+
+    <div class="sec-product-left">
+        <h2>Categories</h2>
+        <div class="product-cat-link">
+            <ul>
+                @{
+                if (Model!=null)
+                {
+                   foreach (var item in Model)
+                    {
+                        <li>
+                            <a asp-page="ProductsBySubCat" asp-route-category_id="@item.Id">@item.Name</a>
+                            @if (@item.SubCategory.Count > 0)
+                            {
+                        <ul>
+                            @foreach (var item2 in item.SubCategory)
+                            {
+                                @*<li><a asp-page="/ProductsBySubCat/@item2.Id">@item2.SubCategoryName</a></li>*@
+                                <li><a asp-page="ProductsBySubCat" asp-route-sub_category="@item2.Id">@item2.SubCategoryName</a></li>
+                            }
+
+                        </ul>
+                            }
+                        </li>
+                    } 
+                }
+                    
+                }
+            </ul>
+        </div>
+    </div>
